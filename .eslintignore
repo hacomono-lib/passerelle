@@ -1,0 +1,12 @@
+.github
+.vscode
+
+coverage
+dist
+docs
+node_modules
+storybook-static
+
+.eslintrc.*
+.prettierrc.*
+tsconfig.json

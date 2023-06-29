@@ -1,7 +1,7 @@
 {
-  "name": "@passerelle/lib",
+  "name": "@passerelle/core",
   "version": "0.0.1",
-  "description": "passerelle common library",
+  "description": "passerelle core",
   "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
   "license": "MIT",
   "repository": {

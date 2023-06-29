@@ -1,45 +1,57 @@
 type Sanitizable = any;
 
 
-interface EnclosureConfig {
-  origin: string
-}
+
+
 
 export interface Message<T extends Sanitizable> {
 
   data: T
 }
 
-export class EnclosureContext {
-  private map = new Map<string, HTMLIFrameElement>()
+const mapKey = Symbol('enclosure-core--iframe-map')
+
+class EnclosureContext {
+  private readonly [mapKey] = new Map<string, HTMLIFrameElement>()
 
   constructor(private readonly config: EnclosureConfig) { }
 
-  regist(key: string, iframe: HTMLIFrameElement): void {
-    if (!this.map) {
-      this.map = new Map()
-    }
-
-    if (this.map.has(key)) {
-      console.warn(`[enclosure-core] iframe with key ${key} already exists.`)
+  regist(iframeKey: string, iframe: HTMLIFrameElement): void {
+    if (this[mapKey].has(iframeKey)) {
+      console.warn(`[enclosure-core] iframe with key ${iframeKey} already exists.`)
       return
     }
 
-    this.map.set(key, iframe)
+    this[mapKey].set(iframeKey, iframe)
   }
 
-  send<T extends Sanitizable>(key: string, data: T): void {
-    const iframe = this.map.get(key)
+  destroy(iframeKey: string): void {
+    this[mapKey].delete(iframeKey)
+  }
+
+  send<T extends Sanitizable>(iframeKey: string, eventKey: string, data: T): void {
+    const iframe = this[mapKey].get(iframeKey)
     if (!iframe) {
-      console.warn(`[enclosure-core] iframe with key ${key} not found.`)
+      console.warn(`[enclosure-core] iframe with key ${iframeKey} not found.`)
       return
     }
 
     if (!iframe.contentWindow || !iframe.contentWindow.postMessage) {
-      console.warn(`[enclosure-core] iframe with key ${key} not ready.`)
+      console.warn(`[enclosure-core] iframe with key ${iframeKey} not ready.`)
       return
     }
 
     iframe.contentWindow.postMessage(data, this.config.origin)
   }
+
+
+  addReceiver<T extends Sanitizable>(iframeKey: string, callback: (eventKey: string, received: T) => void): void {
+
+  }
+
+  removeReceiver(iframeKey: string, callback: (received: any) => void): void {
+
+  }
 }
+
+export const enclo

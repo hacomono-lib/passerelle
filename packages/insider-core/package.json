@@ -1,0 +1,39 @@
+{
+  "name": "@passerelle/insider-core",
+  "version": "0.0.1",
+  "description": "passerelle insider core module",
+  "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hacomono-lib/passerelle.git",
+    "directory": "packages/insider-core"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "tsup",
+    "dev": "tsup --watch --clean",
+    "test": "yarn run -p test:*",
+    "test:spec": "vitest",
+    "test:type": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6",
+    "vitest": "^0.32.2",
+    "yarn-run-all": "latest"
+  }
+}

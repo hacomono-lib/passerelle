@@ -1,15 +1,18 @@
 {
-  "name": "portagate",
+  "name": "passerelle",
   "version": "1.0.0",
-  "description": "Portagate: A universal library enabling seamless navigation between SPAs via an embedded portal. Track and manage URL hash changes across diverse front-end frameworks.",
-  "type": "module",
+  "description": "passerelle: A universal library enabling seamless navigation between SPAs via an embedded portal. Track and manage URL hash changes across diverse front-end frameworks.",
+  "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:hacomono-lib/portagate.git"
+    "url": "git@github.com:hacomono-lib/passerelle.git"
   },
+  "type": "module",
   "private": "true",
   "workspaces": [
-    "./packages/*"
+    "./packages/*",
+    "./tests/*"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.60.0",
@@ -18,10 +21,6 @@
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-import": "^0.13.0",
-    "prettier": "^2.8.8",
-    "typescript": "^5.1.3",
-    "vitest": "^0.32.2"
-  },
-  "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
-  "license": "MIT"
+    "prettier": "^2.8.8"
+  }
 }

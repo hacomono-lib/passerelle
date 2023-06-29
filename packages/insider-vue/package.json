@@ -1,0 +1,44 @@
+{
+  "name": "@passerelle/insider-nuxt",
+  "version": "0.0.1",
+  "description": "passerelle insider module for vue3",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hacomono-lib/passerelle.git",
+    "directory": "packages/insider-vue"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "run-p test:*",
+    "test:spec": "vitest run",
+    "test:type": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "passerelle/insider-core": "0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "vitest": "^0.32.2"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
+  }
+}

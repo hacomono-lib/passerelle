@@ -1,0 +1,51 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "prepare": {
+      "cache": false
+    },
+    "dev": {
+      "cache": true,
+      "persistent": true,
+      "outputs": [".nuxt/**"]
+    },
+    "test": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test-ci": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "typecheck": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "package.json",
+        "vite.config.*",
+        "tailwind.config.*",
+        "tsconfig.*"
+      ],
+      "outputs": [".nuxt/**", ".output/**"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "build-storybook": {
+      "cache": true,
+      "outputs": ["storybook-static/**"],
+      "inputs": [
+        "src/**",
+        ".storybook/**",
+        "!.storybook/test-runner.js",
+        "package.json"
+      ],
+      "dependsOn": ["@hacomono/cobaco-icon-components-vue#build"]
+    }
+  }
+}

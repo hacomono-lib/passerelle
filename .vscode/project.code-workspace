@@ -1,0 +1,76 @@
+{
+  "folders": [
+    {
+      "path": ".."
+    },
+    {
+      "path": "../docs",
+      "name": "documentation"
+    },
+    {
+      "path": "../packages/core",
+      "name": "@passerelle/core"
+    },
+    {
+      "path": "../packages/enclosure-core",
+      "name": "@passerelle/enclosure-core"
+    },
+    {
+      "path": "../packages/insider-core",
+      "name": "@passerelle/insider-core"
+    },
+    {
+      "path": "../packages/enclosure-vue",
+      "name": "@passerelle/enclosure-vue"
+    },
+    {
+      "path": "../packages/insider-vue",
+      "name": "@passerelle/insider-vue"
+    },
+    {
+      "path": "../packages/enclosure-nuxt",
+      "name": "@passerelle/enclosure-nuxt"
+    },
+    {
+      "path": "../packages/insider-nuxt",
+      "name": "@passerelle/insider-nuxt"
+    },
+    {
+      "path": "../packages/insider-nuxt",
+      "name": "@passerelle/insider-nuxt"
+    },
+    {
+      "path": "../packages/insider-nuxt2",
+      "name": "@passerelle/insider-nuxt2"
+    }
+  ],
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    "npm.packageManager": "yarn",
+
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.rulers": [100],
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+      "editor.rulers": [150],
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "typescript.tsdk": "ROOT/node_modules/typescript/lib"
+  },
+  "extensions": {
+    "recommendations": [
+      "Vue.volar",
+      "Vue.vscode-typescript-vue-plugin",
+      "bradlc.vscode-tailwindcss",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+    ],
+    "unwantedRecommendations": ["yoyo930021.vuter"]
+  }
+}
+

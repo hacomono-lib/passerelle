@@ -24,8 +24,8 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "tsup",
     "dev": "tsup --watch --clean",
+    "build": "tsup",
     "test": "yarn run -p test:*",
     "test:spec": "vitest",
     "test:type": "tsc --noEmit -p tsconfig.json"

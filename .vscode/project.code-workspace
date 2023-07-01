@@ -54,7 +54,7 @@
     },
     "[typescript]": {
       "editor.rulers": [100],
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "[vue]": {
       "editor.rulers": [150],

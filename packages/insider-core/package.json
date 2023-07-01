@@ -12,23 +12,27 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/types.d.ts",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "prepack": "tsup",
     "dev": "tsup --watch --clean",
+    "build": "tsup",
     "test": "yarn run -p test:*",
     "test:spec": "vitest",
     "test:type": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@passerelle/core": "0.0.1",
+    "type-assurer": "0.0.1"
   },
   "devDependencies": {
     "tsup": "^7.1.0",

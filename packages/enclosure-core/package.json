@@ -1,7 +1,7 @@
 {
   "name": "@passerelle/enclosure-core",
   "version": "0.0.1",
-  "dependencies": "",
+  "description": "passerelle enclosure core library",
   "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
   "license": "MIT",
   "repository": {
@@ -24,11 +24,15 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "tsup",
     "dev": "tsup --watch --clean",
+    "build": "tsup",
     "test": "yarn run -p test:*",
     "test:spec": "vitest",
     "test:type": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@passerelle/core": "0.0.1",
+    "type-assurer": "0.0.1"
   },
   "devDependencies": {
     "tsup": "^7.1.0",

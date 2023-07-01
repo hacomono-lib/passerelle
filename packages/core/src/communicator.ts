@@ -1,4 +1,4 @@
-import type { Json } from './common'
+import { loggerKey, type Json } from './common'
 import { isMessage, type NavigateMessageValue, type HrefMessageValue, type MessageKey, type Message, type SendDataMessage, type NavigateMessage, type HrefMessage } from './message'
 /**
  * Communicate config
@@ -44,6 +44,10 @@ export class Communicator {
     private readonly config: CommunicateConfig
   ) {
     this.window.addEventListener('message', this.#onMessage)
+
+    if (this.#origin === '*') {
+      console.warn(loggerKey, 'You are using "*" as origin, this is not recommended for security reasons')
+    }
   }
 
   /**

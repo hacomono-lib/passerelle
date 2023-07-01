@@ -9,11 +9,15 @@
     "url": "git@github.com:hacomono-lib/passerelle.git"
   },
   "type": "module",
-  "private": "true",
+  "private": true,
   "workspaces": [
     "./packages/*",
     "./tests/*"
   ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",

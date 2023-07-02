@@ -1,6 +1,6 @@
 import type { Json } from './common'
 
-export type Message = SendDataMessage | NavigateMessage | HrefMessage
+export type Message = SendDataMessage | NavigateMessage | HrefMessage | LayoutMetrixMessage
 
 export type MessageType = Message['type']
 
@@ -79,11 +79,51 @@ export interface HrefMessage {
   value: HrefMessageValue
 }
 
+export interface LayoutMetrix {
+  enclosure: {
+    window: {
+      width: number
+      height: number
+    }
+  },
+  insider: {
+    window: {
+      width: number
+      height: number
+    },
+    offset: {
+      top: number
+      left: number
+    }
+  }
+}
+
+/**
+ * Layout Metrix message iframe
+ *
+ * Receiving side gets sender's layout metrix.
+ * This value is intended to be used in the calculation of the alignment of the overlay element displayed in the iframe.
+ * e.g. modal
+ */
+export interface LayoutMetrixMessage {
+  /**
+   * Message Type
+   */
+  type: 'layout',
+
+  /**
+   * Layout Metrix
+   */
+  value: LayoutMetrix
+}
+
+const messageTypes: MessageType[] = ['data', 'navigate', 'href', 'layout']
+
 export function isMessage(value: unknown): value is Message {
   return (
     !!value &&
     typeof value === 'object' &&
-    ['data', 'navigate', 'href'].includes((value as Message).type) &&
+    messageTypes.includes((value as Message).type) &&
     !!(value as Message).value
   )
 }

@@ -1,5 +1,5 @@
 import { loggerKey, type Json } from './common'
-import { isMessage, type NavigateMessageValue, type HrefMessageValue, type MessageKey, type Message, type SendDataMessage, type NavigateMessage, type HrefMessage } from './message'
+import { isMessage, type NavigateMessageValue, type HrefMessageValue, type MessageKey, type Message, type SendDataMessage, type NavigateMessage, type HrefMessage, type LayoutMetrix, type LayoutMetrixMessage } from './message'
 /**
  * Communicate config
  */
@@ -16,14 +16,32 @@ export interface CommunicateConfig {
    * @param value
    * @returns
    */
-  onNavigate?: (value: NavigateMessageValue) => void,
+  onNavigate?(this: Communicator, value: NavigateMessageValue): void,
 
   /**
    *
    * @param value
    * @returns
    */
-  onHrefNavigate?: (value: HrefMessageValue) => void
+  onHrefNavigate?(this: Communicator, value: HrefMessageValue): void,
+
+  /**
+   *
+   * @param value
+   */
+  onUpdateLayout?(this: Communicator, value: LayoutMetrix): void
+
+  /**
+   *
+   * @param this
+   */
+  onInit?(this: Communicator): void
+
+  /**
+   *
+   * @param this
+   */
+  onDestroy?(this: Communicator): void
 }
 
 type ReceiveCallback<T extends Json> = (received: T) => void
@@ -36,25 +54,28 @@ export class Communicator {
 
   /**
    *
-   * @param window
+   * @param senderWindow
    * @param config
    */
   constructor(
-    private readonly window: Window,
+    private readonly senderWindow: Window,
     private readonly config: CommunicateConfig
   ) {
-    this.window.addEventListener('message', this.#onMessage)
+    window.addEventListener('message', this.#onMessage)
 
     if (this.#origin === '*') {
       console.warn(loggerKey, 'You are using "*" as origin, this is not recommended for security reasons')
     }
+
+    config.onInit?.apply(this)
   }
 
   /**
    *
    */
   destroy() {
-    this.window.removeEventListener('message', this.#onMessage)
+    window.removeEventListener('message', this.#onMessage)
+    this.config.onDestroy?.apply(this)
   }
 
   get #origin(): string {
@@ -75,15 +96,18 @@ export class Communicator {
       }
     },
     navigate: ({ value }: NavigateMessage) => {
-      this.config.onNavigate?.(value)
+      this.config.onNavigate?.apply(this, [value])
     },
     href: ({ value }: HrefMessage) => {
-      this.config.onHrefNavigate?.(value)
+      this.config.onHrefNavigate?.apply(this, [value])
+    },
+    layout: ({ value }: LayoutMetrixMessage) => {
+      this.config.onUpdateLayout?.apply(this, [value])
     }
   }
 
   #send(data: Message): void {
-    this.window.postMessage(data, this.#origin)
+    this.senderWindow.postMessage(data, this.#origin)
   }
 
 
@@ -119,6 +143,25 @@ export class Communicator {
       type: 'data',
       key,
       value
+    })
+  }
+
+  /**
+   *
+   * @param insider
+   */
+  sendLayout(insider: LayoutMetrix['insider']): void {
+    this.#send({
+      type: 'layout',
+      value: {
+        enclosure: {
+          window: {
+            width: window.innerWidth,
+            height: window.innerHeight
+          }
+        },
+        insider
+      }
     })
   }
 

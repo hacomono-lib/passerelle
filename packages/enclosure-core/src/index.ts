@@ -1,6 +1,7 @@
-export { loggerKey } from '@passerelle/core'
-import { Communicator, type CommunicateConfig } from '@passerelle/core'
+import { loggerKey, Communicator, type CommunicateConfig } from '@passerelle/core'
 import { assertNotNil } from 'type-assurer'
+
+export { loggerKey, type Communicator, type CommunicateConfig }
 
 export function createCommunicator(
   iframe: HTMLIFrameElement,

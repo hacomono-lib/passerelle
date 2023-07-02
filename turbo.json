@@ -6,8 +6,7 @@
     },
     "dev": {
       "cache": true,
-      "persistent": true,
-      "outputs": [".nuxt/**"]
+      "persistent": true
     },
     "test": {
       "cache": false,
@@ -27,11 +26,10 @@
       "inputs": [
         "src/**",
         "package.json",
-        "vite.config.*",
-        "tailwind.config.*",
+        "tsup.config.*",
         "tsconfig.*"
       ],
-      "outputs": [".nuxt/**", ".output/**"]
+      "outputs": ["dist/**"]
     },
     "clean": {
       "cache": false

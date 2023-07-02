@@ -52,15 +52,21 @@ type ReceiveCallback<T extends Json> = (received: T) => void
 export class Communicator {
   readonly #receivers: Map<string, Array<ReceiveCallback<Json>>> = new Map()
 
+  readonly #senderWindow: Window
+
+  readonly #config: CommunicateConfig
+
   /**
    *
    * @param senderWindow
    * @param config
    */
   constructor(
-    private readonly senderWindow: Window,
-    private readonly config: CommunicateConfig
+    senderWindow: Window,
+    config: CommunicateConfig
   ) {
+    this.#senderWindow = senderWindow
+    this.#config = config
     window.addEventListener('message', this.#onMessage)
 
     if (this.#origin === '*') {
@@ -75,11 +81,11 @@ export class Communicator {
    */
   destroy() {
     window.removeEventListener('message', this.#onMessage)
-    this.config.onDestroy?.apply(this)
+    this.#config.onDestroy?.apply(this)
   }
 
   get #origin(): string {
-    return this.config.origin ?? location.host
+    return this.#config.origin ?? location.host
   }
 
   #onMessage({ data }: MessageEvent): void {
@@ -96,18 +102,18 @@ export class Communicator {
       }
     },
     navigate: ({ value }: NavigateMessage) => {
-      this.config.onNavigate?.apply(this, [value])
+      this.#config.onNavigate?.apply(this, [value])
     },
     href: ({ value }: HrefMessage) => {
-      this.config.onHrefNavigate?.apply(this, [value])
+      this.#config.onHrefNavigate?.apply(this, [value])
     },
     layout: ({ value }: LayoutMetrixMessage) => {
-      this.config.onUpdateLayout?.apply(this, [value])
+      this.#config.onUpdateLayout?.apply(this, [value])
     }
   }
 
   #send(data: Message): void {
-    this.senderWindow.postMessage(data, this.#origin)
+    this.#senderWindow.postMessage(data, this.#origin)
   }
 
 

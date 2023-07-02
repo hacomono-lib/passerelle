@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import type { RouteLocationNormalized } from '#vue-router'
+import type { RouteLocationNormalized } from 'vue-router'
+import { ref } from 'vue'
+import { useIframeBridge } from '../composables/useIframeBridge'
 
 export interface Props {
   /**

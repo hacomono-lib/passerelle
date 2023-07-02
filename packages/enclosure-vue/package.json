@@ -1,5 +1,5 @@
 {
-  "name": "@passerelle/enclosure-core",
+  "name": "@passerelle/enclosure-vue",
   "version": "0.0.1",
   "description": "passerelle enclosure module for vue3",
   "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
@@ -7,7 +7,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:hacomono-lib/passerelle.git",
-    "directory": "packages/enclosure-core"
+    "directory": "packages/enclosure-vue"
   },
   "type": "module",
   "exports": {
@@ -21,7 +21,8 @@
   "module": "./dist/index.mjs",
   "types": "./dist/types.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "prepare": "tsup",
@@ -34,6 +35,12 @@
   "devDependencies": {
     "typescript": "^5.1.6",
     "vitest": "^0.32.2",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2",
     "yarn-run-all": "latest"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
   }
 }

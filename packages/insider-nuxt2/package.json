@@ -1,11 +1,11 @@
 {
-  "name": "@passerelle/insider-nuxt",
+  "name": "@passerelle/insider-nuxt2",
   "version": "0.0.1",
   "description": "passerelle insider module for nuxt2",
   "repository": {
     "type": "git",
     "url": "git@github.com:hacomono-lib/passerelle.git",
-    "directory": "packages/insider-nuxt"
+    "directory": "packages/insider-nuxt2"
   },
   "license": "MIT",
   "type": "module",
@@ -28,9 +28,6 @@
     "test": "run-p test:*",
     "test:spec": "vitest run",
     "test:type": "tsc --noEmit -p tsconfig.json"
-  },
-  "dependencies": {
-    "passerelle/insider-core": "0.0.1"
   },
   "devDependencies": {
     "@types/node": "^18",

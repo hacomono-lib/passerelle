@@ -32,8 +32,7 @@
     "test:type": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0",
-    "passerelle/enclosure-core": "0.0.1"
+    "@nuxt/kit": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^18",

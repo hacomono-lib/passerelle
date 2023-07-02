@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Playground Enclosure</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        overflow-x: auto;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Playground Insider</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>TimeStamp</th>
+          <th>Event</th>
+          <th>Key</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody id="logger">
+      </tbody>
+    </table>
+    <script>
+      window.addEventListener('message', (event) => {
+        document.getElementById('logger').innerHTML += `
+          <tr>
+            <td>${event.timeStamp}</td>
+            <td>${event.data.type}</td>
+            <td>${event.data.type === 'data' ? event.data.key : ''}</td>
+            <td>${JSON.stringify(event.data.value)}</td>
+          </tr>
+        `
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "@passerelle-test/playground-insider",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+github.com:hacomono/passerelle.git",
+    "directory": "packages/playground-enclosure"
+  },
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "serve": "http-server -p 8081 -c-1 ./static"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

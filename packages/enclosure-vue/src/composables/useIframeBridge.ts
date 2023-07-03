@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 import { createHooks } from 'hookable'
-import type { RouteLocationNormalized } from '#vue-router'
+import type { RouteLocationNormalized } from 'vue-router'
 
 type MaybeRef<T> = Ref<T> | T
 

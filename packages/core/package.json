@@ -21,9 +21,11 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
+    "src",
     "dist"
   ],
   "scripts": {
+    "prepare": "tsup",
     "dev": "tsup --watch --clean",
     "build": "tsup",
     "test": "yarn run -p test:*",

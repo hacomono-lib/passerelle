@@ -2,37 +2,41 @@
 <html>
   <head>
     <title>Playground Enclosure</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        overflow-x: auto;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-      }
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th, td {
-        border: 1px solid #ccc;
-        padding: 0.5rem;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="./assets/base.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/layout.css" />
   </head>
   <body>
-    <h1>Playground Insider</h1>
+    <header>
+      <img
+        alt="html5 logo"
+        class="logo"
+        src="./assets/logo.svg"
+        width="125"
+        height="125" />
+      <div class="wrapper">
+        <h1>@test/playground-insider</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/works">Works</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </header>
     <table>
       <thead>
         <tr>
-          <th>TimeStamp</th>
+          <th>Time</th>
           <th>Event</th>
           <th>Key</th>
           <th>Value</th>
         </tr>
       </thead>
-      <tbody id="logger">
-      </tbody>
+      <tbody id="logger"></tbody>
     </table>
     <script>
       window.addEventListener('message', (event) => {

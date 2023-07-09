@@ -42,6 +42,14 @@
     {
       "path": "../packages/insider-nuxt2",
       "name": "@passerelle/insider-nuxt2"
+    },
+    {
+      "path": "../tests/playground-enclosure",
+      "name": "@test/playground-enclosure"
+    },
+    {
+      "path": "../tests/playground-insider",
+      "name": "@test/playground-insider"
     }
   ],
   "settings": {

@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import type { RouteLocationNormalized } from 'vue-router'
 import { ref } from 'vue'
+import type { ChildToParent, ParentToChild } from './types'
 import { useIframeBridge } from '../composables/useIframeBridge'
+
 
 export interface Props {
   /**
@@ -14,13 +15,13 @@ export interface Props {
    * この関数は、 親の URL が変更される時にコールされる.
    * @returns iframe 内の URL のパス (host を含まない)
    */
-  toChildPath: (parentLocation: RouteLocationNormalized) => string
+  toChildPath: ParentToChild
 
   /**
    *
    * @param childUrl
    */
-  toParentPath: (childUrl: URL) => string
+  toParentPath: ChildToParent
 }
 
 const props = defineProps<Props>()
@@ -42,7 +43,7 @@ useIframeBridge(frame, {
   </keep-alive>
 </template>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .bridging-iframe {
   width: 100%;
   height: 100%;

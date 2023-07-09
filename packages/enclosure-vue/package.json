@@ -15,6 +15,9 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
+    },
+    "./src": {
+      "import": "./src/index.ts"
     }
   },
   "main": "./dist/index.cjs",
@@ -34,6 +37,12 @@
     "test": "run-p test:*",
     "test:spec": "vitest",
     "test:type": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+  },
+  "dependencies": {
+    "@passerelle/core": "0.0.1",
+    "@passerelle/enclosure-core": "0.0.1",
+    "type-assurer": "0.0.1",
+    "hookable": "^5.5.3"
   },
   "devDependencies": {
     "@types/node": "^18.16.17",

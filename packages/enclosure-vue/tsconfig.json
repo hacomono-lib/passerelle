@@ -1,11 +1,13 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+  "extends": ["@vue/tsconfig/tsconfig.dom.json", "../../tsconfig.json"],
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@passerelle/enclosure-vue": ["./src"]
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+    "types": ["./env.d.ts", "vite/client"]
+  }
 }

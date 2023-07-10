@@ -27,8 +27,10 @@ export function createCommunicator(
   const communicator = new Communicator(iframe.contentWindow, {
     ...config,
     onInit() {
-      observer.observe(iframe)
-      window.addEventListener('resize', onLayoutChanged)
+      iframe.addEventListener('load', () => {
+        observer.observe(iframe)
+        window.addEventListener('resize', onLayoutChanged)
+      })
       config.onInit?.call(this)
     },
     onDestroy() {

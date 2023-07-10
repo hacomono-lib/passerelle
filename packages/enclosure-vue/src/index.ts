@@ -11,7 +11,7 @@ interface EnclosurePluginOption {
   path: string | string[]
 }
 
-export default function (router: Router): Plugin<EnclosurePluginOption> {
+export function plugin(router: Router): Plugin<EnclosurePluginOption> {
   return {
     install(app, opt) {
       applyMiddleware(router, opt.path)

@@ -36,14 +36,6 @@ useIframeBridge(frame, {
 <template>
   <iframe
     ref="frame"
-    class="bridging-iframe"
+    style="width: 100%; height: 100%; border: none;"
     :src="initialSrc" />
 </template>
-
-<style lang="css" scoped>
-.bridging-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-</style>

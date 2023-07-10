@@ -18,7 +18,7 @@ function createObserver(callback: (l: RouteLocationNormalized) => void): Interna
   const observed = (location: RouteLocationNormalized) => {
     const { fullPath } = location
     if (oldPath !== fullPath) {
-      console.debug(loggerKey, `observer (parent) : observed "${oldPath}" -> "${location.fullPath}"`)
+      console.debug(loggerKey, loggerFeatureKey, `observed "${oldPath}" -> "${location.fullPath}"`)
       callback(location)
       oldPath = fullPath
     }

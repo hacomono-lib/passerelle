@@ -22,9 +22,6 @@
     "dist"
   ],
   "scripts": {
-    "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "test": "run-p test:*",
     "test:spec": "vitest run",
     "test:type": "tsc --noEmit -p tsconfig.json"

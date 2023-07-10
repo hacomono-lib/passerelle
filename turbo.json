@@ -12,10 +12,6 @@
       "cache": false,
       "dependsOn": ["^build"]
     },
-    "test-ci": {
-      "cache": false,
-      "dependsOn": ["^build"]
-    },
     "typecheck": {
       "cache": false,
       "dependsOn": ["^build"]
@@ -23,27 +19,15 @@
     "build": {
       "cache": true,
       "dependsOn": ["^build"],
-      "inputs": [
-        "src/**",
-        "package.json",
-        "tsup.config.*",
-        "tsconfig.*"
-      ],
+      "inputs": ["src/**", "package.json", "tsup.config.*", "tsconfig.*"],
       "outputs": ["dist/**"]
     },
     "clean": {
       "cache": false
     },
-    "build-storybook": {
-      "cache": true,
-      "outputs": ["storybook-static/**"],
-      "inputs": [
-        "src/**",
-        ".storybook/**",
-        "!.storybook/test-runner.js",
-        "package.json"
-      ],
-      "dependsOn": ["@hacomono/cobaco-icon-components-vue#build"]
+    "preview": {
+      "cache": false,
+      "persistent": true
     }
   }
 }

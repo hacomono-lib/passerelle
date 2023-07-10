@@ -29,11 +29,7 @@
   ],
   "scripts": {
     "prepare": "tsup",
-    "dev": "tsup --watch --clean",
-    "build": "vite",
-    "preview": "run-p preview:*",
-    "preview:enclosure": "vite ./playground --open",
-    "preview:insider": "cd ../../tests/playground-insider && yarn serve",
+    "preview": "vite ./playground --open",
     "test": "run-p test:*",
     "test:spec": "vitest",
     "test:type": "vue-tsc --noEmit -p tsconfig.app.json --composite false"

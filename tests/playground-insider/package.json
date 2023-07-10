@@ -9,7 +9,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "serve": "http-server -p 8081 -c-1 ./static"
+    "preview": "http-server -p 8081 -c-1 ./static"
   },
   "devDependencies": {
     "http-server": "^14.1.1"

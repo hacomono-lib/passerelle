@@ -1,22 +1,24 @@
-import { loggerKey } from '@passerelle/core'
+import { loggerKey, type Communicator } from '@passerelle/core'
 import type { RouteLocationNormalized } from 'vue-router'
 
 import type { InternalObserver, IframeBridgeOption } from '../types'
 import { hook } from '../hooker'
-import type { UseCommunicator } from './communicator'
 
-export function createHashObserver(communicator: UseCommunicator, opt: IframeBridgeOption): InternalObserver {
+const loggerFeatureKey = 'observer (parent) :'
+
+export function createHashObserver(
+  communicator: Communicator,
+  opt: IframeBridgeOption
+): InternalObserver {
   return createObserver((l) => syncHashParentToChild(l, communicator, opt))
 }
 
-function createObserver(
-  callback: (l: RouteLocationNormalized) => void
-): InternalObserver {
+function createObserver(callback: (l: RouteLocationNormalized) => void): InternalObserver {
   let oldPath = ''
   const observed = (location: RouteLocationNormalized) => {
     const { fullPath } = location
     if (oldPath !== fullPath) {
-      console.debug(loggerKey, `Observer (parent) : observe ${oldPath} -> ${location.fullPath}`)
+      console.debug(loggerKey, `observer (parent) : observed "${oldPath}" -> "${location.fullPath}"`)
       callback(location)
       oldPath = fullPath
     }
@@ -24,11 +26,11 @@ function createObserver(
 
   return {
     observe() {
-      console.debug(loggerKey, 'Observer (parent) : observe start')
+      console.debug(loggerKey, loggerFeatureKey, 'observe start')
       hook.hook('parentLocationChange', observed)
     },
     disconnect() {
-      console.debug(loggerKey, 'Observer (parent) : disconnect')
+      console.debug(loggerKey, loggerFeatureKey, 'disconnect')
       hook.removeHook('parentLocationChange', observed)
     }
   }
@@ -36,16 +38,22 @@ function createObserver(
 
 function syncHashParentToChild(
   location: RouteLocationNormalized,
-  communicator: UseCommunicator,
+  communicator: Communicator,
   opt: IframeBridgeOption
 ) {
   const path = opt.toChildPath(location)
-  if (path) {
-    // iframe.contentWindow.history.replaceState({}, '', path)
-    console.debug(loggerKey, `Sync: parent -> child ${path}`)
-    communicator.navigate({
-      path
-    })
-  }
-}
 
+  if (!path) {
+    console.warn(
+      loggerKey,
+      loggerFeatureKey,
+      `sync: parent -> child: path is not found. (inputs: ${path})`
+    )
+    return
+  }
+
+  console.debug(loggerKey, loggerFeatureKey, `sync: parent -> child (path: ${path})`)
+  communicator.navigate({
+    path
+  })
+}

@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import {
-  type ParentToChild,
-  type ChildToParent
-} from '../../../src/components/types'
-
-const parentToChild: ParentToChild = (location) => {
-  return location.hash
-}
-
-const childToParent: ChildToParent = (url) => {
-  return '/hoge'
-}
-</script>
-
 <template>
-  <BridgeFrame
-    initial-src="http://localhost:8081/"
-    :parent-to-child="parentToChild"
-    :child-to-parent="childToParent" />
+  empty
 </template>

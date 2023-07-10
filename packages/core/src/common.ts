@@ -6,4 +6,4 @@ export type JsonPrimitive = string | number | boolean | null;
 
 export type Json = JsonPrimitive | JsonObject | JsonArray;
 
-export const loggerKey = '[PASSERELLE]'
+export const loggerKey = '[passerelle]'

@@ -9,6 +9,6 @@ import plugin from '@passerelle/enclosure-vue'
 const app = createApp(App)
 
 app.use(router)
-app.use(plugin(router), { path: '/' })
+app.use(plugin(router), { path: '/bridge' })
 
 app.mount('#app')

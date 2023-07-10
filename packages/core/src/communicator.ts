@@ -1,29 +1,42 @@
 import { loggerKey, type Json } from './common'
-import { isMessage, type NavigateMessageValue, type HrefMessageValue, type MessageKey, type Message, type SendDataMessage, type NavigateMessage, type HrefMessage, type LayoutMetrix, type LayoutMetrixMessage } from './message'
+import {
+  isMessage,
+  type NavigateMessageValue,
+  type HrefMessageValue,
+  type MessageKey,
+  type Message,
+  type SendDataMessage,
+  type NavigateMessage,
+  type HrefMessage,
+  type LayoutMetrix,
+  type LayoutMetrixMessage
+} from './message'
+
+const loggerFeatureKey = 'core :'
+
 /**
  * Communicate config
  */
 export interface CommunicateConfig {
-
   /**
    * Origin to send messages to
    * @default {string} same origin
    */
-  origin?: string,
+  origin?: string
 
   /**
    *
    * @param value
    * @returns
    */
-  onNavigate?(this: Communicator, value: NavigateMessageValue): void,
+  onNavigate?(this: Communicator, value: NavigateMessageValue): void
 
   /**
    *
    * @param value
    * @returns
    */
-  onHrefNavigate?(this: Communicator, value: HrefMessageValue): void,
+  onHrefNavigate?(this: Communicator, value: HrefMessageValue): void
 
   /**
    *
@@ -46,6 +59,28 @@ export interface CommunicateConfig {
 
 type ReceiveCallback<T extends Json> = (received: T) => void
 
+function validateConfig({ origin = location.host }: CommunicateConfig) {
+  if (origin === '*') {
+    console.warn(
+      loggerKey,
+      loggerFeatureKey,
+      'You are using "*" as origin, this is not recommended for security reasons'
+    )
+  }
+
+  if (isLocalhost(origin)) {
+    console.warn(
+      loggerKey,
+      loggerFeatureKey,
+      `You are using an IP address or localhost as origin (${origin}), origin is set to "*"`
+    )
+  }
+}
+
+function isLocalhost(origin: string): boolean {
+  return origin.startsWith('localhost:') || /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(origin)
+}
+
 /**
  *
  */
@@ -61,17 +96,13 @@ export class Communicator {
    * @param senderWindow
    * @param config
    */
-  constructor(
-    senderWindow: Window,
-    config: CommunicateConfig
-  ) {
+  constructor(senderWindow: Window, config: CommunicateConfig) {
     this.#senderWindow = senderWindow
     this.#config = config
-    window.addEventListener('message', this.#onMessage)
+    validateConfig(config)
 
-    if (this.#origin === '*') {
-      console.warn(loggerKey, 'You are using "*" as origin, this is not recommended for security reasons')
-    }
+    console.debug(loggerKey, loggerFeatureKey, 'init', config)
+    window.addEventListener('message', this.#received)
 
     config.onInit?.apply(this)
   }
@@ -80,16 +111,24 @@ export class Communicator {
    *
    */
   destroy() {
-    window.removeEventListener('message', this.#onMessage)
+    console.debug(loggerKey, loggerFeatureKey, 'destroy')
+    window.removeEventListener('message', this.#received)
     this.#config.onDestroy?.apply(this)
   }
 
   get #origin(): string {
-    return this.#config.origin ?? location.host
+    const host = this.#config.origin ?? location.host
+
+    if (isLocalhost(host)) {
+      return '*'
+    }
+
+    return host
   }
 
-  #onMessage({ data }: MessageEvent): void {
+  #received({ data }: MessageEvent): void {
     if (isMessage(data)) {
+      console.debug(loggerKey, loggerFeatureKey, `received [${data.type}]`, data)
       this.#receivedMap[data.type](data as any)
     }
   }
@@ -98,7 +137,7 @@ export class Communicator {
     data: ({ key, value }: SendDataMessage<Json>) => {
       if (this.#receivers.has(key as string)) {
         const receivers = this.#receivers.get(key as string) as Array<ReceiveCallback<Json>>
-        receivers.forEach(receiver => receiver(value))
+        receivers.forEach((receiver) => receiver(value))
       }
     },
     navigate: ({ value }: NavigateMessage) => {
@@ -113,9 +152,9 @@ export class Communicator {
   }
 
   #send(data: Message): void {
+    console.debug(loggerKey, loggerFeatureKey, 'send', data)
     this.#senderWindow.postMessage(data, this.#origin)
   }
-
 
   /**
    *
@@ -177,10 +216,10 @@ export class Communicator {
    * @param callback
    */
   addReceiver<T extends Json>(key: MessageKey<T>, callback: ReceiveCallback<T>): void {
-    this.#receivers.set(key as string, [
-      ...this.#receivers.get(key as string) ?? [],
-      callback
-    ] as Array<ReceiveCallback<Json>>)
+    this.#receivers.set(
+      key as string,
+      [...(this.#receivers.get(key as string) ?? []), callback] as Array<ReceiveCallback<Json>>
+    )
   }
 
   /**
@@ -190,6 +229,9 @@ export class Communicator {
    */
   removeReceiver<T extends Json>(key: MessageKey<T>, callback: (received: T) => void): void {
     const receivers = this.#receivers.get(key as string) as Array<ReceiveCallback<Json>>
-    this.#receivers.set(key as string, receivers.filter((c) => c !== callback))
+    this.#receivers.set(
+      key as string,
+      receivers.filter((c) => c !== callback)
+    )
   }
 }

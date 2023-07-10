@@ -1,7 +1,6 @@
 
 import { createCommunicator, type UseCommunicator } from './internals/communicator'
 import { createHashObserver } from './internals/hashObserver'
-// import { createIframeInternalObserver } from './internals/childObserver'
 import type { IframeRef, IframeBridgeOption, InternalObserver } from './types'
 
 /**
@@ -12,17 +11,14 @@ import type { IframeRef, IframeBridgeOption, InternalObserver } from './types'
  */
 export function useIframeBridge(iframeRef: IframeRef, opt: IframeBridgeOption): UseCommunicator {
   let parentObserver: InternalObserver
-  // const childObserver = createIframeInternalObserver(iframeRef, opt)
 
   const communicator = createCommunicator(iframeRef, {
     onInit() {
       parentObserver = createHashObserver(communicator, opt)
       parentObserver.observe()
-      // childObserver.observe()
     },
     onDestroy() {
       parentObserver.disconnect()
-      // childObserver.disconnect()
     }
   })
 

@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import type { ChildToParent, ParentToChild } from './types'
 import { useIframeBridge } from '../composables/useIframeBridge'
 
-
 export interface Props {
   /**
    *
@@ -35,12 +34,10 @@ useIframeBridge(frame, {
 </script>
 
 <template>
-  <keep-alive>
-    <iframe
-      ref="frame"
-      class="bridging-iframe"
-      :src="initialSrc" />
-  </keep-alive>
+  <iframe
+    ref="frame"
+    class="bridging-iframe"
+    :src="initialSrc" />
 </template>
 
 <style lang="css" scoped>

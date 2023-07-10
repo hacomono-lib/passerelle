@@ -9,7 +9,6 @@ function createMiddleware(path: string | string[]): NavigationGuardWithThis<unde
   return function(to, from, next) {
     if (isSamePathTransition(to, from) && isTargetPath(to, path)) {
       updateURL(to)
-      return false
     }
 
     return next()
@@ -21,7 +20,7 @@ function isSamePathTransition(to: RouteLocationNormalized, from: RouteLocationNo
 }
 
 function isTargetPath(to: RouteLocationNormalized, path: string | string[]): boolean {
-  return (typeof path === 'string' ? [path] : path).includes(to.path)
+  return (typeof path === 'string' ? [path] : path).some((p) => to.path.startsWith(p))
 }
 
 function updateURL(to: RouteLocationNormalized): void {

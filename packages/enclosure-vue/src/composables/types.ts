@@ -5,11 +5,6 @@ type MaybeRef<T> = Ref<T> | T
 
 export type IframeRef = MaybeRef<HTMLIFrameElement | null | undefined>
 
-export interface InternalObserver {
-  observe(): void
-  disconnect(): void
-}
-
 export interface IframeBridgeOption {
   /**
    * iframe 内側の URL を動的に生成します.

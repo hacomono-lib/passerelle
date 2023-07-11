@@ -1,7 +1,9 @@
-
+import { loggerKey, type Communicator } from '@passerelle/core'
 import { createCommunicator, type UseCommunicator } from './internals/communicator'
-import { createHashObserver } from './internals/hashObserver'
-import type { IframeRef, IframeBridgeOption, InternalObserver } from './types'
+import { onBeforeRouteUpdate, type RouteLocationNormalized } from 'vue-router'
+import type { IframeRef, IframeBridgeOption } from './types'
+
+const loggerFeatureKey = 'observer (parent) :'
 
 /**
  * 引数に iframe タグを設定することで、以下の機能を提供する
@@ -10,17 +12,41 @@ import type { IframeRef, IframeBridgeOption, InternalObserver } from './types'
  * @param iframeRef
  */
 export function useIframeBridge(iframeRef: IframeRef, opt: IframeBridgeOption): UseCommunicator {
-  let parentObserver: InternalObserver
+  const communicator = createCommunicator(iframeRef, { })
 
-  const communicator = createCommunicator(iframeRef, {
-    onInit() {
-      parentObserver = createHashObserver(communicator, opt)
-      parentObserver.observe()
-    },
-    onDestroy() {
-      parentObserver.disconnect()
+  onBeforeRouteUpdate((to, from, next) => {
+    if (isSamePathTransition(to, from)) {
+      syncHashParentToChild(to, communicator, opt)
     }
+    return next()
   })
 
   return communicator
+}
+
+
+function isSamePathTransition(to: RouteLocationNormalized, from: RouteLocationNormalized): boolean {
+  return to.name === from.name && to.path !== from.path
+}
+
+function syncHashParentToChild(
+  location: RouteLocationNormalized,
+  communicator: Communicator,
+  opt: IframeBridgeOption
+) {
+  const path = opt.toChildPath(location)
+
+  if (!path) {
+    console.warn(
+      loggerKey,
+      loggerFeatureKey,
+      `sync: parent -> child: path is not found. (inputs: ${path})`
+    )
+    return
+  }
+
+  console.debug(loggerKey, loggerFeatureKey, `sync: parent -> child (path: ${path})`)
+  communicator.navigate({
+    path
+  })
 }

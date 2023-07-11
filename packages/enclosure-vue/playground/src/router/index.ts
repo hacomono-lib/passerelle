@@ -13,7 +13,7 @@ const router = createRouter({
     {
       path: '/bridge/:pathMatch(.*)*',
       name: 'bridge',
-      component: BridgeView,
+      component: BridgeView
     }
   ]
 })

@@ -1,21 +1,11 @@
 import type { Plugin } from 'vue'
-import type { Router } from 'vue-router'
 
-import { applyMiddleware } from './middlewares/iframeSync'
 import BridgeFrame from './components/BridgeFrame.vue'
-import { useIframeBridge } from './composables/useIframeBridge'
 
-export { BridgeFrame, useIframeBridge }
+export { BridgeFrame }
 
-interface EnclosurePluginOption {
-  path: string | string[]
-}
-
-export function plugin(router: Router): Plugin<EnclosurePluginOption> {
-  return {
-    install(app, opt) {
-      applyMiddleware(router, opt.path)
-      app.component('BridgeFrame', BridgeFrame)
-    }
-  } satisfies Plugin<EnclosurePluginOption>
-}
+export const enclosure = {
+  install(app) {
+    app.component('BridgeFrame', BridgeFrame)
+  }
+} satisfies Plugin

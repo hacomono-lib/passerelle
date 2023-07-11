@@ -9,7 +9,7 @@ export default defineConfig({
   treeshake: true,
   sourcemap: true,
   clean: true,
-  minifyIdentifiers: true,
+  minifyIdentifiers: false,
   minifySyntax: true,
   minifyWhitespace: false
 })

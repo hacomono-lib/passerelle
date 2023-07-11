@@ -19,7 +19,7 @@
     "build": {
       "cache": true,
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "package.json", "tsup.config.*", "tsconfig.*"],
+      "inputs": ["src/**", "package.json", "tsup.config.*", "vite.config.*", "tsconfig.*"],
       "outputs": ["dist/**"]
     },
     "clean": {

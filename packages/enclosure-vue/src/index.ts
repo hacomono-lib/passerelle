@@ -1,5 +1,4 @@
 import type { Plugin } from 'vue'
-
 import BridgeFrame from './components/BridgeFrame.vue'
 
 export { BridgeFrame }

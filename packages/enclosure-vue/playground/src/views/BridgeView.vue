@@ -1,15 +1,24 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router';
 import {
   type ParentToChild,
   type ChildToParent
 } from '../../../src/components/types'
 
-const parentToChild: ParentToChild = (location) => {
-  const [,matchedPath] = /^\/bridge(\/.*?)$/.exec(location.path) || []
+const route = useRoute()
+
+const defaultPath = `http://localhost:5174${extractChildPath(route.path)}`
+
+function extractChildPath(path: string): string {
+  const [,matchedPath] = /^\/bridge(\/.*?)$/.exec(path) || []
   if (!matchedPath) {
-    throw new Error('invalid path')
+    throw new Error(`invalid path: ${path}`)
   }
   return matchedPath
+}
+
+const parentToChild: ParentToChild = (location) => {
+  return extractChildPath(location.path)
 }
 
 const childToParent: ChildToParent = (url) => {
@@ -19,7 +28,7 @@ const childToParent: ChildToParent = (url) => {
 
 <template>
   <BridgeFrame
-    initial-src="http://localhost:8081/"
+    :initial-src="defaultPath"
     :to-child-path="parentToChild"
     :to-parent-path="childToParent" />
 </template>

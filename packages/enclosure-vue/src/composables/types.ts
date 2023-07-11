@@ -1,11 +1,12 @@
 import type { Ref } from 'vue'
 import type { RouteLocationNormalized } from 'vue-router'
+import type { CommunicateConfig } from '@passerelle/core'
 
 type MaybeRef<T> = Ref<T> | T
 
 export type IframeRef = MaybeRef<HTMLIFrameElement | null | undefined>
 
-export interface IframeBridgeOption {
+export interface IframeBridgeOption extends CommunicateConfig {
   /**
    * iframe 内側の URL を動的に生成します.
    * メソッド内で `useRoute` や `window` へ参照し、現在の URL を元に生成することを想定しています.
@@ -18,10 +19,5 @@ export interface IframeBridgeOption {
    * @return 親側の path
    */
   toParentPath: (childURL: URL) => string
-
-  /**
-   *
-   */
-  baseURL?: string
 }
 

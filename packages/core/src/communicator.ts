@@ -91,6 +91,7 @@ export class Communicator {
 
   readonly #config: CommunicateConfig
 
+  readonly #onMessage = this.#received.bind(this)
   /**
    *
    * @param senderWindow
@@ -102,7 +103,7 @@ export class Communicator {
     validateConfig(config)
 
     console.debug(loggerKey, loggerFeatureKey, 'init', config)
-    window.addEventListener('message', this.#received)
+    window.addEventListener('message', this.#onMessage)
 
     config.onInit?.apply(this)
   }
@@ -112,7 +113,7 @@ export class Communicator {
    */
   destroy() {
     console.debug(loggerKey, loggerFeatureKey, 'destroy')
-    window.removeEventListener('message', this.#received)
+    window.removeEventListener('message', this.#onMessage)
     this.#config.onDestroy?.apply(this)
   }
 

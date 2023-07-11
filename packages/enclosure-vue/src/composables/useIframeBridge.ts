@@ -3,8 +3,6 @@ import { createCommunicator, type UseCommunicator } from './internals/communicat
 import { onBeforeRouteUpdate, type RouteLocationNormalized } from 'vue-router'
 import type { IframeRef, IframeBridgeOption } from './types'
 
-const loggerFeatureKey = 'observer (parent) :'
-
 /**
  * 引数に iframe タグを設定することで、以下の機能を提供する
  * - iframe の src を書き換えてしまうと、ページがリロードされてしまうため、 src を書き換えずにページを遷移する
@@ -34,18 +32,19 @@ function syncHashParentToChild(
   communicator: Communicator,
   opt: IframeBridgeOption
 ) {
+  const loggerFeatureKey = 'observer (parent) : sync parent -> child :'
   const path = opt.toChildPath(location)
 
   if (!path) {
     console.warn(
       loggerKey,
       loggerFeatureKey,
-      `sync: parent -> child: path is not found. (inputs: ${path})`
+      `path is not found. (inputs: ${path})`
     )
     return
   }
 
-  console.debug(loggerKey, loggerFeatureKey, `sync: parent -> child (path: ${path})`)
+  console.debug(loggerKey, loggerFeatureKey, `(path: ${path})`)
   communicator.navigate({
     path
   })

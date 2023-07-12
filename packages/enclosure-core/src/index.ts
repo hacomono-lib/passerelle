@@ -19,7 +19,7 @@ export {
 
 export function createCommunicator(
   iframe: HTMLIFrameElement,
-  config: CommunicateConfig
+  config?: CommunicateConfig
 ): Communicator {
   assertNotNil(iframe.contentWindow, 'iframe.contentWindow is null')
 
@@ -39,18 +39,18 @@ export function createCommunicator(
   const observer = new ResizeObserver(onLayoutChanged)
 
   const communicator = new Communicator(iframe.contentWindow, {
-    ...config,
+    ...(config ?? {}),
     onInit() {
       iframe.addEventListener('load', () => {
         observer.observe(iframe)
         window.addEventListener('resize', onLayoutChanged)
       })
-      config.onInit?.call(this)
+      config?.onInit?.call(this)
     },
     onDestroy() {
       observer.unobserve(iframe)
       window.removeEventListener('resize', onLayoutChanged)
-      config.onDestroy?.call(this)
+      config?.onDestroy?.call(this)
     }
   })
 

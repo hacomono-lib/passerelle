@@ -39,7 +39,7 @@ export interface NavigateMessageValue {
   /**
    * Optional params to be passed to the path
    */
-  params?: Record<string, string | number>
+  params?: Record<string, string | string[]>
 }
 
 /**

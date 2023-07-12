@@ -1,13 +1,6 @@
 <script setup lang="ts">
-import { useCommunicator } from '@passerelle/insider-vue'
 import { ref } from 'vue'
 
-interface Log {
-  time: string
-  event: string
-  key?: string
-  value: object
-}
 
 const logs = ref<Log[]>([])
 

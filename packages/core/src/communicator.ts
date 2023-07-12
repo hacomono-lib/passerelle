@@ -97,7 +97,7 @@ export class Communicator {
    * @param senderWindow
    * @param config
    */
-  constructor(senderWindow: Window, config: CommunicateConfig) {
+  constructor(senderWindow: Window, config: CommunicateConfig = {}) {
     this.#senderWindow = senderWindow
     this.#config = config
     validateConfig(config)

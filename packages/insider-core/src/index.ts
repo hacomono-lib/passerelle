@@ -19,7 +19,7 @@ export {
   type MessageKey
 }
 
-export function createCommunicator(config: CommunicateConfig): Communicator {
+export function createCommunicator(config?: CommunicateConfig): Communicator {
   assertNotNil(parent)
   return new Communicator(parent, config)
 }

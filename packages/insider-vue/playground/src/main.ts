@@ -9,6 +9,7 @@ import { insider } from '@passerelle/insider-vue'
 const app = createApp(App)
 
 app.use(router)
-app.use(insider(router))
+app.use(insider, { router })
+
 
 app.mount('#app')

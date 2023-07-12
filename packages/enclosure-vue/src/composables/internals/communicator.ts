@@ -6,7 +6,7 @@ import { ensureNotNil } from 'type-assurer'
 
 export type UseCommunicator = Omit<Communicator, 'destroy' | 'navigate'>
 
-export function createCommunicator(iframeRef: IframeRef, config: CommunicateConfig): Communicator {
+export function createCommunicator(iframeRef: IframeRef, config?: CommunicateConfig): Communicator {
   let communicator: Communicator | null = null
 
   onMounted(() => {

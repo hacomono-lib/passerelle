@@ -7,6 +7,10 @@ import type { Communicator, NavigateMessage } from '@passerelle/core'
 import type { LayoutMetrix } from '@passerelle/core'
 import type { HrefMessage } from '@passerelle/core'
 
+import { onBeforeHrefNavigate, onBeforeNavigate, onUpdateLayout } from './composables/events'
+
+export { onBeforeHrefNavigate, onBeforeNavigate, onUpdateLayout }
+
 export interface InsiderVueConfig {
   router: Router
 

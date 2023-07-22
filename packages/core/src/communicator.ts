@@ -1,4 +1,6 @@
-import { loggerKey, type Json } from './common'
+import { loggerKey } from '@passerelle/lib'
+
+import { type Json } from './common'
 import {
   isMessage,
   type NavigateMessageValue,
@@ -9,7 +11,8 @@ import {
   type NavigateMessage,
   type HrefMessage,
   type LayoutMetrix,
-  type LayoutMetrixMessage
+  type LayoutMetrixMessage,
+  Acknowledge
 } from './message'
 
 const loggerFeatureKey = 'core :'
@@ -23,6 +26,26 @@ export interface CommunicateConfig {
    * @default {string} same origin
    */
   origin?: string
+
+  /**
+   * A Unique key to be set to ensure that the communication partners across ths iframe are in common context.
+   * if not set, context identity is not ensured (ackStrict must be false).
+   * @default {undefined}
+   */
+  key?: string
+
+  /**
+   * Timeout for the acknowledge message
+   * @default {number} 1000
+   */
+  ackTimeout?: number
+
+  /**
+   * If set to true, enclosure and insider must have the same key.
+   * If set to false, allow unset key.
+   * @default {boolean} true
+   */
+  ackStrict?: boolean
 
   /**
    *
@@ -57,6 +80,11 @@ export interface CommunicateConfig {
   onDestroy?(this: Communicator): void
 }
 
+const defaultConfig = {
+  ackTimeout: 1000,
+  ackStrict: true
+} as const satisfies CommunicateConfig
+
 type ReceiveCallback<T extends Json> = (received: T) => void
 
 function validateConfig({ origin = location.host }: CommunicateConfig) {
@@ -89,9 +117,16 @@ export class Communicator {
 
   readonly #senderWindow: Window
 
-  readonly #config: CommunicateConfig
+  readonly #config: CommunicateConfig & typeof defaultConfig
 
   readonly #onMessage = this.#received.bind(this)
+
+  #ackSuccessful: boolean = false
+
+  #ackResolver: (value: boolean) => void = () => {}
+
+  #lastLayout: LayoutMetrix | undefined
+
   /**
    *
    * @param senderWindow
@@ -99,7 +134,10 @@ export class Communicator {
    */
   constructor(senderWindow: Window, config: CommunicateConfig = {}) {
     this.#senderWindow = senderWindow
-    this.#config = config
+    this.#config = {
+      ...defaultConfig,
+      ...config
+    } as typeof defaultConfig
     validateConfig(config)
 
     console.debug(loggerKey, loggerFeatureKey, 'init', config)
@@ -117,6 +155,20 @@ export class Communicator {
     this.#config.onDestroy?.apply(this)
   }
 
+  /**
+   *
+   */
+  get ackSuccessful(): boolean {
+    return this.#ackSuccessful
+  }
+
+  get lastLayout(): LayoutMetrix | undefined {
+    return this.#lastLayout
+  }
+
+  /**
+   *
+   */
   get #origin(): string {
     const host = this.#config.origin ?? location.host
 
@@ -127,13 +179,20 @@ export class Communicator {
     return host
   }
 
+  /**
+   *
+   * @param param0
+   */
   #received({ data }: MessageEvent): void {
-    if (isMessage(data)) {
+    if (isMessage(data) && this.#isAllowedMessage(data)) {
       console.debug(loggerKey, loggerFeatureKey, `received [${data.type}]`, data)
       this.#receivedMap[data.type](data as any)
     }
   }
 
+  /**
+   *
+   */
   #receivedMap = {
     data: ({ key, value }: SendDataMessage<Json>) => {
       if (this.#receivers.has(key as string)) {
@@ -148,11 +207,55 @@ export class Communicator {
       this.#config.onHrefNavigate?.apply(this, [value])
     },
     layout: ({ value }: LayoutMetrixMessage) => {
+      this.#lastLayout = value
       this.#config.onUpdateLayout?.apply(this, [value])
+    },
+    ack: ({ key, comm }: Acknowledge) => {
+      this.#ackSuccessful = this.#checkAckKey(key)
+
+      if (comm === 'send' && this.#ackSuccessful) {
+        this.#send({
+          type: 'ack',
+          key: this.#config.key,
+          comm: 'receive'
+        })
+        return
+      }
+
+      if (comm === 'receive') {
+        this.#ackResolver(this.#ackSuccessful)
+        return
+      }
     }
   }
 
+  /**
+   *
+   * @param receivedKey
+   */
+  #checkAckKey(receivedKey: string | undefined): boolean {
+    if (this.#config.ackStrict && !receivedKey) {
+      return true
+    }
+
+    return this.#config.key === receivedKey
+  }
+
+  /**
+   *
+   * @param message
+   */
+  #isAllowedMessage(message: Message): boolean {
+    return message.type === 'ack' || this.ackSuccessful
+  }
+
+  /**
+   *
+   * @param data
+   */
   #send(data: Message): void {
+    if (!this.#isAllowedMessage(data)) return
+
     console.debug(loggerKey, loggerFeatureKey, 'send', data)
     this.#senderWindow.postMessage(data, this.#origin)
   }
@@ -234,5 +337,26 @@ export class Communicator {
       key as string,
       receivers.filter((c) => c !== callback)
     )
+  }
+
+
+  /**
+   *
+   */
+  async acknowledge(): Promise<boolean> {
+    const promise = new Promise<boolean>((resolve) => {
+      this.#ackResolver = resolve
+      this.#send({ type: 'ack', key: this.#config.key, comm: 'send' })
+    })
+      .catch(() => false)
+      .finally(() => {
+        this.#ackResolver = () => {}
+      })
+
+    setTimeout(() => {
+      this.#ackResolver(false)
+    }, this.#config.ackTimeout)
+
+    return promise
   }
 }

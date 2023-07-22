@@ -1,4 +1,5 @@
-import { loggerKey, type Communicator } from '@passerelle/core'
+import { loggerKey } from '@passerelle/lib'
+import { type Communicator } from '@passerelle/core'
 import { createCommunicator, type UseCommunicator } from './internals/communicator'
 import { onBeforeRouteUpdate, type RouteLocationNormalized } from 'vue-router'
 import type { IframeRef, IframeBridgeOption } from './types'

@@ -11,5 +11,4 @@ const app = createApp(App)
 app.use(router)
 app.use(insider, { router })
 
-
 app.mount('#app')

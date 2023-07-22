@@ -1,6 +1,11 @@
 import type { Json } from './common'
 
-export type Message = SendDataMessage | NavigateMessage | HrefMessage | LayoutMetrixMessage
+export type Message =
+  | SendDataMessage
+  | NavigateMessage
+  | HrefMessage
+  | LayoutMetrixMessage
+  | Acknowledge
 
 export type MessageType = Message['type']
 
@@ -79,18 +84,35 @@ export interface HrefMessage {
   value: HrefMessageValue
 }
 
+export interface Acknowledge {
+  /**
+   * Message Type
+   */
+  type: 'ack'
+
+  /**
+   * Communication direction
+   */
+  comm: 'send' | 'receive'
+
+  /**
+   * Unique key to identify messages to be sent and received
+   */
+  key?: string
+}
+
 export interface LayoutMetrix {
   enclosure: {
     window: {
       width: number
       height: number
     }
-  },
+  }
   insider: {
     window: {
       width: number
       height: number
-    },
+    }
     offset: {
       top: number
       left: number
@@ -109,7 +131,7 @@ export interface LayoutMetrixMessage {
   /**
    * Message Type
    */
-  type: 'layout',
+  type: 'layout'
 
   /**
    * Layout Metrix
@@ -117,13 +139,12 @@ export interface LayoutMetrixMessage {
   value: LayoutMetrix
 }
 
-const messageTypes: MessageType[] = ['data', 'navigate', 'href', 'layout']
+const messageTypes: MessageType[] = ['data', 'navigate', 'href', 'layout', 'ack']
 
 export function isMessage(value: unknown): value is Message {
   return (
     !!value &&
     typeof value === 'object' &&
-    messageTypes.includes((value as Message).type) &&
-    !!(value as Message).value
+    messageTypes.includes((value as Message).type)
   )
 }

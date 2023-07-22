@@ -1,4 +1,3 @@
-export { loggerKey } from './common'
 export type {
   NavigateMessageValue as NavigateMessage,
   HrefMessageValue as HrefMessage,

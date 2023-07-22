@@ -1,9 +1,10 @@
 import type { Plugin, App } from 'vue'
 import type { Router } from 'vue-router'
 
-import { createCommunicator } from '@passerelle/insider-core'
+import { isSSR } from '@passerelle/lib'
+import { createCommunicator, type Communicator, type NavigateMessage } from '@passerelle/insider-core'
+
 import { applyMiddleware } from './middlewares/observeTransition'
-import type { Communicator, NavigateMessage } from '@passerelle/core'
 import type { LayoutMetrix } from '@passerelle/core'
 import type { HrefMessage } from '@passerelle/core'
 
@@ -61,6 +62,8 @@ export interface InsiderVueConfig {
 
 export const insider: Plugin<InsiderVueConfig> = {
   install(app: App, opt: InsiderVueConfig) {
+    if (isSSR()) return
+
     const communicator = createCommunicator({
       origin: opt?.origin,
       onNavigate(value) {

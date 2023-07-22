@@ -1,6 +1,6 @@
+import { loggerKey } from '@passerelle/lib'
 import {
-  loggerKey,
-  Communicator,
+  Communicator as _Communicator,
   type CommunicateConfig,
   type NavigateMessage,
   type HrefMessage,
@@ -9,13 +9,13 @@ import {
 import { assertNotNil } from 'type-assurer'
 
 export {
-  loggerKey,
-  type Communicator,
   type CommunicateConfig,
   type HrefMessage,
   type NavigateMessage,
   type MessageKey
 }
+
+export type Communicator = Omit<_Communicator, 'acknowledge'>
 
 export function createCommunicator(
   iframe: HTMLIFrameElement,
@@ -23,7 +23,7 @@ export function createCommunicator(
 ): Communicator {
   assertNotNil(iframe.contentWindow, 'iframe.contentWindow is null')
 
-  const onLayoutChanged = () => {
+  const sendLayout = () => {
     communicator.sendLayout({
       window: {
         width: iframe.offsetWidth,
@@ -36,20 +36,31 @@ export function createCommunicator(
     })
   }
 
-  const observer = new ResizeObserver(onLayoutChanged)
+  const observer = new ResizeObserver(sendLayout)
 
-  const communicator = new Communicator(iframe.contentWindow, {
+  const communicator = new _Communicator(iframe.contentWindow, {
     ...(config ?? {}),
     onInit() {
-      iframe.addEventListener('load', () => {
+      iframe.addEventListener('load', async () => {
+        if (!await communicator.acknowledge()) {
+          console.warn(loggerKey, 'enclosure-core: acknowledge failed')
+          return
+        }
+
+        // send first layout
+        sendLayout()
+
+        // start observer
         observer.observe(iframe)
-        window.addEventListener('resize', onLayoutChanged)
+        window.addEventListener('resize', sendLayout)
       })
       config?.onInit?.call(this)
     },
     onDestroy() {
+      // stop observer
       observer.unobserve(iframe)
-      window.removeEventListener('resize', onLayoutChanged)
+      window.removeEventListener('resize', sendLayout)
+
       config?.onDestroy?.call(this)
     }
   })

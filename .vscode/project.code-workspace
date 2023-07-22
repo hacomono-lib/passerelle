@@ -8,6 +8,10 @@
       "name": "documentation"
     },
     {
+      "path": "../packages/lib",
+      "name": "@passerelle/lib"
+    },
+    {
       "path": "../packages/core",
       "name": "@passerelle/core"
     },
@@ -68,7 +72,7 @@
       "editor.rulers": [150],
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "typescript.tsdk": "ROOT/node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib"
   },
   "extensions": {
     "recommendations": [

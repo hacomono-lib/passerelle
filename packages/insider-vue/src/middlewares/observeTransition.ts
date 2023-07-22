@@ -1,4 +1,4 @@
-import type { Communicator } from "@passerelle/core";
+import type { Communicator } from "@passerelle/insider-core";
 import type { Router } from "vue-router";
 
 export function applyMiddleware(router: Router, communicator: Communicator) {

@@ -35,6 +35,7 @@
     "test:type": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
+    "@passerelle/lib": "0.0.1",
     "@passerelle/core": "0.0.1",
     "@passerelle/enclosure-core": "0.0.1",
     "type-assurer": "0.0.1"

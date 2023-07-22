@@ -1,6 +1,6 @@
+import { loggerKey } from '@passerelle/lib'
 import {
-  loggerKey,
-  Communicator,
+  Communicator as _Communicator,
   type CommunicateConfig,
   type NavigateMessage,
   type HrefMessage,
@@ -10,8 +10,6 @@ import {
 import { assertNotNil } from 'type-assurer'
 
 export {
-  loggerKey,
-  type Communicator,
   type CommunicateConfig,
   type NavigateMessage,
   type HrefMessage,
@@ -19,7 +17,9 @@ export {
   type MessageKey
 }
 
+export type Communicator = Omit<_Communicator, 'acknowledge'>
+
 export function createCommunicator(config?: CommunicateConfig): Communicator {
   assertNotNil(parent)
-  return new Communicator(parent, config)
+  return new _Communicator(parent, config)
 }

@@ -158,7 +158,7 @@ export class Communicator {
   /**
    *
    */
-  get ackSuccessful(): boolean {
+  get isReady(): boolean {
     return this.#ackSuccessful
   }
 
@@ -246,7 +246,7 @@ export class Communicator {
    * @param message
    */
   #isAllowedMessage(message: Message): boolean {
-    return message.type === 'ack' || this.ackSuccessful
+    return message.type === 'ack' || this.isReady
   }
 
   /**

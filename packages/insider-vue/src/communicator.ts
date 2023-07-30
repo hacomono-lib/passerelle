@@ -60,6 +60,8 @@ export interface InsiderVueConfig {
 
 export const LAYOUT_KEY = Symbol() as InjectionKey<LayoutMetrix>
 
+export const COMMUNICATOR_KEY = Symbol() as InjectionKey<Communicator>
+
 export function initCommunicator(app: App, opt: InsiderVueConfig) {
   const communicator = createCommunicator(app, opt)
   applyMiddleware(opt.router, communicator)
@@ -67,7 +69,7 @@ export function initCommunicator(app: App, opt: InsiderVueConfig) {
 }
 
 function createCommunicator(app: App, opt: InsiderVueConfig): Communicator {
-  return create({
+  const communicator = create({
     origin: opt?.origin,
     key: opt?.key,
     async onNavigate(value) {
@@ -92,6 +94,9 @@ function createCommunicator(app: App, opt: InsiderVueConfig): Communicator {
       opt?.onDestroy?.call(this, app)
     }
   })
+
+  app.provide(COMMUNICATOR_KEY, communicator)
+  return communicator
 }
 
 export function applyMiddleware(router: Router, communicator: Communicator) {

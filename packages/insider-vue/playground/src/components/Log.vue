@@ -1,39 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 
-
-const logs = ref<Log[]>([])
-
-function addLog(log: Omit<Log, 'time'>) {
-  logs.value = [
-    ...logs.value,
-    {
-      time: new Date().toLocaleTimeString(),
-      ...log
-    }
-  ]
+export interface Log {
+  time: string
+  event: string
+  key: string
+  value: any
 }
 
-useCommunicator({
-  onNavigate(value) {
-    addLog({
-      event: 'navigate',
-      value
-    })
-  },
-  onHrefNavigate(value) {
-    addLog({
-      event: 'href',
-      value
-    })
-  },
-  onUpdateLayout(value) {
-    addLog({
-      event: 'layout',
-      value
-    })
-  }
-})
+export interface Props {
+  logs: Log[]
+}
+
+defineProps<Props>()
 </script>
 
 <template>

@@ -6,28 +6,37 @@ import { useIframeBridge } from '../composables/useIframeBridge'
 
 export interface Props {
   /**
-   *
+   * URO to be specified in the iframe's src attribute.
    */
   initialSrc: string
 
   /**
-   * iframe 内の URL を動的に生成する関数を指定する.
-   * この関数は、 親の URL が変更される時にコールされる.
-   * @returns iframe 内の URL のパス (host を含まない)
+   * Function to craete a new path on the insider side based on the transition information of the enclosuere side.
+   * This function is called whenever the URL on the enclosure side changes.
+   * @param location
+   * @returns {string} Path of the URL inside the iframe (excluding host)
    */
   toChildPath: ParentToChild
 
   /**
-   *
+   * Function to create a new path on the enclosure side based on the transition information of the insider side.
+   * This function is called whenever the URL on the insider side changes.
    * @param childUrl
+   * @returns {string} Path of the URL on the enclosure side (excluding host)
    */
   toParentPath: ChildToParent
 
   /**
-   * iframe の postMessage で送信する際の origin を指定する.
-   * この値を指定しない場合、 今のページの origin が使用される.
+   * Specify the origin when sending with iframe's postMessage.
+   * If this value is not specified, the origin of the current page will be used.
+   * @default location.origin
    */
   origin?: string | undefined
+
+  /**
+   * Specify the key when sending with iframe's postMessage.
+   */
+  key?: string | undefined
 }
 
 export interface Emit {
@@ -45,6 +54,7 @@ useIframeBridge(frame, {
   toChildPath: (location) => props.toChildPath(location),
   toParentPath: (url) => props.toParentPath(url),
   origin: props.origin,
+  key: props.key,
   onNavigate(value) {
     emit('navigate', value)
   },

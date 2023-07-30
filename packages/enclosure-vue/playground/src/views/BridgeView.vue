@@ -29,6 +29,7 @@ const childToParent: ChildToParent = (url) => {
 <template>
   <BridgeFrame
     :initial-src="defaultPath"
+    key="passerelle-playground"
     :to-child-path="parentToChild"
     :to-parent-path="childToParent" />
 </template>

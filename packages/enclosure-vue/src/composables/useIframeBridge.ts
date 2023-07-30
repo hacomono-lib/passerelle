@@ -11,7 +11,8 @@ import type { IframeRef, IframeBridgeOption } from './types'
  * @param iframeRef
  */
 export function useIframeBridge(iframeRef: IframeRef, opt: IframeBridgeOption): UseCommunicator {
-  const communicator = createCommunicator(iframeRef, { })
+  const { toChildPath: _toChildPath, toParentPath: _toParentPath, ...config } = opt
+  const communicator = createCommunicator(iframeRef, config)
 
   onBeforeRouteUpdate((to, from, next) => {
     if (isSamePathTransition(to, from)) {
@@ -22,7 +23,6 @@ export function useIframeBridge(iframeRef: IframeRef, opt: IframeBridgeOption): 
 
   return communicator
 }
-
 
 function isSamePathTransition(to: RouteLocationNormalized, from: RouteLocationNormalized): boolean {
   return to.name === from.name && to.path !== from.path
@@ -37,11 +37,7 @@ function syncHashParentToChild(
   const path = opt.toChildPath(location)
 
   if (!path) {
-    console.warn(
-      loggerKey,
-      loggerFeatureKey,
-      `path is not found. (inputs: ${path})`
-    )
+    console.warn(loggerKey, loggerFeatureKey, `path is not found. (inputs: ${path})`)
     return
   }
 

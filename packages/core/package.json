@@ -32,9 +32,6 @@
     "test:spec": "vitest",
     "test:type": "tsc --noEmit -p tsconfig.json"
   },
-  "dependencies": {
-    "@passerelle/lib": "^0.0.1"
-  },
   "devDependencies": {
     "tsup": "^7.1.0",
     "typescript": "^5.1.6",

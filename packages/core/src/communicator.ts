@@ -1,5 +1,3 @@
-import { loggerKey } from '@passerelle/lib'
-
 import { type Json } from './common'
 import {
   isMessage,
@@ -21,6 +19,11 @@ const loggerFeatureKey = 'core :'
  * Communicate config
  */
 export interface CommunicateConfig {
+  /**
+   *
+   */
+  logPrefix?: string
+
   /**
    * Origin to send messages to
    * @default {string} same origin
@@ -82,28 +85,14 @@ export interface CommunicateConfig {
 
 const defaultConfig = {
   ackTimeout: 1000,
-  ackStrict: true
+  ackStrict: true,
+  origin: location.host,
+  logPrefix: '[passerelle]'
 } as const satisfies CommunicateConfig
 
+type FixedConfig = CommunicateConfig & typeof defaultConfig
+
 type ReceiveCallback<T extends Json> = (received: T) => void
-
-function validateConfig({ origin = location.host }: CommunicateConfig) {
-  if (origin === '*') {
-    console.warn(
-      loggerKey,
-      loggerFeatureKey,
-      'You are using "*" as origin, this is not recommended for security reasons'
-    )
-  }
-
-  if (isLocalhost(origin)) {
-    console.warn(
-      loggerKey,
-      loggerFeatureKey,
-      `You are using an IP address or localhost as origin (${origin}), origin is set to "*"`
-    )
-  }
-}
 
 function isLocalhost(origin: string): boolean {
   return origin.startsWith('localhost:') || /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(origin)
@@ -117,7 +106,7 @@ export class Communicator {
 
   readonly #senderWindow: Window
 
-  readonly #config: CommunicateConfig & typeof defaultConfig
+  readonly #config: FixedConfig
 
   readonly #onMessage = this.#received.bind(this)
 
@@ -137,10 +126,10 @@ export class Communicator {
     this.#config = {
       ...defaultConfig,
       ...config
-    } as typeof defaultConfig
-    validateConfig(config)
+    } as FixedConfig
+    this.#validateConfig(this.#config)
 
-    console.debug(loggerKey, loggerFeatureKey, 'init', config)
+    console.debug(this.#logPrefix, loggerFeatureKey, 'init', config)
     window.addEventListener('message', this.#onMessage)
 
     config.onInit?.apply(this)
@@ -150,7 +139,7 @@ export class Communicator {
    *
    */
   destroy() {
-    console.debug(loggerKey, loggerFeatureKey, 'destroy')
+    console.debug(this.#logPrefix, loggerFeatureKey, 'destroy')
     window.removeEventListener('message', this.#onMessage)
     this.#config.onDestroy?.apply(this)
   }
@@ -166,6 +155,10 @@ export class Communicator {
     return this.#lastLayout
   }
 
+  get #logPrefix(): string {
+    return this.#config.logPrefix
+  }
+
   /**
    *
    */
@@ -179,13 +172,33 @@ export class Communicator {
     return host
   }
 
+  #validateConfig({ origin }: FixedConfig) {
+  if (origin === '*') {
+    console.warn(
+      this.#logPrefix,
+      loggerFeatureKey,
+      'You are using "*" as origin, this is not recommended for security reasons'
+    )
+  }
+
+  if (isLocalhost(origin)) {
+    console.warn(
+      this.#logPrefix,
+      loggerFeatureKey,
+      `You are using an IP address or localhost as origin (${origin}), origin is set to "*"`
+    )
+  }
+
+  }
+
+
   /**
    *
    * @param param0
    */
   #received({ data }: MessageEvent): void {
     if (isMessage(data) && this.#isAllowedMessage(data)) {
-      console.debug(loggerKey, loggerFeatureKey, `received [${data.type}]`, data)
+      console.debug(this.#logPrefix, loggerFeatureKey, `received [${data.type}]`, data)
       this.#receivedMap[data.type](data as any)
     }
   }
@@ -256,7 +269,7 @@ export class Communicator {
   #send(data: Message): void {
     if (!this.#isAllowedMessage(data)) return
 
-    console.debug(loggerKey, loggerFeatureKey, 'send', data)
+    console.debug(this.#logPrefix, loggerFeatureKey, 'send', data)
     this.#senderWindow.postMessage(data, this.#origin)
   }
 

@@ -1,4 +1,3 @@
-import { loggerKey } from '@passerelle/lib'
 import { type Communicator } from '@passerelle/core'
 import { createCommunicator, type UseCommunicator } from './internals/communicator'
 import { onBeforeRouteUpdate, type RouteLocationNormalized } from 'vue-router'
@@ -33,15 +32,16 @@ function syncHashParentToChild(
   communicator: Communicator,
   opt: IframeBridgeOption
 ) {
+  const logPrefix = opt.logPrefix ?? '[passerelle/enclosure/vue]'
   const loggerFeatureKey = 'observer (parent) : sync parent -> child :'
   const path = opt.toChildPath(location)
 
   if (!path) {
-    console.warn(loggerKey, loggerFeatureKey, `path is not found. (inputs: ${path})`)
+    console.warn(logPrefix, loggerFeatureKey, `path is not found. (inputs: ${path})`)
     return
   }
 
-  console.debug(loggerKey, loggerFeatureKey, `(path: ${path})`)
+  console.debug(logPrefix, loggerFeatureKey, `(path: ${path})`)
   communicator.navigate({
     path
   })

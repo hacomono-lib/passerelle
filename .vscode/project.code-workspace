@@ -8,10 +8,6 @@
       "name": "documentation"
     },
     {
-      "path": "../packages/lib",
-      "name": "@passerelle/lib"
-    },
-    {
       "path": "../packages/core",
       "name": "@passerelle/core"
     },

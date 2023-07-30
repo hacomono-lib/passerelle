@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "@passerelle/core": "0.0.1",
-    "@passerelle/lib": "0.0.1",
     "type-assurer": "0.0.1"
   },
   "devDependencies": {

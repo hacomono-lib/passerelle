@@ -1,12 +1,14 @@
 import type { Plugin, App } from 'vue'
 
-import { isSSR } from '@passerelle/lib'
-
 import { initCommunicator, LAYOUT_KEY, COMMUNICATOR_KEY, type InsiderVueConfig } from './communicator'
 
-export { onUpdateLayout } from './hooks'
+export { onUpdateLayout, useCommunicator } from './composables'
 
 export { type InsiderVueConfig, LAYOUT_KEY, COMMUNICATOR_KEY }
+
+function isSSR(): boolean {
+  return typeof window === 'undefined'
+}
 
 export const insider: Plugin<InsiderVueConfig> = {
   install(app: App, opt: InsiderVueConfig) {

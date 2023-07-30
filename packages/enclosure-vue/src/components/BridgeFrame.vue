@@ -37,6 +37,11 @@ export interface Props {
    * Specify the key when sending with iframe's postMessage.
    */
   key?: string | undefined
+
+  /**
+   *
+   */
+  logPrefix?: string | undefined
 }
 
 export interface Emit {

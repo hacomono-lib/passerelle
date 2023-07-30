@@ -1,4 +1,3 @@
-import { loggerKey } from '@passerelle/lib'
 import {
   Communicator as _Communicator,
   type CommunicateConfig,

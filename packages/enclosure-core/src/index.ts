@@ -1,4 +1,3 @@
-import { loggerKey } from '@passerelle/lib'
 import {
   Communicator as _Communicator,
   type CommunicateConfig,
@@ -43,7 +42,7 @@ export function createCommunicator(
     onInit() {
       iframe.addEventListener('load', async () => {
         if (!await communicator.acknowledge()) {
-          console.warn(loggerKey, 'enclosure-core: acknowledge failed')
+          console.warn(config?.logPrefix ?? '[passerelle/enclosure]', 'enclosure-core: acknowledge failed')
           return
         }
 

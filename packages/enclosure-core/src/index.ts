@@ -6,6 +6,7 @@ import {
   type MessageKey
 } from '@passerelle/core'
 import { assertNotNil } from 'type-assurer'
+import { name } from '../package.json'
 
 export {
   type CommunicateConfig,
@@ -37,12 +38,15 @@ export function createCommunicator(
 
   const observer = new ResizeObserver(sendLayout)
 
+  const logPrefix = config?.logPrefix ?? `[${name}]`
+
   const communicator = new _Communicator(iframe.contentWindow, {
     ...(config ?? {}),
+    logPrefix,
     onInit() {
       iframe.addEventListener('load', async () => {
         if (!await communicator.acknowledge()) {
-          console.warn(config?.logPrefix ?? '[passerelle/enclosure]', 'enclosure-core: acknowledge failed')
+          console.warn(logPrefix, 'enclosure-core: acknowledge failed')
           return
         }
 

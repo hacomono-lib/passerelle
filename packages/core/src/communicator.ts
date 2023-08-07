@@ -13,6 +13,8 @@ import {
   Acknowledge
 } from './message'
 
+import { name } from '../package.json'
+
 const loggerFeatureKey = 'core :'
 
 /**
@@ -87,7 +89,7 @@ const defaultConfig = {
   ackTimeout: 1000,
   ackStrict: true,
   origin: location.host,
-  logPrefix: '[passerelle]'
+  logPrefix: `[${name}]`
 } as const satisfies CommunicateConfig
 
 type FixedConfig = CommunicateConfig & typeof defaultConfig
@@ -96,6 +98,15 @@ type ReceiveCallback<T extends Json> = (received: T) => void
 
 function isLocalhost(origin: string): boolean {
   return origin.startsWith('localhost:') || /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(origin)
+}
+
+function omitNil<T extends Record<string, any>>(obj: T): T {
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    if (value !== undefined && value !== null) {
+      acc[key as keyof T] = value
+    }
+    return acc
+  }, {} as T)
 }
 
 /**
@@ -125,7 +136,7 @@ export class Communicator {
     this.#senderWindow = senderWindow
     this.#config = {
       ...defaultConfig,
-      ...config
+      ...omitNil(config)
     } as FixedConfig
     this.#validateConfig(this.#config)
 

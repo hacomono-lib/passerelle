@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import {
-  type ParentToChild,
-  type ChildToParent
-} from '../../../src/components/types'
+import type { ParentToChild, ChildToParent } from '@passerelle/enclosure-vue'
 
 const route = useRoute()
 
@@ -21,15 +18,15 @@ const parentToChild: ParentToChild = (location) => {
   return extractChildPath(location.path)
 }
 
-const childToParent: ChildToParent = (url) => {
-  return '/hoge'
+const childToParent: ChildToParent = ({ path, params }) => {
+  return { path: `/bridge${path}`, params }
 }
 </script>
 
 <template>
   <BridgeFrame
+    communicate-key="passerelle-playground"
     :initial-src="defaultPath"
-    key="passerelle-playground"
     :to-child-path="parentToChild"
     :to-parent-path="childToParent" />
 </template>

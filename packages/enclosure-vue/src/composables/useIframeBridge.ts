@@ -1,7 +1,12 @@
 import { type Communicator } from '@passerelle/core'
 import { createCommunicator, type UseCommunicator } from './internals/communicator'
-import { onBeforeRouteUpdate, type RouteLocationNormalized } from 'vue-router'
+import { onBeforeRouteUpdate, useRouter, type RouteLocationNormalized } from 'vue-router'
 import type { IframeRef, IframeBridgeOption } from './types'
+import { name } from '../../package.json'
+
+function extractLogPrefix(opt: IframeBridgeOption): string {
+  return opt.logPrefix ?? `[${name}]`
+}
 
 /**
  * 引数に iframe タグを設定することで、以下の機能を提供する
@@ -10,8 +15,19 @@ import type { IframeRef, IframeBridgeOption } from './types'
  * @param iframeRef
  */
 export function useIframeBridge(iframeRef: IframeRef, opt: IframeBridgeOption): UseCommunicator {
-  const { toChildPath: _toChildPath, toParentPath: _toParentPath, ...config } = opt
-  const communicator = createCommunicator(iframeRef, config)
+  const { toChildPath: _a, toParentPath, onNavigate: _c, ...config } = opt
+
+  const router = useRouter()
+
+  const communicator = createCommunicator(iframeRef, {
+    ...config,
+    logPrefix: extractLogPrefix(opt),
+    onNavigate(value) {
+      opt.onNavigate?.call(this, value)
+
+      router.replace(toParentPath(value))
+    },
+  })
 
   onBeforeRouteUpdate((to, from, next) => {
     if (isSamePathTransition(to, from)) {
@@ -32,7 +48,7 @@ function syncHashParentToChild(
   communicator: Communicator,
   opt: IframeBridgeOption
 ) {
-  const logPrefix = opt.logPrefix ?? '[passerelle/enclosure/vue]'
+  const logPrefix = extractLogPrefix(opt)
   const loggerFeatureKey = 'observer (parent) : sync parent -> child :'
   const path = opt.toChildPath(location)
 

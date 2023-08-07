@@ -36,7 +36,7 @@ export interface Props {
   /**
    * Specify the key when sending with iframe's postMessage.
    */
-  key?: string | undefined
+  communicateKey?: string | undefined
 
   /**
    *
@@ -59,7 +59,7 @@ useIframeBridge(frame, {
   toChildPath: (location) => props.toChildPath(location),
   toParentPath: (url) => props.toParentPath(url),
   origin: props.origin,
-  key: props.key,
+  key: props.communicateKey,
   onNavigate(value) {
     emit('navigate', value)
   },

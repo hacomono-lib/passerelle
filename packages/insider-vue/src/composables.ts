@@ -8,7 +8,11 @@ export function onUpdateLayout(callback: (value: LayoutMetrix) => void | Promise
   const layout = inject(LAYOUT_KEY)
   if (!layout) return
 
-  watch(layout, callback)
+  watch(layout, (v) => {
+    if (!v) return
+
+    callback(v)
+  })
 }
 
 export function useCommunicator(): Communicator {

@@ -1,6 +1,7 @@
-import type { App, InjectionKey } from 'vue'
+import { ref, type App, type InjectionKey, type Ref } from 'vue'
 import type { Router } from 'vue-router'
 import { type Communicator, createCommunicator as create, type NavigateMessage, type HrefMessage, type LayoutMetrix } from '@passerelle/insider-core'
+import { name } from '../package.json'
 
 export interface InsiderVueConfig {
   /**
@@ -18,6 +19,11 @@ export interface InsiderVueConfig {
    *
    */
   key?: string
+
+  /**
+   *
+   */
+  logPrefix?: string
 
   /**
    *
@@ -58,7 +64,7 @@ export interface InsiderVueConfig {
   onDestroy?(this: Communicator, app: App): void
 }
 
-export const LAYOUT_KEY = Symbol() as InjectionKey<LayoutMetrix>
+export const LAYOUT_KEY = Symbol() as InjectionKey<Ref<LayoutMetrix | undefined>>
 
 export const COMMUNICATOR_KEY = Symbol() as InjectionKey<Communicator>
 
@@ -69,13 +75,18 @@ export function initCommunicator(app: App, opt: InsiderVueConfig) {
 }
 
 function createCommunicator(app: App, opt: InsiderVueConfig): Communicator {
+  const layout = ref<LayoutMetrix | undefined>()
+  app.provide(LAYOUT_KEY, layout)
+
   const communicator = create({
     origin: opt?.origin,
     key: opt?.key,
+    logPrefix: opt?.logPrefix ?? `[${name}]`,
     async onNavigate(value) {
       opt?.onNavigate?.call(this, app, value)
 
-      opt.router.push({ path: value.path, params: value.params })
+      const { path, params = {}} = value
+      opt.router.replace({ path, params })
     },
     async onHrefNavigate(value) {
       opt?.onHrefNavigate?.call(this, app, value)
@@ -85,7 +96,7 @@ function createCommunicator(app: App, opt: InsiderVueConfig): Communicator {
     async onUpdateLayout(value) {
       opt?.onUpdateLayout?.call(this, app, value)
 
-      app.provide(LAYOUT_KEY, value)
+      layout.value = value
     },
     onInit() {
       opt?.onInit?.call(this, app)

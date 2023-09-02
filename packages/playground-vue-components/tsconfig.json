@@ -4,9 +4,7 @@
     "composite": true,
     "module": "ESNext",
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-    },
-    "types": ["./env.d.ts", "vite/client"]
-  }
+    "types": ["vite/client"]
+  },
+  "include": ["./env.d.ts", "./src/index.ts", "./src/internals/*"]
 }

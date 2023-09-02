@@ -283,6 +283,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/parser@npm:^7.18.4":
+  version: 7.22.10
+  resolution: "@babel/parser@npm:7.22.10"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: af51567b7d3cdf523bc608eae057397486c7fa6c2e5753027c01fe5c36f0767b2d01ce3049b222841326cc5b8c7fda1d810ac1a01af0a97bb04679e2ef9f7049
+  languageName: node
+  linkType: hard
+
 "@babel/parser@npm:^7.20.15, @babel/parser@npm:^7.21.3, @babel/parser@npm:^7.22.4, @babel/parser@npm:^7.22.5":
   version: 7.22.5
   resolution: "@babel/parser@npm:7.22.5"
@@ -1424,6 +1433,7 @@ __metadata:
     "@types/node": ^18.16.17
     "@vitejs/plugin-vue": ^4.2.3
     "@vue/tsconfig": ^0.4.0
+    playground-vue-components: ../playground-vue-components
     type-assurer: 0.0.1
     typescript: ^5.1.6
     vite: ^4.3.9
@@ -1494,6 +1504,7 @@ __metadata:
     "@passerelle/insider-core": 0.0.1
     "@types/node": ^18
     hookable: ^5.5.3
+    playground-vue-components: ../playground-vue-components
     vite: ^4.3.9
     vitest: ^0.32.2
     vue: ^3.3.4
@@ -2238,6 +2249,17 @@ __metadata:
     "@vue/compiler-core": 3.3.4
     "@vue/shared": 3.3.4
   checksum: 1c2ac0c89de8eef7be1c568d57504e6245adaaec40c2c4d9717bc231ca10bf682d918a3b358d24c786eeaf8e0d7eb8a65f57d9044775a304783fde1d069a1896
+  languageName: node
+  linkType: hard
+
+"@vue/compiler-sfc@npm:2.7.14":
+  version: 2.7.14
+  resolution: "@vue/compiler-sfc@npm:2.7.14"
+  dependencies:
+    "@babel/parser": ^7.18.4
+    postcss: ^8.4.14
+    source-map: ^0.6.1
+  checksum: 25e00abaecb311f1effbf539bc3e4fdeedb39d35f9c2947b2640187a047e6a7400e693fd7da1d3a98977b9078c5bf629ca47f8b9a59dc14a080c0a1e1dd06a49
   languageName: node
   linkType: hard
 
@@ -3655,7 +3677,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.1.1":
+"csstype@npm:^3.1.0, csstype@npm:^3.1.1":
   version: 3.1.2
   resolution: "csstype@npm:3.1.2"
   checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
@@ -8015,6 +8037,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playground-vue-component@workspace:packages/playground-vue-components":
+  version: 0.0.0-use.local
+  resolution: "playground-vue-component@workspace:packages/playground-vue-components"
+  dependencies:
+    vue: ^2.7.14
+  peerDependencies:
+    vue: ^2.7.14 || ^3.0.0
+  languageName: unknown
+  linkType: soft
+
+"playground-vue-components@file:../playground-vue-components::locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue":
+  version: 0.0.0
+  resolution: "playground-vue-components@file:../playground-vue-components#../playground-vue-components::hash=415907&locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue"
+  peerDependencies:
+    vue: ^2.7.14 || ^3.0.0
+  checksum: 5a4397f9c2ebf90bc3dfc963b0aa1712176388a1b91cb7c20ff41471fc5bfca625afcedb2be81ac48b28f30400ac2815040a92a1de38aee158900475e407037e
+  languageName: node
+  linkType: hard
+
+"playground-vue-components@file:../playground-vue-components::locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue":
+  version: 0.0.0
+  resolution: "playground-vue-components@file:../playground-vue-components#../playground-vue-components::hash=415907&locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue"
+  peerDependencies:
+    vue: ^2.7.14 || ^3.0.0
+  checksum: 5a4397f9c2ebf90bc3dfc963b0aa1712176388a1b91cb7c20ff41471fc5bfca625afcedb2be81ac48b28f30400ac2815040a92a1de38aee158900475e407037e
+  languageName: node
+  linkType: hard
+
 "postcss-calc@npm:^9.0.0":
   version: 9.0.1
   resolution: "postcss-calc@npm:9.0.1"
@@ -8398,6 +8448,17 @@ __metadata:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: 1cdd0c298849df6cd65f7e646a3ba36870a37b65f55fd59d1a165539c263e9b4872a402bf4ed1ca1bc31f58b68b2835545e33ea1a23b161a1f8aa6d5ded81e78
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.14":
+  version: 8.4.28
+  resolution: "postcss@npm:8.4.28"
+  dependencies:
+    nanoid: ^3.3.6
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: f605c24a36f7e400bad379735fbfc893ccb8d293ad6d419bb824db77cdcb69f43d614ef35f9f7091f32ca588d130ec60dbcf53b366e6bf88a8a64bbeb3c05f6d
   languageName: node
   linkType: hard
 
@@ -9216,7 +9277,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map@npm:^0.6.0, source-map@npm:~0.6.1":
+"source-map@npm:^0.6.0, source-map@npm:^0.6.1, source-map@npm:~0.6.1":
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 59ce8640cf3f3124f64ac289012c2b8bd377c238e316fb323ea22fbfe83da07d81e000071d7242cad7a23cd91c7de98e4df8830ec3f133cb6133a5f6e9f67bc2
@@ -10802,6 +10863,16 @@ __metadata:
   bin:
     vue-tsc: bin/vue-tsc.js
   checksum: 97df9cefbd784901b01c1cf24a4262feb60d4f665e9f69a763408291199e2ab24a9b03d1183cabea200fb5afde7c9a0de19b82c3e0c0b85ee9685c57f8b240c4
+  languageName: node
+  linkType: hard
+
+"vue@npm:^2.7.14":
+  version: 2.7.14
+  resolution: "vue@npm:2.7.14"
+  dependencies:
+    "@vue/compiler-sfc": 2.7.14
+    csstype: ^3.1.0
+  checksum: 8b06da67cc40870c66a30b7a6bc2874950cd4383792c371eb30497dd14fc7b41cf308b1c4517368d8f0e7ac16198c08de19236f6a79fe43f4bdbc4a1d9d4ad07
   languageName: node
   linkType: hard
 

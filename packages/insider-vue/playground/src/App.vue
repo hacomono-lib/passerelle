@@ -1,39 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterView, onBeforeRouteUpdate } from 'vue-router'
-import { onUpdateLayout } from '@passerelle/insider-vue';
-
+import { onMounted } from 'vue'
+import { RouterView } from 'vue-router'
 import Header from './components/Header.vue'
-import Log, { type Log as LogUnit } from './components/Log.vue'
+import { useCommunicator } from '@passerelle/insider-vue'
+import Playground from 'playground-vue-component'
 
-onUpdateLayout((layout) => {
-  console.log('test')
-  addLog({
-    event: 'layout',
-    key: 'layout',
-    value: layout
-  })
+onMounted(() => {
+  const communicator = useCommunicator()
+
+  ;(window as any).getCommunicator = () => communicator
 })
-
-const logs = ref<LogUnit[]>([])
-
-function addLog(log: Omit<LogUnit, 'time'>) {
-  logs.value = [
-    ...logs.value,
-    {
-      time: new Date().toLocaleTimeString(),
-      ...log
-    }
-  ]
-}
 </script>
 
 <template>
   <section>
-    <Header >
+    <Header>
       <RouterView />
     </Header>
-    <Log :logs="logs" />
+    <Playground mode="insider" />
   </section>
 </template>
 

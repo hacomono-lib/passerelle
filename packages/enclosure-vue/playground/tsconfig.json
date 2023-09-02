@@ -1,0 +1,9 @@
+{
+  "extends": ["../tsconfig.json"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@passerelle/enclosure-vue": ["../src"]
+    }
+  }
+}

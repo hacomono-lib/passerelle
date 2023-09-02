@@ -1,11 +1,12 @@
 {
   "folders": [
     {
-      "path": ".."
+      "path": "..",
+      "name": "#root"
     },
     {
       "path": "../docs",
-      "name": "documentation"
+      "name": "#documentation"
     },
     {
       "path": "../packages/core",
@@ -44,12 +45,16 @@
       "name": "@passerelle/insider-nuxt2"
     },
     {
+      "path": "../packages/playground-vue-components",
+      "name": "#common/playground-vue-components"
+    },
+    {
       "path": "../tests/playground-enclosure",
-      "name": "@test/playground-enclosure"
+      "name": "#test/playground-enclosure"
     },
     {
       "path": "../tests/playground-insider",
-      "name": "@test/playground-insider"
+      "name": "#test/playground-insider"
     }
   ],
   "settings": {

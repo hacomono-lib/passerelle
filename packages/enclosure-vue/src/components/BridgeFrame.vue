@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import type { NavigateMessage, HrefMessage } from '@passerelle/enclosure-core'
 import type { ChildToParent, ParentToChild } from './types'
 import { useIframeBridge } from '../composables/useIframeBridge'
+import type { UseCommunicator } from '@/composables/internals/communicator'
 
 export interface Props {
   /**
@@ -55,7 +56,7 @@ const emit = defineEmits<Emit>()
 
 const frame = ref<HTMLIFrameElement>()
 
-useIframeBridge(frame, {
+const communicator = useIframeBridge(frame, {
   toChildPath: (location) => props.toChildPath(location),
   toParentPath: (url) => props.toParentPath(url),
   origin: props.origin,
@@ -67,11 +68,27 @@ useIframeBridge(frame, {
     emit('href', value)
   }
 })
+
+function getCommunicator() {
+  return communicator
+}
+
+defineExpose({
+  getCommunicator
+})
 </script>
 
 <template>
   <iframe
     ref="frame"
-    style="width: 100%; height: 100%; border: none"
     :src="initialSrc" />
 </template>
+
+
+<style scoped>
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+</style>

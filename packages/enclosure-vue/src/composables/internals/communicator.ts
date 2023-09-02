@@ -10,7 +10,7 @@ export function createCommunicator(iframeRef: IframeRef, config?: CommunicateCon
   let communicator: Communicator | null = null
 
   onMounted(() => {
-    communicator = createCommunicatorInternal(ensureNotNil(unref(iframeRef)), config)
+    communicator = createCommunicatorInternal(ensureNotNil(unref(iframeRef)), config) as Communicator
   })
 
   onBeforeUnmount(() => {

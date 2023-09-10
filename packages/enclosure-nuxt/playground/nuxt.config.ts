@@ -1,5 +1,8 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
-  myModule: {},
+  srcDir: './src',
+
+  css: ['~/assets/css/main.css'],
+
   devtools: { enabled: true }
 })

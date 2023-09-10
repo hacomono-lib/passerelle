@@ -1,19 +1,23 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addImports, addComponent } from '@nuxt/kit'
 
-// Module options TypeScript interface definition
 export interface ModuleOptions {}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'my-module',
-    configKey: 'myModule'
+    name: '@passerelle/enclosure-nuxt',
+    configKey: 'enclosure'
   },
-  // Default configuration options of the Nuxt module
   defaults: {},
-  setup (options, nuxt) {
-    const resolver = createResolver(import.meta.url)
+  setup(_options, _nuxt) {
+    addComponent({
+      filePath: '@passerelle/enclosure-vue/src/components/BridgeFrame.vue',
+      name: 'BridgeFrame',
+      island: false
+    })
 
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve('./runtime/plugin'))
+    addImports({
+      name: 'useIframeBridge',
+      from: '@passerelle/enclosure-vue/src/composables/useIframeBridge.ts'
+    })
   }
 })

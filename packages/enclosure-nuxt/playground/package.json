@@ -1,12 +1,7 @@
 {
   "private": true,
-  "name": "my-module-playground",
+  "name": "playground",
   "type": "module",
-  "scripts": {
-    "dev": "nuxi dev",
-    "build": "nuxi build",
-    "generate": "nuxi generate"
-  },
   "devDependencies": {
     "nuxt": "latest"
   }

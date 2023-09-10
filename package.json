@@ -15,6 +15,7 @@
     "./tests/*"
   ],
   "scripts": {
+    "prepare": "turbo run prepare --parallel",
     "dev": "turbo run dev",
     "preview": "turbo run dev preview --parallel",
     "build": "turbo run build"

@@ -8,25 +8,36 @@ function extractLogPrefix(opt: IframeBridgeOption): string {
   return opt.logPrefix ?? `[${name}]`
 }
 
+const isSSR = typeof window === 'undefined'
+
 /**
  * 引数に iframe タグを設定することで、以下の機能を提供する
  * - iframe の src を書き換えてしまうと、ページがリロードされてしまうため、 src を書き換えずにページを遷移する
  * - iframe 内側のページ遷移を検知し、親側の history 及びページパスへ同期させる
  * @param iframeRef
+ * @param opt
+ * @return
  */
-export function useIframeBridge(iframeRef: IframeRef, opt: IframeBridgeOption): UseCommunicator {
+export function useIframeBridge(
+  iframeRef: IframeRef,
+  opt: IframeBridgeOption
+): UseCommunicator | undefined {
+  if (isSSR) {
+    return undefined
+  }
+
   const { toChildPath: _a, toParentPath, onNavigate: _c, ...config } = opt
 
   const router = useRouter()
 
   const communicator = createCommunicator(iframeRef, {
-    ...config,
     logPrefix: extractLogPrefix(opt),
+    ...config,
     onNavigate(value) {
       opt.onNavigate?.call(this, value)
 
       router.replace(toParentPath(value))
-    },
+    }
   })
 
   onBeforeRouteUpdate((to, from, next) => {

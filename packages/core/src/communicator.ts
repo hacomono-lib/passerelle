@@ -85,14 +85,16 @@ export interface CommunicateConfig {
   onDestroy?(this: Communicator): void
 }
 
-const defaultConfig = {
-  ackTimeout: 1000,
-  ackStrict: true,
-  origin: location.host,
-  logPrefix: `[${name}]`
-} as const satisfies CommunicateConfig
+function defaultConfig() {
+  return {
+    ackTimeout: 1000,
+    ackStrict: true,
+    origin: location.host,
+    logPrefix: `[${name}]`
+  } as const satisfies CommunicateConfig
+}
 
-type FixedConfig = CommunicateConfig & typeof defaultConfig
+type FixedConfig = CommunicateConfig & ReturnType<typeof defaultConfig>
 
 type ReceiveCallback<T extends Json> = (received: T) => void
 
@@ -133,9 +135,13 @@ export class Communicator {
    * @param config
    */
   constructor(senderWindow: Window, config: CommunicateConfig = {}) {
+    if (typeof window === 'undefined') {
+      throw new Error('Communicator must be instantiated in the browser.')
+    }
+
     this.#senderWindow = senderWindow
     this.#config = {
-      ...defaultConfig,
+      ...defaultConfig(),
       ...omitNil(config)
     } as FixedConfig
     this.#validateConfig(this.#config)
@@ -184,24 +190,22 @@ export class Communicator {
   }
 
   #validateConfig({ origin }: FixedConfig) {
-  if (origin === '*') {
-    console.warn(
-      this.#logPrefix,
-      loggerFeatureKey,
-      'You are using "*" as origin, this is not recommended for security reasons'
-    )
-  }
+    if (origin === '*') {
+      console.warn(
+        this.#logPrefix,
+        loggerFeatureKey,
+        'You are using "*" as origin, this is not recommended for security reasons'
+      )
+    }
 
-  if (isLocalhost(origin)) {
-    console.warn(
-      this.#logPrefix,
-      loggerFeatureKey,
-      `You are using an IP address or localhost as origin (${origin}), origin is set to "*"`
-    )
+    if (isLocalhost(origin)) {
+      console.warn(
+        this.#logPrefix,
+        loggerFeatureKey,
+        `You are using an IP address or localhost as origin (${origin}), origin is set to "*"`
+      )
+    }
   }
-
-  }
-
 
   /**
    *
@@ -362,7 +366,6 @@ export class Communicator {
       receivers.filter((c) => c !== callback)
     )
   }
-
 
   /**
    *

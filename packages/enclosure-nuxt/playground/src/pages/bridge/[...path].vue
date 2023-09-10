@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import type { BridgeFrame as BridgeFrameComponent } from '#components'
 import type { ParentToChild, ChildToParent } from '@passerelle/enclosure-vue'
-import { onMounted, ref } from 'vue'
 
 const route = useRoute()
 
@@ -23,12 +22,9 @@ const childToParent: ChildToParent = ({ path, params }) => {
   return { path: `/bridge${path}`, params }
 }
 
-const bridge = ref()
+const bridge = ref<typeof BridgeFrameComponent>()
 
-onMounted(() => {
-  // デバッグのためにわざと window を介してルートに communicator を公開している
-  ;(window as any).getCommunicator = () => bridge.value.getCommunicator()
-})
+onMounted(() => {})
 </script>
 
 <template>

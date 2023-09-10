@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import type { NavigateMessage, HrefMessage } from '@passerelle/enclosure-core'
 import type { ChildToParent, ParentToChild } from './types'
 import { useIframeBridge } from '../composables/useIframeBridge'
-import type { UseCommunicator } from '@/composables/internals/communicator'
 
 export interface Props {
   /**
@@ -69,6 +68,9 @@ const communicator = useIframeBridge(frame, {
   }
 })
 
+/**
+ *
+ */
 function getCommunicator() {
   return communicator
 }
@@ -83,7 +85,6 @@ defineExpose({
     ref="frame"
     :src="initialSrc" />
 </template>
-
 
 <style scoped>
 iframe {

@@ -22,7 +22,11 @@
     "dist"
   ],
   "scripts": {
-    "prepare": "nuxt-module-build",
+    "prepare": "nuxt-module-build --stub && nuxt prepare playground",
+    "preview": "nuxt dev playground --port 5175",
+    "playground:build": "nuxt build playground",
+    "playground:start": "nuxt start playground --port 5175",
+    "build": "nuxt-module-build",
     "test": "run-p test:*",
     "test:spec": "vitest run",
     "test:type": "tsc --noEmit -p tsconfig.json"

@@ -8,13 +8,14 @@
       height="125" />
 
     <div class="wrapper">
-      <h1>@passerelle/enclosure-nuxt</h1>
-
+      <h1>@passerelle/insider-nuxt</h1>
+      <p>
+        <slot />
+      </p>
       <nav>
-        <nuxt-link to="/">Home</nuxt-link>
-        <nuxt-link to="/bridge/about">About</nuxt-link>
-        <nuxt-link to="/bridge/works">Works</nuxt-link>
-        <nuxt-link to="/bridge/contact">Contact</nuxt-link>
+        <nuxt-link to="/about">About</nuxt-link>
+        <nuxt-link to="/works">Works</nuxt-link>
+        <nuxt-link to="/contact">Contact</nuxt-link>
       </nav>
     </div>
   </header>
@@ -26,11 +27,17 @@
   margin: 0 auto 2rem;
 }
 
+p {
+  width: 100%;
+}
+
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 1rem;
   text-align: center;
-  margin-top: 2rem;
+
+  margin-left: -1rem;
+  padding: 1rem 0;
 }
 
 nav a.router-link-exact-active {
@@ -65,14 +72,5 @@ header .wrapper {
   display: flex;
   place-items: flex-start;
   flex-wrap: wrap;
-}
-
-nav {
-  text-align: left;
-  margin-left: -1rem;
-  font-size: 1rem;
-
-  padding: 1rem 0;
-  margin-top: 1rem;
 }
 </style>

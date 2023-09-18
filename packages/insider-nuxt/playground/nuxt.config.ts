@@ -1,5 +1,9 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
-  myModule: {},
-  devtools: { enabled: true }
+  srcDir: './src',
+  css: ['~/assets/css/main.css'],
+
+  passerelle: {
+    key: 'passerelle-playground'
+  }
 })

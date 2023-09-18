@@ -17,7 +17,8 @@
   "scripts": {
     "prepare": "turbo run prepare --parallel",
     "dev": "turbo run dev",
-    "preview": "turbo run dev preview --parallel",
+    "preview:vue": "turbo run dev preview --parallel --filter=enclosure-vue --filter=insider-vue",
+    "preview:nuxt": "turbo run dev preview --parallel --filter=enclosure-nuxt --filter=insider-nuxt",
     "build": "turbo run build"
   },
   "devDependencies": {

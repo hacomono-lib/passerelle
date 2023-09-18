@@ -1,19 +1,44 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, addTemplate, addImports } from '@nuxt/kit'
+import type { InsiderVueConfig } from '@passerelle/insider-vue'
 
 // Module options TypeScript interface definition
-export interface ModuleOptions {}
+export type ModuleOptions = Pick<InsiderVueConfig, 'origin' | 'key' | 'logPrefix'>
+
+const DIRECTORY_NAME = 'passerelle'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'my-module',
-    configKey: 'myModule'
+    name: '@passerelle/inlosure-nuxt',
+    configKey: 'passerelle'
   },
-  // Default configuration options of the Nuxt module
   defaults: {},
-  setup (options, nuxt) {
-    const resolver = createResolver(import.meta.url)
+  setup(options, _nuxt) {
+    const plugin = addTemplate({
+      filename: `${DIRECTORY_NAME}/insider-plugin.ts`,
+      write: true,
+      getContents: () => `
+import { insider } from '@passerelle/insider-vue'
 
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve('./runtime/plugin'))
+export default defineNuxtPlugin((nuxtApp) => {
+  const router = useRouter()
+  nuxtApp.vueApp.use(insider, { router ${(() => {
+    const optionsStr = Object.entries(options)
+      .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
+      .join(', ')
+    return optionsStr ? `, ${optionsStr}` : ''
+  })()}})
+})
+`
+    })
+
+    addPlugin({
+      src: plugin.dst,
+      mode: 'client'
+    })
+
+    addImports({
+      name: 'useCommunicator',
+      from: '@passerelle/insider-vue/src/composables.ts'
+    })
   }
 })

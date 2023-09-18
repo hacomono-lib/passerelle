@@ -2,9 +2,13 @@
 import type { BridgeFrame as BridgeFrameComponent } from '#components'
 import type { ParentToChild, ChildToParent } from '@passerelle/enclosure-vue'
 
+definePageMeta({
+  middleware: ['passerelle']
+})
+
 const route = useRoute()
 
-const defaultPath = `http://localhost:5174${extractChildPath(route.path)}`
+const defaultPath = `http://localhost:5176${extractChildPath(route.path)}`
 
 function extractChildPath(path: string): string {
   const [, matchedPath] = /^\/bridge(\/.*?)$/.exec(path) ?? []

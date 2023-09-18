@@ -41,10 +41,6 @@
       "name": "@passerelle/insider-nuxt"
     },
     {
-      "path": "../packages/insider-nuxt2",
-      "name": "@passerelle/insider-nuxt2"
-    },
-    {
       "path": "../packages/playground-vue-components",
       "name": "#common/playground-vue-components"
     },

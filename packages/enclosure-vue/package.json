@@ -26,7 +26,7 @@
     "dist"
   ],
   "scripts": {
-    "preview": "vite ./playground --port 5173",
+    "preview": "vite ./playground --port 5173 --open",
     "build": "vite build",
     "test": "run-p test:*",
     "test:spec": "vitest",
@@ -35,7 +35,7 @@
   "dependencies": {
     "@passerelle/core": "0.0.1",
     "@passerelle/enclosure-core": "0.0.1",
-    "type-assurer": "0.0.1"
+    "type-assurer": "0.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.16.17",

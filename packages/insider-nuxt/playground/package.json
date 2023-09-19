@@ -3,7 +3,6 @@
   "name": "playground",
   "type": "module",
   "devDependencies": {
-    "@passerelle/insider-vue": "../../insider-vue",
     "nuxt": "latest"
   }
 }

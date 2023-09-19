@@ -1,24 +1,22 @@
 /// <reference path="../../../playground/.nuxt/types/imports.d.ts" />
 import { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router'
 
-function isSameRoute(a: RouteLocationNormalized, b: RouteLocationNormalized): boolean {
-  const findPasserelleRote = (routes: RouteLocationNormalized): RouteRecordNormalized[] =>
-    routes.matched.filter((a) => (a.meta as any).middleware?.includes('passerelle'))
-
-  const matchedA = findPasserelleRote(a)
-  const matchedB = findPasserelleRote(b)
-
-  // 同一オブジェクトの組が　ｔ つでもあれば同一ルートとみなす
-  return matchedA.some((a) => matchedB.some((b) => a === b))
+function shouldTransitionWithPasserelle(a: RouteLocationNormalized, b: RouteLocationNormalized): boolean {
+  return a.name === b.name && a.path !== b.path
 }
 
 export default defineNuxtRouteMiddleware((to, from) => {
+  console.log('passerelle-bridge')
   if (process.server) {
-    return false
+    return true
   }
 
-  if (isSameRoute(to, from)) {
-    location.replace(to.fullPath)
+  if (shouldTransitionWithPasserelle(to, from)) {
+    const context = useNuxtApp()
+    const baseURL = context.$config.app.baseURL ?? '/'
+    const href = `${baseURL}${to.fullPath}`.replace(/^\/\//, '/')
+
+    history.pushState({}, '', href)
     return false
   }
 

@@ -1,23 +1,19 @@
-import {
-  Communicator as _Communicator,
-  type CommunicateConfig,
-  type NavigateMessage,
-  type HrefMessage,
-  type LayoutMetrix,
-  type MessageKey
+import { Communicator as _Communicator } from '@passerelle/core'
+import type {
+  CommunicateConfig as _CommunicateCollab,
+  NavigateMessage,
+  HrefMessage,
+  LayoutMetrix,
+  MessageKey
 } from '@passerelle/core'
 import { assertNotNil } from 'type-assurer'
 import { name } from '../package.json'
 
-export {
-  type CommunicateConfig,
-  type NavigateMessage,
-  type HrefMessage,
-  type LayoutMetrix,
-  type MessageKey
-}
+export { type NavigateMessage, type HrefMessage, type LayoutMetrix, type MessageKey }
 
-export type Communicator = Omit<_Communicator, 'acknowledge'>
+export type Communicator = Omit<_Communicator, 'requestCollab'>
+
+export type CommunicateConfig = Omit<_CommunicateCollab, 'requiredCollab'>
 
 export function createCommunicator(config?: CommunicateConfig): Communicator {
   const logPrefix = config?.logPrefix ?? `[${name}]`
@@ -25,6 +21,7 @@ export function createCommunicator(config?: CommunicateConfig): Communicator {
   assertNotNil(parent)
   return new _Communicator(parent, {
     ...(config ?? {}),
-    logPrefix,
+    requireCollab: true,
+    logPrefix
   })
 }

@@ -5,7 +5,7 @@ import { name } from '../package.json'
 
 export { type CommunicateConfig, type HrefMessage, type NavigateMessage, type MessageKey }
 
-export type Communicator = Omit<_Communicator, 'acknowledge'>
+export type Communicator = Omit<_Communicator, 'requestCollab'>
 
 export function createCommunicator(
   iframe: HTMLIFrameElement,

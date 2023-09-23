@@ -73,6 +73,8 @@ const communicator = useIframeBridge(frame, {
   toParentPath: (url) => props.toParentPath(url),
   origin: props.origin,
   key: props.communicateKey,
+  requireCollab: props.requiredCollab,
+  collabRequestTimeout: props.collabRequestTimeout,
   onNavigate(value) {
     emit('navigate', value)
   },

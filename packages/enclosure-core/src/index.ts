@@ -1,10 +1,5 @@
-import {
-  Communicator as _Communicator,
-  type CommunicateConfig,
-  type NavigateMessage,
-  type HrefMessage,
-  type MessageKey
-} from '@passerelle/core'
+import { Communicator as _Communicator } from '@passerelle/core'
+import type { CommunicateConfig, NavigateMessage, HrefMessage, MessageKey } from '@passerelle/core'
 import { assertNotNil } from 'type-assurer'
 import { name } from '../package.json'
 

@@ -39,7 +39,7 @@ onMounted(() => {
     :initial-src="defaultPath"
     :to-child-path="parentToChild"
     :to-parent-path="childToParent"
-    require-collab />
+    required-collab />
 </template>
 
 <style scoped>

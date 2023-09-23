@@ -1,16 +1,16 @@
 import { type Json } from './common'
-import {
-  isMessage,
-  type NavigateMessageValue,
-  type HrefMessageValue,
-  type MessageKey,
-  type Message,
-  type SendDataMessage,
-  type NavigateMessage,
-  type HrefMessage,
-  type LayoutMetrix,
-  type LayoutMetrixMessage,
-  Acknowledge
+import { isMessage } from './message'
+import type {
+  NavigateMessageValue,
+  HrefMessageValue,
+  MessageKey,
+  Message,
+  SendDataMessage,
+  NavigateMessage,
+  HrefMessage,
+  LayoutMetrix,
+  LayoutMetrixMessage,
+  CollabMessage
 } from './message'
 
 import { name } from '../package.json'
@@ -28,29 +28,29 @@ export interface CommunicateConfig {
 
   /**
    * Origin to send messages to
-   * @default {string} same origin
+   * @default same origin
    */
   origin?: string
 
   /**
    * A Unique key to be set to ensure that the communication partners across ths iframe are in common context.
    * if not set, context identity is not ensured (ackStrict must be false).
-   * @default {undefined}
+   * @default undefined
    */
   key?: string
 
   /**
-   * Timeout for the acknowledge message
-   * @default {number} 1000
+   * Timeout for the collab request
+   * @default 1000
    */
-  ackTimeout?: number
+  collabRequestTimeout?: number
 
   /**
-   * If set to true, enclosure and insider must have the same key.
+   * If set to true, passerelle must exist on both the outside and inside of the iframe, enclosure and insider must have the same key.
    * If set to false, allow unset key.
-   * @default {boolean} true
+   * @default false
    */
-  ackStrict?: boolean
+  requireCollab?: boolean
 
   /**
    *
@@ -87,8 +87,8 @@ export interface CommunicateConfig {
 
 function defaultConfig() {
   return {
-    ackTimeout: 1000,
-    ackStrict: true,
+    collabRequestTimeout: 1000,
+    requireCollab: false,
     origin: location.host,
     logPrefix: `[${name}]`
   } as const satisfies CommunicateConfig
@@ -123,9 +123,9 @@ export class Communicator {
 
   readonly #onMessage = this.#received.bind(this)
 
-  #ackSuccessful: boolean = false
+  #collaborated: boolean = false
 
-  #ackResolver: (value: boolean) => void = () => {}
+  #collabResolver: (value: boolean) => void = () => {}
 
   #lastLayout: LayoutMetrix | undefined
 
@@ -165,7 +165,7 @@ export class Communicator {
    *
    */
   get isReady(): boolean {
-    return this.#ackSuccessful
+    return this.#collaborated
   }
 
   get lastLayout(): LayoutMetrix | undefined {
@@ -238,12 +238,12 @@ export class Communicator {
       this.#lastLayout = value
       this.#config.onUpdateLayout?.apply(this, [value])
     },
-    ack: ({ key, comm }: Acknowledge) => {
-      this.#ackSuccessful = this.#checkAckKey(key)
+    collab: ({ key, comm }: CollabMessage) => {
+      this.#collaborated = this.#validCollabKey(key)
 
-      if (comm === 'send' && this.#ackSuccessful) {
+      if (comm === 'send' && this.#collaborated) {
         this.#send({
-          type: 'ack',
+          type: 'collab',
           key: this.#config.key,
           comm: 'receive'
         })
@@ -251,7 +251,7 @@ export class Communicator {
       }
 
       if (comm === 'receive') {
-        this.#ackResolver(this.#ackSuccessful)
+        this.#collabResolver(this.#collaborated)
         return
       }
     }
@@ -261,8 +261,8 @@ export class Communicator {
    *
    * @param receivedKey
    */
-  #checkAckKey(receivedKey: string | undefined): boolean {
-    if (this.#config.ackStrict && !receivedKey) {
+  #validCollabKey(receivedKey: string | undefined): boolean {
+    if (this.#config.requireCollab && !receivedKey) {
       return true
     }
 
@@ -274,7 +274,7 @@ export class Communicator {
    * @param message
    */
   #isAllowedMessage(message: Message): boolean {
-    return message.type === 'ack' || this.isReady
+    return message.type === 'collab' || this.isReady
   }
 
   /**
@@ -370,19 +370,23 @@ export class Communicator {
   /**
    *
    */
-  async acknowledge(): Promise<boolean> {
+  async requestCollab(): Promise<boolean> {
+    if (!this.#config.requireCollab || this.#collaborated) {
+      return true
+    }
+
     const promise = new Promise<boolean>((resolve) => {
-      this.#ackResolver = resolve
-      this.#send({ type: 'ack', key: this.#config.key, comm: 'send' })
+      this.#collabResolver = resolve
+      this.#send({ type: 'collab', key: this.#config.key, comm: 'send' })
     })
       .catch(() => false)
       .finally(() => {
-        this.#ackResolver = () => {}
+        this.#collabResolver = () => {}
       })
 
     setTimeout(() => {
-      this.#ackResolver(false)
-    }, this.#config.ackTimeout)
+      this.#collabResolver(false)
+    }, this.#config.collabRequestTimeout)
 
     return promise
   }

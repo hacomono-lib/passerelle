@@ -1,6 +1,12 @@
 import { ref, type App, type InjectionKey, type Ref } from 'vue'
 import type { Router } from 'vue-router'
-import { type Communicator, createCommunicator as create, type NavigateMessage, type HrefMessage, type LayoutMetrix } from '@passerelle/insider-core'
+import {
+  type Communicator,
+  createCommunicator as create,
+  type NavigateMessage,
+  type HrefMessage,
+  type LayoutMetrix
+} from '@passerelle/insider-core'
 import { name } from '../package.json'
 
 export interface InsiderVueConfig {
@@ -24,6 +30,19 @@ export interface InsiderVueConfig {
    *
    */
   logPrefix?: string
+
+  /**
+   * Timeout for the collab request
+   * @default 1000
+   */
+  collabRequestTimeout?: number
+
+  /**
+   * If set to true, passerelle must exist on both the outside and inside of the iframe, enclosure and insider must have the same key.
+   * If set to false, allow unset key.
+   * @default false
+   */
+  requiredCollab?: boolean
 
   /**
    *
@@ -85,7 +104,7 @@ function createCommunicator(app: App, opt: InsiderVueConfig): Communicator {
     async onNavigate(value) {
       opt?.onNavigate?.call(this, app, value)
 
-      const { path, params = {}} = value
+      const { path, params = {} } = value
       opt.router.replace({ path, params })
     },
     async onHrefNavigate(value) {

@@ -34,6 +34,19 @@ export interface Props {
   origin?: string | undefined
 
   /**
+   * Timeout for the collab request
+   * @default 1000
+   */
+  collabRequestTimeout?: number
+
+  /**
+   * If set to true, passerelle must exist on both the outside and inside of the iframe, enclosure and insider must have the same key.
+   * If set to false, allow unset key.
+   * @default false
+   */
+  requiredCollab?: boolean
+
+  /**
    * Specify the key when sending with iframe's postMessage.
    */
   communicateKey?: string | undefined

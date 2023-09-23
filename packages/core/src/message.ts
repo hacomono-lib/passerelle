@@ -5,7 +5,7 @@ export type Message =
   | NavigateMessage
   | HrefMessage
   | LayoutMetrixMessage
-  | Acknowledge
+  | CollabMessage
 
 export type MessageType = Message['type']
 
@@ -84,11 +84,11 @@ export interface HrefMessage {
   value: HrefMessageValue
 }
 
-export interface Acknowledge {
+export interface CollabMessage {
   /**
    * Message Type
    */
-  type: 'ack'
+  type: 'collab'
 
   /**
    * Communication direction
@@ -139,12 +139,8 @@ export interface LayoutMetrixMessage {
   value: LayoutMetrix
 }
 
-const messageTypes: MessageType[] = ['data', 'navigate', 'href', 'layout', 'ack']
+const messageTypes: MessageType[] = ['data', 'navigate', 'href', 'layout', 'collab']
 
 export function isMessage(value: unknown): value is Message {
-  return (
-    !!value &&
-    typeof value === 'object' &&
-    messageTypes.includes((value as Message).type)
-  )
+  return !!value && typeof value === 'object' && messageTypes.includes((value as Message).type)
 }

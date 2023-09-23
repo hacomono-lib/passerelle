@@ -38,7 +38,8 @@ onMounted(() => {})
     communicate-key="passerelle-playground"
     :initial-src="defaultPath"
     :to-child-path="parentToChild"
-    :to-parent-path="childToParent" />
+    :to-parent-path="childToParent"
+    required-collab />
 </template>
 
 <style scoped>

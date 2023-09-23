@@ -8,12 +8,7 @@ import {
 import { assertNotNil } from 'type-assurer'
 import { name } from '../package.json'
 
-export {
-  type CommunicateConfig,
-  type HrefMessage,
-  type NavigateMessage,
-  type MessageKey
-}
+export { type CommunicateConfig, type HrefMessage, type NavigateMessage, type MessageKey }
 
 export type Communicator = Omit<_Communicator, 'acknowledge'>
 
@@ -45,8 +40,8 @@ export function createCommunicator(
     logPrefix,
     onInit() {
       iframe.addEventListener('load', async () => {
-        if (!await communicator.acknowledge()) {
-          console.warn(logPrefix, 'enclosure-core: acknowledge failed')
+        if (!(await communicator.requestCollab())) {
+          console.warn(logPrefix, 'enclosure-core: collab failed')
           return
         }
 

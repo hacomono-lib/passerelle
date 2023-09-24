@@ -1753,6 +1753,7 @@ __metadata:
     "@passerelle/enclosure-vue": ^0.0.1
     "@types/node": ^18
     nuxt: ^3.5.0
+    typescript: ^5.1.6
     vitest: ^0.32.2
   peerDependencies:
     nuxt: ^3.0.0
@@ -1812,6 +1813,7 @@ __metadata:
     "@passerelle/insider-vue": ^0.0.1
     "@types/node": ^18
     nuxt: ^3.5.0
+    typescript: ^5.1.6
     vitest: ^0.32.2
   peerDependencies:
     nuxt: ^3.0.0
@@ -1830,6 +1832,7 @@ __metadata:
     "@types/node": ^18
     hookable: ^5.5.3
     playground-vue-components: ../playground-vue-components
+    typescript: ^5.1.6
     vite: ^4.3.9
     vitest: ^0.32.2
     vue: ^3.3.4

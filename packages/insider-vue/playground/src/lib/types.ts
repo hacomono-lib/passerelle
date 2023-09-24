@@ -1,4 +1,4 @@
-import { InjectionKey } from "vue"
+import type { InjectionKey } from 'vue'
 
 export interface Log {
   time: string
@@ -7,4 +7,4 @@ export interface Log {
   value: object
 }
 
-export const logKey: InjectionKey<Log[]> = Symbol("log")
+export const logKey: InjectionKey<Log[]> = Symbol('log')

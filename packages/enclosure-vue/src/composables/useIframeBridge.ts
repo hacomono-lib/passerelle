@@ -1,13 +1,13 @@
 import { onBeforeUnmount, onMounted, unref } from 'vue'
 import { onBeforeRouteUpdate, useRouter, type RouteLocationNormalized } from 'vue-router'
+import { ensureNotNil } from 'type-assurer'
 import {
   createCommunicator as createCommunicatorInternal,
   type Communicator
 } from '@passerelle/enclosure-core'
 
-import type { IframeRef, IframeBridgeOption } from './types'
+import type { IframeRef, IframeBridgeOption } from '../lib/types'
 import { name } from '../../package.json'
-import { ensureNotNil } from 'type-assurer'
 
 function extractLogPrefix(opt: IframeBridgeOption): string {
   return opt.logPrefix ?? `[${name}]`

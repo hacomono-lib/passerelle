@@ -3,9 +3,11 @@ import { ref } from 'vue'
 import type {
   NavigateMessage,
   HrefMessage,
-  MessageKey
+  MessageKey,
+  Json
 } from '@passerelle/enclosure-core'
-import type { ChildToParent, ParentToChild } from './types'
+
+import type { ChildToParent, ParentToChild } from '../lib/types'
 import { useIframeBridge } from '../composables/useIframeBridge'
 
 export interface Props {

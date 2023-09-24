@@ -38,7 +38,7 @@ export function initCommunicator(app: App, config: InsiderVueConfig) {
   initDestructor(communicator)
 }
 
-export function createCommunicator(config: InsiderVueConfig): Communicator {
+export function createCommunicator(config: Omit<InsiderVueConfig, 'router'>): Communicator {
   const communicator = create({
     origin: config?.origin,
     key: config?.key,

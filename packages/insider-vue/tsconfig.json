@@ -9,5 +9,6 @@
       "@passerelle/insider-vue": ["./src"]
     },
     "types": ["./env.d.ts", "vite/client"]
-  }
+  },
+  "include": ["package.json", "**/*.ts"]
 }

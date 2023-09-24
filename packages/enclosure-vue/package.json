@@ -29,7 +29,7 @@
     "dev": "vite ./playground --port 5173",
     "build": "vite build",
     "test": "vitest",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
     "clean": "rm -rf dist"
   },
   "dependencies": {

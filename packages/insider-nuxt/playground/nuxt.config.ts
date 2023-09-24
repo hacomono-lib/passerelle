@@ -1,3 +1,5 @@
+import baseConfig from '../../../tsconfig.json'
+
 export default defineNuxtConfig({
   modules: ['../src/module'],
   srcDir: './src',
@@ -5,5 +7,11 @@ export default defineNuxtConfig({
 
   passerelle: {
     key: 'passerelle-playground'
+  },
+
+  typescript: {
+    tsConfig: {
+      compilerOptions: baseConfig.compilerOptions
+    }
   }
 })

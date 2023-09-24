@@ -1,131 +1,55 @@
 import { ref, type App, type InjectionKey, type Ref } from 'vue'
 import type { Router } from 'vue-router'
-import {
-  type Communicator,
-  createCommunicator as create,
-  type NavigateMessage,
-  type HrefMessage,
-  type LayoutMetrix
-} from '@passerelle/insider-core'
+import { createCommunicator as create } from '@passerelle/insider-core'
+import type { Communicator, LayoutMetrix, CommunicateConfig } from '@passerelle/insider-core'
 import { name } from '../package.json'
-
-export interface InsiderVueConfig {
-  /**
-   * Router instance
-   */
-  router: Router
-
-  /**
-   * Origin to send messages to
-   * @default {string} same origin
-   */
-  origin?: string
-
-  /**
-   *
-   */
-  key?: string
-
-  /**
-   *
-   */
-  logPrefix?: string
-
-  /**
-   * Timeout for the collab request
-   * @default 1000
-   */
-  collabRequestTimeout?: number
-
-  /**
-   * If set to true, passerelle must exist on both the outside and inside of the iframe, enclosure and insider must have the same key.
-   * If set to false, allow unset key.
-   * @default false
-   */
-  requiredCollab?: boolean
-
-  /**
-   *
-   * @param this
-   * @param app
-   * @param value
-   */
-  onNavigate?(this: Communicator, app: App, value: NavigateMessage): void
-
-  /**
-   *
-   * @param this
-   * @param app
-   * @param value
-   */
-  onHrefNavigate?(this: Communicator, app: App, value: HrefMessage): void
-
-  /**
-   *
-   * @param this
-   * @param app
-   * @param value
-   */
-  onUpdateLayout?(this: Communicator, app: App, value: LayoutMetrix): void
-
-  /**
-   *
-   * @param this
-   * @param app
-   */
-  onInit?(this: Communicator, app: App): void
-
-  /**
-   *
-   * @param this
-   * @param app
-   */
-  onDestroy?(this: Communicator, app: App): void
-}
 
 export const LAYOUT_KEY = Symbol() as InjectionKey<Ref<LayoutMetrix | undefined>>
 
 export const COMMUNICATOR_KEY = Symbol() as InjectionKey<Communicator>
 
-export function initCommunicator(app: App, opt: InsiderVueConfig) {
-  const communicator = createCommunicator(app, opt)
-  applyMiddleware(opt.router, communicator)
+export interface InsiderVueConfig extends CommunicateConfig {
+  router: Router
+  communicator?: Communicator
+}
+
+export function initCommunicator(app: App, config: InsiderVueConfig) {
+  const communicator = config.communicator ?? createCommunicator(config)
+
+  const layout = ref<LayoutMetrix | undefined>()
+  app.provide(LAYOUT_KEY, layout)
+  app.provide(COMMUNICATOR_KEY, communicator)
+
+  communicator.hooks.on('href', (value) => {
+    window.location.href = value.href
+  })
+
+  communicator.hooks.on('layout', (value) => {
+    layout.value = value
+  })
+
+  communicator.hooks.on('navigate', (value) => {
+    const { path, params = {} } = value
+    ;(config as InsiderVueConfig).router.replace({ path, params })
+  })
+
+  applyMiddleware(config.router, communicator)
+
   initDestructor(communicator)
 }
 
-function createCommunicator(app: App, opt: InsiderVueConfig): Communicator {
-  const layout = ref<LayoutMetrix | undefined>()
-  app.provide(LAYOUT_KEY, layout)
-
+export function createCommunicator(config: InsiderVueConfig): Communicator {
   const communicator = create({
-    origin: opt?.origin,
-    key: opt?.key,
-    logPrefix: opt?.logPrefix ?? `[${name}]`,
-    async onNavigate(value) {
-      opt?.onNavigate?.call(this, app, value)
-
-      const { path, params = {} } = value
-      opt.router.replace({ path, params })
-    },
-    async onHrefNavigate(value) {
-      opt?.onHrefNavigate?.call(this, app, value)
-
-      window.location.href = value.href
-    },
-    async onUpdateLayout(value) {
-      opt?.onUpdateLayout?.call(this, app, value)
-
-      layout.value = value
-    },
+    origin: config?.origin,
+    key: config?.key,
+    logPrefix: config?.logPrefix ?? `[${name}]`,
     onInit() {
-      opt?.onInit?.call(this, app)
+      config?.onInit?.call(this)
     },
     onDestroy() {
-      opt?.onDestroy?.call(this, app)
+      config?.onDestroy?.call(this)
     }
   })
-
-  app.provide(COMMUNICATOR_KEY, communicator)
   return communicator
 }
 

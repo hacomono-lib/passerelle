@@ -1,10 +1,4 @@
-import {
-  defineNuxtModule,
-  addImports,
-  addComponent,
-  addRouteMiddleware,
-  createResolver
-} from '@nuxt/kit'
+import { defineNuxtModule, addImports, addComponent, createResolver } from '@nuxt/kit'
 
 export interface ModuleOptions {}
 
@@ -25,11 +19,6 @@ export default defineNuxtModule<ModuleOptions>({
     addImports({
       name: 'useIframeBridge',
       from: '@passerelle/enclosure-vue/src/composables/useIframeBridge.ts'
-    })
-
-    addRouteMiddleware({
-      name: 'passerelle',
-      path: resolver.resolve('runtime/middleware/passerelle-bridge.ts')
     })
   }
 })

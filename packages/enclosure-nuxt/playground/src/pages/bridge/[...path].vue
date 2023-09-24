@@ -3,7 +3,7 @@ import type { BridgeFrame as BridgeFrameComponent } from '#components'
 import type { ParentToChild, ChildToParent } from '@passerelle/enclosure-vue'
 
 definePageMeta({
-  middleware: ['passerelle']
+  key: 'bridge'
 })
 
 const route = useRoute()
@@ -18,17 +18,15 @@ function extractChildPath(path: string): string {
   return matchedPath
 }
 
-const parentToChild: ParentToChild = (location) => {
+const parentToChild = ((location) => {
   return extractChildPath(location.path)
-}
+}) satisfies ParentToChild
 
-const childToParent: ChildToParent = ({ path, params }) => {
+const childToParent = (({ path, params }) => {
   return { path: `/bridge${path}`, params }
-}
+}) satisfies ChildToParent
 
 const bridge = ref<typeof BridgeFrameComponent>()
-
-onMounted(() => {})
 </script>
 
 <template>

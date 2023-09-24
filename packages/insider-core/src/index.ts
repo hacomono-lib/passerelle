@@ -1,17 +1,18 @@
 import { Communicator as _Communicator } from '@passerelle/core'
-import type {
-  CommunicateConfig as _CommunicateCollab,
-  NavigateMessage,
-  HrefMessage,
-  LayoutMetrix,
-  MessageKey
-} from '@passerelle/core'
+import type { CommunicateConfig as _CommunicateCollab } from '@passerelle/core'
 import { assertNotNil } from 'type-assurer'
 import { name } from '../package.json'
 
-export { type NavigateMessage, type HrefMessage, type LayoutMetrix, type MessageKey }
+export type {
+  NavigateMessage,
+  HrefMessage,
+  LayoutMetrix,
+  MessageKey,
+  SendDataMessage,
+  Json
+} from '@passerelle/core'
 
-export type Communicator = Omit<_Communicator, 'requestCollab'>
+export type Communicator = Omit<_Communicator, 'requestCollab' | 'sendLayout'>
 
 export type CommunicateConfig = Omit<_CommunicateCollab, 'requiredCollab'>
 

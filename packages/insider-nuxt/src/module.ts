@@ -17,16 +17,18 @@ export default defineNuxtModule<ModuleOptions>({
       filename: `${DIRECTORY_NAME}/insider-plugin.ts`,
       write: true,
       getContents: () => `
-import { insider } from '@passerelle/insider-vue'
+import { insider, createCommunicator } from '@passerelle/insider-vue'
+
+const communicator = createCommunicator({
+  ${(() =>
+    Object.entries(options)
+      .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
+      .join(',\n'))()}
+})
 
 export default defineNuxtPlugin((nuxtApp) => {
   const router = useRouter()
-  nuxtApp.vueApp.use(insider, { router ${(() => {
-    const optionsStr = Object.entries(options)
-      .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
-      .join(', ')
-    return optionsStr ? `, ${optionsStr}` : ''
-  })()}})
+  nuxtApp.vueApp.use(insider, { router, communicator })
 })
 `
     })

@@ -1,4 +1,4 @@
-import { type Json } from './common'
+import type { Json } from './common'
 import { isMessage } from './message'
 import type {
   NavigateMessageValue,
@@ -12,6 +12,7 @@ import type {
   LayoutMetrixMessage,
   CollabMessage
 } from './message'
+import { CommunicatorHooks } from './hooker'
 
 import { name } from '../package.json'
 
@@ -54,26 +55,6 @@ export interface CommunicateConfig {
 
   /**
    *
-   * @param value
-   * @returns
-   */
-  onNavigate?(this: Communicator, value: NavigateMessageValue): void
-
-  /**
-   *
-   * @param value
-   * @returns
-   */
-  onHrefNavigate?(this: Communicator, value: HrefMessageValue): void
-
-  /**
-   *
-   * @param value
-   */
-  onUpdateLayout?(this: Communicator, value: LayoutMetrix): void
-
-  /**
-   *
    * @param this
    */
   onInit?(this: Communicator): void
@@ -96,8 +77,6 @@ function defaultConfig() {
 
 type FixedConfig = CommunicateConfig & ReturnType<typeof defaultConfig>
 
-type ReceiveCallback<T extends Json> = (received: T) => void
-
 function isLocalhost(origin: string): boolean {
   return origin.startsWith('localhost:') || /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(origin)
 }
@@ -115,13 +94,13 @@ function omitNil<T extends Record<string, any>>(obj: T): T {
  *
  */
 export class Communicator {
-  readonly #receivers: Map<string, Array<ReceiveCallback<Json>>> = new Map()
-
   readonly #senderWindow: Window
 
   readonly #config: FixedConfig
 
   readonly #onMessage = this.#received.bind(this)
+
+  readonly hooks = new CommunicatorHooks()
 
   #collaborated: boolean = false
 
@@ -157,6 +136,7 @@ export class Communicator {
    */
   destroy() {
     console.debug(this.#logPrefix, loggerFeatureKey, 'destroy')
+    this.hooks.clear()
     window.removeEventListener('message', this.#onMessage)
     this.#config.onDestroy?.apply(this)
   }
@@ -223,20 +203,17 @@ export class Communicator {
    */
   #receivedMap = {
     data: ({ key, value }: SendDataMessage<Json>) => {
-      if (this.#receivers.has(key as string)) {
-        const receivers = this.#receivers.get(key as string) as Array<ReceiveCallback<Json>>
-        receivers.forEach((receiver) => receiver(value))
-      }
+      this.hooks.call('data', key, value)
     },
     navigate: ({ value }: NavigateMessage) => {
-      this.#config.onNavigate?.apply(this, [value])
+      this.hooks.call('navigate', value)
     },
     href: ({ value }: HrefMessage) => {
-      this.#config.onHrefNavigate?.apply(this, [value])
+      this.hooks.call('href', value)
     },
     layout: ({ value }: LayoutMetrixMessage) => {
       this.#lastLayout = value
-      this.#config.onUpdateLayout?.apply(this, [value])
+      this.hooks.call('layout', value)
     },
     collab: ({ key, comm }: CollabMessage) => {
       this.#collaborated = this.#validCollabKey(key)
@@ -315,7 +292,7 @@ export class Communicator {
    * @param key
    * @param value
    */
-  sendValue<T extends Json>(key: MessageKey<T>, value: T): void {
+  sendData<T extends Json>(key: MessageKey<T>, value: T): void {
     this.#send({
       type: 'data',
       key,
@@ -340,31 +317,6 @@ export class Communicator {
         insider
       }
     })
-  }
-
-  /**
-   *
-   * @param key
-   * @param callback
-   */
-  addReceiver<T extends Json>(key: MessageKey<T>, callback: ReceiveCallback<T>): void {
-    this.#receivers.set(
-      key as string,
-      [...(this.#receivers.get(key as string) ?? []), callback] as Array<ReceiveCallback<Json>>
-    )
-  }
-
-  /**
-   *
-   * @param key
-   * @param callback
-   */
-  removeReceiver<T extends Json>(key: MessageKey<T>, callback: (received: T) => void): void {
-    const receivers = this.#receivers.get(key as string) as Array<ReceiveCallback<Json>>
-    this.#receivers.set(
-      key as string,
-      receivers.filter((c) => c !== callback)
-    )
   }
 
   /**

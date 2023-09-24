@@ -1,11 +1,18 @@
 import { Communicator as _Communicator } from '@passerelle/core'
-import type { CommunicateConfig, NavigateMessage, HrefMessage, MessageKey } from '@passerelle/core'
+import type { CommunicateConfig } from '@passerelle/core'
 import { assertNotNil } from 'type-assurer'
 import { name } from '../package.json'
 
-export { type CommunicateConfig, type HrefMessage, type NavigateMessage, type MessageKey }
+export type {
+  CommunicateConfig,
+  HrefMessage,
+  NavigateMessage,
+  MessageKey,
+  SendDataMessage,
+  Json
+} from '@passerelle/core'
 
-export type Communicator = Omit<_Communicator, 'requestCollab'>
+export type Communicator = Omit<_Communicator, 'requestCollab' | 'sendLayout'>
 
 export function createCommunicator(
   iframe: HTMLIFrameElement,

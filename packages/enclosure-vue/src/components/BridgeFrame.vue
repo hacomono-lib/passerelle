@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import type { NavigateMessage, HrefMessage } from '@passerelle/enclosure-core'
+import type {
+  NavigateMessage,
+  HrefMessage,
+  MessageKey
+} from '@passerelle/enclosure-core'
 import type { ChildToParent, ParentToChild } from './types'
 import { useIframeBridge } from '../composables/useIframeBridge'
 
@@ -57,9 +61,15 @@ export interface Props {
   logPrefix?: string | undefined
 }
 
+export interface SendData<T extends Json> {
+  key: MessageKey<T>
+  value: T
+}
+
 export interface Emit {
   (e: 'navigate', value: NavigateMessage): void
   (e: 'href', value: HrefMessage): void
+  <T extends Json>(e: 'data', value: SendData<T>): void
 }
 
 const props = defineProps<Props>()
@@ -68,30 +78,26 @@ const emit = defineEmits<Emit>()
 
 const frame = ref<HTMLIFrameElement>()
 
-const communicator = useIframeBridge(frame, {
+useIframeBridge(frame, {
   toChildPath: (location) => props.toChildPath(location),
   toParentPath: (url) => props.toParentPath(url),
   origin: props.origin,
   key: props.communicateKey,
   requireCollab: props.requiredCollab,
   collabRequestTimeout: props.collabRequestTimeout,
-  onNavigate(value) {
-    emit('navigate', value)
-  },
-  onHrefNavigate(value) {
-    emit('href', value)
+  onInit() {
+    this.hooks.on('navigate', (value) => {
+      emit('navigate', value)
+    })
+
+    this.hooks.on('href', (value) => {
+      emit('href', value)
+    })
+
+    this.hooks.on('data', (key, value) => {
+      emit('data', { key, value })
+    })
   }
-})
-
-/**
- *
- */
-function getCommunicator() {
-  return communicator
-}
-
-defineExpose({
-  getCommunicator
 })
 </script>
 

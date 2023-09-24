@@ -1,8 +1,13 @@
-import { type Communicator } from '@passerelle/core'
-import { createCommunicator, type UseCommunicator } from './internals/communicator'
+import { onBeforeUnmount, onMounted, unref } from 'vue'
 import { onBeforeRouteUpdate, useRouter, type RouteLocationNormalized } from 'vue-router'
+import {
+  createCommunicator as createCommunicatorInternal,
+  type Communicator
+} from '@passerelle/enclosure-core'
+
 import type { IframeRef, IframeBridgeOption } from './types'
 import { name } from '../../package.json'
+import { ensureNotNil } from 'type-assurer'
 
 function extractLogPrefix(opt: IframeBridgeOption): string {
   return opt.logPrefix ?? `[${name}]`
@@ -18,36 +23,36 @@ const isSSR = typeof window === 'undefined'
  * @param opt
  * @return
  */
-export function useIframeBridge(
-  iframeRef: IframeRef,
-  opt: IframeBridgeOption
-): UseCommunicator | undefined {
-  if (isSSR) {
-    return undefined
-  }
+export function useIframeBridge(iframeRef: IframeRef, opt: IframeBridgeOption) {
+  if (isSSR) return
 
-  const { toChildPath: _a, toParentPath, onNavigate: _c, ...config } = opt
+  const { toChildPath: _a, toParentPath, ...config } = opt
 
   const router = useRouter()
 
-  const communicator = createCommunicator(iframeRef, {
-    logPrefix: extractLogPrefix(opt),
-    ...config,
-    onNavigate(value) {
-      opt.onNavigate?.call(this, value)
+  let communicator: Communicator | undefined = undefined
 
+  onMounted(() => {
+    communicator = createCommunicatorInternal(ensureNotNil(unref(iframeRef)), {
+      logPrefix: extractLogPrefix(opt),
+      ...config
+    })
+
+    communicator!.hooks.on('navigate', (value) => {
       router.replace(toParentPath(value))
-    }
+    })
   })
 
   onBeforeRouteUpdate((to, from, next) => {
     if (isSamePathTransition(to, from)) {
-      syncHashParentToChild(to, communicator, opt)
+      syncHashParentToChild(to, ensureNotNil(communicator), opt)
     }
     return next()
   })
 
-  return communicator
+  onBeforeUnmount(() => {
+    communicator?.destroy()
+  })
 }
 
 function isSamePathTransition(to: RouteLocationNormalized, from: RouteLocationNormalized): boolean {

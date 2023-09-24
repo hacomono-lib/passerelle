@@ -1,8 +1,8 @@
 import { inject, watch } from 'vue'
-import { type LayoutMetrix } from '@passerelle/core'
+import type { Communicator, LayoutMetrix } from '@passerelle/insider-core'
 
 import { LAYOUT_KEY, COMMUNICATOR_KEY } from './communicator'
-import type { Communicator } from '@passerelle/insider-core'
+import { isSSR } from './common'
 
 export function onUpdateLayout(callback: (value: LayoutMetrix) => void | Promise<void>): void {
   const layout = inject(LAYOUT_KEY)
@@ -14,8 +14,6 @@ export function onUpdateLayout(callback: (value: LayoutMetrix) => void | Promise
     callback(v)
   })
 }
-
-const isSSR = typeof window === 'undefined'
 
 export function useCommunicator(): Communicator | undefined {
   if (isSSR) {

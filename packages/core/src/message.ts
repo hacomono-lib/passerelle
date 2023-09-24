@@ -138,9 +138,3 @@ export interface LayoutMetrixMessage {
    */
   value: LayoutMetrix
 }
-
-const messageTypes: MessageType[] = ['data', 'navigate', 'href', 'layout', 'collab']
-
-export function isMessage(value: unknown): value is Message {
-  return !!value && typeof value === 'object' && messageTypes.includes((value as Message).type)
-}

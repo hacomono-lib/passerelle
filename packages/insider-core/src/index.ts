@@ -16,13 +16,15 @@ export type Communicator = Omit<_Communicator, 'requestCollab' | 'sendLayout'>
 
 export type CommunicateConfig = Omit<_CommunicateCollab, 'requiredCollab'>
 
-export function createCommunicator(config?: CommunicateConfig): Communicator {
-  const logPrefix = config?.logPrefix ?? `[${name}]`
+const logPrefix = `[${name}]`
 
+export function createCommunicator(config: CommunicateConfig = {}): Communicator {
   assertNotNil(parent)
-  return new _Communicator(parent, {
-    ...(config ?? {}),
-    requireCollab: true,
-    logPrefix
+  const communicator = new _Communicator(parent, {
+    ...config,
+    requireCollab: true
   })
+
+  communicator.logPrefix = logPrefix
+  return communicator
 }

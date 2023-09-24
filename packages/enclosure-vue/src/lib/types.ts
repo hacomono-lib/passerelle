@@ -12,7 +12,7 @@ export type ChildToParent = (navigationMessage: NavigateMessage) => RouteLocatio
 
 export type UseCommunicator = Partial<Omit<Communicator, 'destroy' | 'navigate'>>
 
-export interface IframeBridgeOption extends CommunicateConfig {
+export interface IframeBridgeConfig extends CommunicateConfig {
   /**
    *
    */

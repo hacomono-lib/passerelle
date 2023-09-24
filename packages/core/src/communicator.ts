@@ -1,5 +1,4 @@
 import type { Json } from './common'
-import { isMessage } from './message'
 import type {
   NavigateMessageValue,
   HrefMessageValue,
@@ -16,17 +15,10 @@ import { CommunicatorHooks } from './hooker'
 
 import { name } from '../package.json'
 
-const loggerFeatureKey = 'core :'
-
 /**
  * Communicate config
  */
 export interface CommunicateConfig {
-  /**
-   *
-   */
-  logPrefix?: string
-
   /**
    * Origin to send messages to
    * @default same origin
@@ -54,13 +46,13 @@ export interface CommunicateConfig {
   requireCollab?: boolean
 
   /**
-   *
+   * Called when the communicator is initialized
    * @param this
    */
   onInit?(this: Communicator): void
 
   /**
-   *
+   * Called when the communicator is destroyed
    * @param this
    */
   onDestroy?(this: Communicator): void
@@ -70,8 +62,7 @@ function defaultConfig() {
   return {
     collabRequestTimeout: 1000,
     requireCollab: false,
-    origin: location.host,
-    logPrefix: `[${name}]`
+    origin: location.host
   } as const satisfies CommunicateConfig
 }
 
@@ -90,17 +81,29 @@ function omitNil<T extends Record<string, any>>(obj: T): T {
   }, {} as T)
 }
 
+const logScope = 'core :'
+
 /**
  *
  */
 export class Communicator {
+  logPrefix = `[${name}]`
+
   readonly #senderWindow: Window
 
   readonly #config: FixedConfig
 
   readonly #onMessage = this.#received.bind(this)
 
-  readonly hooks = new CommunicatorHooks()
+  readonly #hooks = new CommunicatorHooks()
+
+  /**
+   * Event hooks
+   * @returns CommunicatorHooks
+   */
+  get hooks() {
+    return this.#hooks
+  }
 
   #collaborated: boolean = false
 
@@ -125,40 +128,37 @@ export class Communicator {
     } as FixedConfig
     this.#validateConfig(this.#config)
 
-    console.debug(this.#logPrefix, loggerFeatureKey, 'init', config)
+    console.debug(this.logPrefix, logScope, 'init', config)
     window.addEventListener('message', this.#onMessage)
 
     config.onInit?.apply(this)
   }
 
   /**
-   *
+   * Destroy the communicator
    */
   destroy() {
-    console.debug(this.#logPrefix, loggerFeatureKey, 'destroy')
-    this.hooks.clear()
+    console.debug(this.logPrefix, logScope, 'destroy')
+    this.#hooks.clear()
     window.removeEventListener('message', this.#onMessage)
     this.#config.onDestroy?.apply(this)
   }
 
   /**
-   *
+   * If the communicator requires collab, it will return true after the collab is completed.
    */
   get isReady(): boolean {
-    return this.#collaborated
+    return this.#config.requireCollab && this.#collaborated
   }
 
+  /**
+   * If the communicator initialized ain the iframe, it will return the last layout received from the outside.
+   * If not, it will return undefined.
+   */
   get lastLayout(): LayoutMetrix | undefined {
     return this.#lastLayout
   }
 
-  get #logPrefix(): string {
-    return this.#config.logPrefix
-  }
-
-  /**
-   *
-   */
   get #origin(): string {
     const host = this.#config.origin ?? location.host
 
@@ -172,48 +172,49 @@ export class Communicator {
   #validateConfig({ origin }: FixedConfig) {
     if (origin === '*') {
       console.warn(
-        this.#logPrefix,
-        loggerFeatureKey,
+        this.logPrefix,
+        logScope,
         'You are using "*" as origin, this is not recommended for security reasons'
       )
     }
 
     if (isLocalhost(origin)) {
       console.warn(
-        this.#logPrefix,
-        loggerFeatureKey,
+        this.logPrefix,
+        logScope,
         `You are using an IP address or localhost as origin (${origin}), origin is set to "*"`
       )
     }
   }
 
-  /**
-   *
-   * @param param0
-   */
+  #isMessage(value: unknown): value is Message {
+    return (
+      !!value &&
+      typeof value === 'object' &&
+      Object.keys(this.#receivedMap).includes((value as Message).type)
+    )
+  }
+
   #received({ data }: MessageEvent): void {
-    if (isMessage(data) && this.#isAllowedMessage(data)) {
-      console.debug(this.#logPrefix, loggerFeatureKey, `received [${data.type}]`, data)
+    if (this.#isMessage(data) && this.#isAllowedMessage(data)) {
+      console.debug(this.logPrefix, logScope, `received [${data.type}]`, data)
       this.#receivedMap[data.type](data as any)
     }
   }
 
-  /**
-   *
-   */
   #receivedMap = {
     data: ({ key, value }: SendDataMessage<Json>) => {
-      this.hooks.call('data', key, value)
+      this.#hooks.call('data', key, value)
     },
     navigate: ({ value }: NavigateMessage) => {
-      this.hooks.call('navigate', value)
+      this.#hooks.call('navigate', value)
     },
     href: ({ value }: HrefMessage) => {
-      this.hooks.call('href', value)
+      this.#hooks.call('href', value)
     },
     layout: ({ value }: LayoutMetrixMessage) => {
       this.#lastLayout = value
-      this.hooks.call('layout', value)
+      this.#hooks.call('layout', value)
     },
     collab: ({ key, comm }: CollabMessage) => {
       this.#collaborated = this.#validCollabKey(key)
@@ -234,10 +235,6 @@ export class Communicator {
     }
   }
 
-  /**
-   *
-   * @param receivedKey
-   */
   #validCollabKey(receivedKey: string | undefined): boolean {
     if (this.#config.requireCollab && !receivedKey) {
       return true
@@ -246,49 +243,41 @@ export class Communicator {
     return this.#config.key === receivedKey
   }
 
-  /**
-   *
-   * @param message
-   */
   #isAllowedMessage(message: Message): boolean {
     return message.type === 'collab' || this.isReady
   }
 
-  /**
-   *
-   * @param data
-   */
   #send(data: Message): void {
     if (!this.#isAllowedMessage(data)) return
 
-    console.debug(this.#logPrefix, loggerFeatureKey, 'send', data)
+    console.debug(this.logPrefix, logScope, 'send', data)
     this.#senderWindow.postMessage(data, this.#origin)
   }
 
   /**
-   *
-   * @param value
+   * Send SPA navigation message to the other side
+   * @param navigate
    */
-  navigate(value: NavigateMessageValue): void {
+  navigate(navigate: NavigateMessageValue): void {
     this.#send({
       type: 'navigate',
-      value
+      value: navigate
     })
   }
 
   /**
-   *
-   * @param value
+   * Send location change message to the other side
+   * @param href
    */
-  href(value: HrefMessageValue): void {
+  href(href: HrefMessageValue): void {
     this.#send({
       type: 'href',
-      value
+      value: href
     })
   }
 
   /**
-   *
+   * Send data to the other side
    * @param key
    * @param value
    */
@@ -301,7 +290,7 @@ export class Communicator {
   }
 
   /**
-   *
+   * Send iframe position and size to the inside
    * @param insider
    */
   sendLayout(insider: LayoutMetrix['insider']): void {
@@ -320,7 +309,7 @@ export class Communicator {
   }
 
   /**
-   *
+   * Request collab
    */
   async requestCollab(): Promise<boolean> {
     if (!this.#config.requireCollab || this.#collaborated) {

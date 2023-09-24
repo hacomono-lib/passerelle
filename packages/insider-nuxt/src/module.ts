@@ -3,7 +3,7 @@ import type { InsiderVueConfig } from '@passerelle/insider-vue'
 import { name } from '../package.json'
 
 // Module options TypeScript interface definition
-export type ModuleOptions = Pick<InsiderVueConfig, 'origin' | 'key' | 'logPrefix'>
+export type ModuleOptions = Pick<InsiderVueConfig, 'origin' | 'key'>
 
 const DIRECTORY_NAME = 'passerelle'
 
@@ -14,7 +14,6 @@ export default defineNuxtModule<ModuleOptions>({
   },
   defaults: {
     origin: '*',
-    logPrefix: `[${name}]`,
     key: 'default'
   },
   setup(options, _nuxt) {

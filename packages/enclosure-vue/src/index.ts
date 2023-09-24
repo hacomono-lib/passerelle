@@ -1,6 +1,6 @@
 import type { Plugin } from 'vue'
 import BridgeFrame from './components/BridgeFrame.vue'
-export type { ParentToChild, ChildToParent, IframeBridgeOption } from './lib/types'
+export type { ParentToChild, ChildToParent, IframeBridgeConfig } from './lib/types'
 
 export { BridgeFrame }
 

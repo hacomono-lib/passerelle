@@ -2,11 +2,15 @@ import { ref, type App, type InjectionKey, type Ref } from 'vue'
 import type { Router } from 'vue-router'
 import { createCommunicator as create } from '@passerelle/insider-core'
 import type { Communicator, LayoutMetrix, CommunicateConfig } from '@passerelle/insider-core'
+
+import { isSSR } from './common'
 import { name } from '../package.json'
 
 export const LAYOUT_KEY = Symbol() as InjectionKey<Ref<LayoutMetrix | undefined>>
 
 export const COMMUNICATOR_KEY = Symbol() as InjectionKey<Communicator>
+
+const logPrefix = `[${name}]`
 
 export interface InsiderVueConfig extends CommunicateConfig {
   router: Router
@@ -14,6 +18,8 @@ export interface InsiderVueConfig extends CommunicateConfig {
 }
 
 export function initCommunicator(app: App, config: InsiderVueConfig) {
+  if (isSSR) return
+
   const communicator = config.communicator ?? createCommunicator(config)
 
   const layout = ref<LayoutMetrix | undefined>()
@@ -40,16 +46,16 @@ export function initCommunicator(app: App, config: InsiderVueConfig) {
 
 export function createCommunicator(config: Omit<InsiderVueConfig, 'router'>): Communicator {
   const communicator = create({
-    origin: config?.origin,
-    key: config?.key,
-    logPrefix: config?.logPrefix ?? `[${name}]`,
+    origin: config.origin,
+    key: config.key,
     onInit() {
-      config?.onInit?.call(this)
+      config.onInit?.call(this)
     },
     onDestroy() {
-      config?.onDestroy?.call(this)
+      config.onDestroy?.call(this)
     }
   })
+  communicator.logPrefix = logPrefix
   return communicator
 }
 

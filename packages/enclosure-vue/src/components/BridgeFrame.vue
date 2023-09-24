@@ -9,6 +9,7 @@ import type {
 
 import type { ChildToParent, ParentToChild } from '../lib/types'
 import { useIframeBridge } from '../composables/useIframeBridge'
+import type { RouteLocationNormalized } from 'vue-router'
 
 export interface Props {
   /**
@@ -56,11 +57,6 @@ export interface Props {
    * Specify the key when sending with iframe's postMessage.
    */
   communicateKey?: string | undefined
-
-  /**
-   *
-   */
-  logPrefix?: string | undefined
 }
 
 export interface SendData<T extends Json> {
@@ -69,8 +65,19 @@ export interface SendData<T extends Json> {
 }
 
 export interface Emit {
+  /**
+   *
+   */
   (e: 'navigate', value: NavigateMessage): void
+
+  /**
+   *
+   */
   (e: 'href', value: HrefMessage): void
+
+  /**
+   *
+   */
   <T extends Json>(e: 'data', value: SendData<T>): void
 }
 
@@ -81,22 +88,23 @@ const emit = defineEmits<Emit>()
 const frame = ref<HTMLIFrameElement>()
 
 useIframeBridge(frame, {
-  toChildPath: (location) => props.toChildPath(location),
-  toParentPath: (url) => props.toParentPath(url),
+  toChildPath: (location: RouteLocationNormalized) =>
+    props.toChildPath(location),
+  toParentPath: (url: NavigateMessage) => props.toParentPath(url),
   origin: props.origin,
   key: props.communicateKey,
   requireCollab: props.requiredCollab,
   collabRequestTimeout: props.collabRequestTimeout,
   onInit() {
-    this.hooks.on('navigate', (value) => {
+    this.hooks.on('navigate', (value: NavigateMessage) => {
       emit('navigate', value)
     })
 
-    this.hooks.on('href', (value) => {
+    this.hooks.on('href', (value: HrefMessage) => {
       emit('href', value)
     })
 
-    this.hooks.on('data', (key, value) => {
+    this.hooks.on('data', (key: any, value: any) => {
       emit('data', { key, value })
     })
   }
@@ -108,11 +116,3 @@ useIframeBridge(frame, {
     ref="frame"
     :src="initialSrc" />
 </template>
-
-<style scoped>
-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-</style>

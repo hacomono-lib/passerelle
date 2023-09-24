@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 import packages from './package.json'
 
+const devMode = process.env['NODE_ENV'] === 'development'
+
 export default defineConfig({
   plugins: [
     vue(),
@@ -19,10 +21,13 @@ export default defineConfig({
       entry: 'src/index.ts',
       name: 'PasserelleEnclosureVue',
       formats: ['es', 'cjs'],
-      fileName: 'index',
+      fileName: 'index'
     },
     rollupOptions: {
-      external: [...Object.keys(packages.dependencies), ...Object.keys(packages.peerDependencies)],
+      external: [...Object.keys(packages.dependencies), ...Object.keys(packages.peerDependencies)]
     }
+  },
+  esbuild: {
+    pure: devMode ? [] : ['console.log', 'console.info', 'console.debug']
   }
 })

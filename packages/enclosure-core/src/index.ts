@@ -14,9 +14,13 @@ export type {
 
 export type Communicator = Omit<_Communicator, 'requestCollab' | 'sendLayout'>
 
+const logPrefix = `[${name}]`
+
+const logScope = 'enclosure-core :'
+
 export function createCommunicator(
   iframe: HTMLIFrameElement,
-  config?: CommunicateConfig
+  config: CommunicateConfig = {}
 ): Communicator {
   assertNotNil(iframe.contentWindow, 'iframe.contentWindow is null')
 
@@ -35,15 +39,12 @@ export function createCommunicator(
 
   const observer = new ResizeObserver(sendLayout)
 
-  const logPrefix = config?.logPrefix ?? `[${name}]`
-
   const communicator = new _Communicator(iframe.contentWindow, {
-    ...(config ?? {}),
-    logPrefix,
+    ...config,
     onInit() {
       iframe.addEventListener('load', async () => {
         if (!(await communicator.requestCollab())) {
-          console.warn(logPrefix, 'enclosure-core: collab failed')
+          console.warn(logPrefix, logScope, 'collab failed')
           return
         }
 
@@ -54,16 +55,18 @@ export function createCommunicator(
         observer.observe(iframe)
         window.addEventListener('resize', sendLayout)
       })
-      config?.onInit?.call(this)
+      config.onInit?.call(this)
     },
     onDestroy() {
       // stop observer
       observer.unobserve(iframe)
       window.removeEventListener('resize', sendLayout)
 
-      config?.onDestroy?.call(this)
+      config.onDestroy?.call(this)
     }
   })
+
+  communicator.logPrefix = logPrefix
 
   return communicator
 }

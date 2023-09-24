@@ -6,7 +6,8 @@
     },
     "dev": {
       "cache": true,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^dev"]
     },
     "test": {
       "cache": false,

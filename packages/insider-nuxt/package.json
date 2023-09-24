@@ -23,13 +23,11 @@
   ],
   "scripts": {
     "prepare": "nuxt-module-build --stub && nuxt prepare playground",
-    "preview": "nuxt dev playground --port 5176",
-    "playground:build": "nuxt build playground",
-    "playground:start": "nuxt start playground --port 5176",
+    "dev": "nuxt dev playground --port 5176",
     "build": "nuxt-module-build",
-    "test": "run-p test:*",
-    "test:spec": "vitest run",
-    "test:type": "tsc --noEmit -p tsconfig.json"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "clean": "rm -rf dist playground/.nuxt"
   },
   "dependencies": {
     "@nuxt/kit": "^3.0.0",

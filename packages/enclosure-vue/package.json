@@ -26,11 +26,11 @@
     "dist"
   ],
   "scripts": {
-    "preview": "vite ./playground --port 5173 --open",
+    "dev": "vite ./playground --port 5173",
     "build": "vite build",
-    "test": "run-p test:*",
-    "test:spec": "vitest",
-    "test:type": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+    "test": "vitest",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@passerelle/core": "0.0.1",

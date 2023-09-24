@@ -28,9 +28,9 @@
     "prepare": "tsup",
     "dev": "tsup --watch --clean",
     "build": "tsup",
-    "test": "yarn run -p test:*",
-    "test:spec": "vitest",
-    "test:type": "tsc --noEmit -p tsconfig.json"
+    "test": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@passerelle/core": "0.0.1",

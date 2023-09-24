@@ -10,11 +10,11 @@
     },
     "test": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["prepare", "^build"]
     },
     "typecheck": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["prepare", "^build"]
     },
     "build": {
       "cache": true,
@@ -30,11 +30,6 @@
     },
     "clean": {
       "cache": false
-    },
-    "preview": {
-      "dependsOn": ["^dev"],
-      "cache": false,
-      "persistent": true
     }
   }
 }

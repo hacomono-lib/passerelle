@@ -1,15 +1,14 @@
 import { defineNuxtModule, addImports, addComponent, createResolver } from '@nuxt/kit'
+import { name } from '../package.json'
 
 export interface ModuleOptions {}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@passerelle/enclosure-nuxt'
+    name
   },
   defaults: {},
   setup(_options, _nuxt) {
-    const resolver = createResolver(__dirname)
-
     addComponent({
       filePath: '@passerelle/enclosure-vue/src/components/BridgeFrame.vue',
       name: 'BridgeFrame',

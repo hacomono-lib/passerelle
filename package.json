@@ -16,10 +16,13 @@
   ],
   "scripts": {
     "prepare": "turbo run prepare --parallel",
-    "dev": "turbo run dev",
-    "preview:vue": "turbo run dev preview --parallel --filter=enclosure-vue --filter=insider-vue",
-    "preview:nuxt": "turbo run dev preview --parallel --filter=enclosure-nuxt --filter=insider-nuxt",
-    "build": "turbo run build"
+    "dev": "turbo run dev --parallel",
+    "dev:vue": "turbo run dev --parallel --filter=enclosure-vue --filter=insider-vue",
+    "dev:nuxt": "turbo run dev --parallel --filter=enclosure-nuxt --filter=insider-nuxt",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "clean": "turbo run clean"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.60.0",

@@ -1,11 +1,7 @@
 ---
-"@passerelle/core": minor
-"@passerelle/enclosure-core": minor
-"@passerelle/insider-core": minor
-"@passerelle/enclosure-vue": minor
-"@passerelle/insider-vue": minor
-"@passerelle/enclosure-nuxt": minor
-"@passerelle/insider-nuxt": minor
+'@passerelle/core': major
+'@passerelle/enclosure-core': major
+'@passerelle/insider-core': major
 ---
 
-feat: passerelle core logics and vue, nuxt plugin
+feat: passerelle core logics

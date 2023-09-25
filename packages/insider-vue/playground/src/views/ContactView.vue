@@ -1,3 +1,0 @@
-<template>
-  /contact
-</template>

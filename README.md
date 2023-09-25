@@ -1,2 +1,7 @@
-# nuxt-iframe-brige
-Nuxt3 module for managing iframes in SPAs, enabling seamless navigation and communication between the main app and embedded iframe, ideal for micro-frontend architecture.
+# passerelle
+
+passerelle: A universal library enabling seamless navigation between SPAs via an embedded portal. Track and manage URL hash changes across diverse front-end frameworks.
+
+## polyrepos
+
+- [Vue plugins](https://github.com/hacomono-lib/passerelle-vue)

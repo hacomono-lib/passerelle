@@ -11,9 +11,10 @@ runs:
       uses: actions/cache@v3
       with:
         path: |
-          ./dist
+          ./**/dist
+          ./**/.nuxt
         key: cache-build-results-${{ runner.os }}-${{ github.sha }}
 
     - if: steps.cache_build_results.outputs.cache-hit != 'true'
-      run: yarn build
+      run: yarn prepare && yarn build
       shell: bash

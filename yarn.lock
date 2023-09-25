@@ -8046,19 +8046,19 @@ __metadata:
 
 "playground-vue-components@file:../playground-vue-components::locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue":
   version: 0.0.0
-  resolution: "playground-vue-components@file:../playground-vue-components#../playground-vue-components::hash=b6b748&locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue"
+  resolution: "playground-vue-components@file:../playground-vue-components#../playground-vue-components::hash=0b5c70&locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue"
   peerDependencies:
     vue: ^2.7.14 || ^3.0.0
-  checksum: 2b7b73661eb09463cc44aeedb24f21e86aa95d2f44eba6cfaf04832a9812398659fd90de2e676bdde3eda6254796abfbcef8a7b9b639b02c097778d5bb8f59e4
+  checksum: 75bc9f2b252b7f7678cbb6dd37a3e4514d3acf34af8c47cfd69ae4e89b40fad7e002aaf06591b58d38062e37e61bcab18ffea06595c424abb7c2c041cfe62dc0
   languageName: node
   linkType: hard
 
 "playground-vue-components@file:../playground-vue-components::locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue":
   version: 0.0.0
-  resolution: "playground-vue-components@file:../playground-vue-components#../playground-vue-components::hash=b6b748&locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue"
+  resolution: "playground-vue-components@file:../playground-vue-components#../playground-vue-components::hash=0b5c70&locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue"
   peerDependencies:
     vue: ^2.7.14 || ^3.0.0
-  checksum: 2b7b73661eb09463cc44aeedb24f21e86aa95d2f44eba6cfaf04832a9812398659fd90de2e676bdde3eda6254796abfbcef8a7b9b639b02c097778d5bb8f59e4
+  checksum: 75bc9f2b252b7f7678cbb6dd37a3e4514d3acf34af8c47cfd69ae4e89b40fad7e002aaf06591b58d38062e37e61bcab18ffea06595c424abb7c2c041cfe62dc0
   languageName: node
   linkType: hard
 

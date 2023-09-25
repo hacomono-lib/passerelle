@@ -43,14 +43,6 @@
     {
       "path": "../packages/playground-vue-components",
       "name": "#common/playground-vue-components"
-    },
-    {
-      "path": "../tests/playground-enclosure",
-      "name": "#test/playground-enclosure"
-    },
-    {
-      "path": "../tests/playground-insider",
-      "name": "#test/playground-insider"
     }
   ],
   "settings": {

@@ -1,0 +1,19 @@
+---
+name: Build and Cache
+description: This composite action runs build command and rtestores from cache if available.
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: cache and restore "build result"
+      id: cache_build_results
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./dist
+        key: cache-build-results-${{ runner.os }}-${{ github.sha }}
+
+    - if: steps.cache_build_results.outputs.cache-hit != 'true'
+      run: yarn build
+      shell: bash

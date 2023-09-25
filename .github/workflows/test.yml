@@ -33,18 +33,20 @@ jobs:
     name: 'Test: Code Specifigation'
     runs-on: ubuntu-latest
     needs:
-      - init__node
+      - build
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/init-node
+      - uses: ./.github/actions/build-and-cache
       - run: yarn test
 
   test__typecheck:
     name: 'Test: TypeCheck'
     runs-on: ubuntu-latest
     needs:
-      - init__node
+      - build
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/init-node
+      - uses: ./.github/actions/build-and-cache
       - run: yarn typecheck

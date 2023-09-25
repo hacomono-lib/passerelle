@@ -16,5 +16,5 @@ runs:
         key: cache-build-results-${{ runner.os }}-${{ github.sha }}
 
     - if: steps.cache_build_results.outputs.cache-hit != 'true'
-      run: yarn prepare && yarn build
+      run: yarn build
       shell: bash

@@ -25,7 +25,6 @@
     "dist"
   ],
   "scripts": {
-    "prepare": "tsup",
     "dev": "DEV=true tsup --watch --clean",
     "build": "tsup",
     "typecheck": "tsc --noEmit -p tsconfig.json",

@@ -16,7 +16,7 @@ export function onUpdateLayout(callback: (value: LayoutMetrix) => void | Promise
 
 export function onReceivedData<T extends Json>(
   key: MessageKey<T>,
-  callback: (value: T) => void | Promise<void>
+  callback: (value: T) => void
 ): void {
   const communicator = useCommunicator()
 

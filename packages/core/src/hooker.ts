@@ -40,6 +40,13 @@ export class CommunicatorHooks {
    */
   on(event: 'data', callback: <T extends Json>(key: MessageKey<T>, value: T) => void): void
 
+  /**
+   *
+   * @param event
+   * @param callback
+   */
+  on(event: 'data', callback: (key: string, value: unknown) => void): void
+
   on(event: Event, callback: (...values: any[]) => void): void {
     if (!this.#eventMap.has(event)) {
       this.#eventMap.set(event, new Set())
@@ -79,6 +86,13 @@ export class CommunicatorHooks {
     callback: <T extends Json>(key: MessageKey<T>, value: SendDataMessage) => void
   ): void
 
+  /**
+   *
+   * @param event
+   * @param callback
+   */
+  off(event: 'data', callback: (key: string, value: unknown) => void): void
+
   off(event: Event, callback: (...values: any[]) => void): void {
     this.#eventMap.get(event)?.delete(callback)
   }
@@ -111,6 +125,14 @@ export class CommunicatorHooks {
    * @param value
    */
   call(event: 'data', key: MessageKey<Json>, value: Json): void
+
+  /**
+   *
+   * @param event
+   * @param key
+   * @param value
+   */
+  call(event: 'data', key: string, value: unknown): void
 
   call(event: Event, ...values: any[]): void {
     this.#eventMap.get(event)?.forEach((callback) => callback(...values))

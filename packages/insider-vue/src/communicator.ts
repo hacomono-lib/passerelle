@@ -36,7 +36,7 @@ export function initCommunicator(app: App, config: InsiderVueConfig) {
 
   communicator.hooks.on('navigate', (value) => {
     const { path, params = {} } = value
-    ;(config as InsiderVueConfig).router.replace({ path, params })
+    config.router.replace({ path, params })
   })
 
   applyMiddleware(config.router, communicator)
@@ -45,16 +45,7 @@ export function initCommunicator(app: App, config: InsiderVueConfig) {
 }
 
 export function createCommunicator(config: Omit<InsiderVueConfig, 'router'>): Communicator {
-  const communicator = create({
-    origin: config.origin,
-    key: config.key,
-    onInit() {
-      config.onInit?.call(this)
-    },
-    onDestroy() {
-      config.onDestroy?.call(this)
-    }
-  })
+  const communicator = create(config)
   communicator.logPrefix = logPrefix
   return communicator
 }

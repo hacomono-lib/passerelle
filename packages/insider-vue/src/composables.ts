@@ -1,24 +1,38 @@
-import { inject, watch } from 'vue'
-import type { Communicator, LayoutMetrix } from '@passerelle/insider-core'
+import { inject, onUnmounted } from 'vue'
+import type { Communicator, LayoutMetrix, MessageKey, Json } from '@passerelle/insider-core'
 
-import { LAYOUT_KEY, COMMUNICATOR_KEY } from './communicator'
+import { COMMUNICATOR_KEY } from './communicator'
 import { isSSR } from './common'
 
 export function onUpdateLayout(callback: (value: LayoutMetrix) => void | Promise<void>): void {
-  const layout = inject(LAYOUT_KEY)
-  if (!layout) return
+  const communicator = useCommunicator()
 
-  watch(layout, (v) => {
-    if (!v) return
+  communicator.hooks.on('layout', callback)
 
-    callback(v)
+  onUnmounted(() => {
+    communicator.hooks.off('layout', callback)
   })
 }
 
-export function useCommunicator(): Communicator | undefined {
-  if (isSSR) {
-    return undefined
+export function onReceivedData<T extends Json>(
+  key: MessageKey<T>,
+  callback: (value: T) => void | Promise<void>
+): void {
+  const communicator = useCommunicator()
+
+  const callbackWrap = (k: string, v: unknown) => {
+    if (k === key) callback(v as T)
   }
+
+  communicator.hooks.on('data', callbackWrap)
+
+  onUnmounted(() => {
+    communicator.hooks.off('data', callbackWrap)
+  })
+}
+
+export function useCommunicator(): Communicator {
+  if (isSSR) throw Error('passerelle communicator can not be used in SSR')
 
   const communicator = inject(COMMUNICATOR_KEY)
   if (!communicator) throw new Error('passerelle insider is not installed')

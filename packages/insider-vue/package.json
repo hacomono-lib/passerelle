@@ -27,7 +27,6 @@
   "scripts": {
     "dev": "vite ./playground --port 5174",
     "build": "vite build",
-    "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "clean": "rm -rf dist"
   },

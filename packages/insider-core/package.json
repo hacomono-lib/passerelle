@@ -28,7 +28,6 @@
     "prepare": "tsup",
     "dev": "tsup --watch --clean",
     "build": "tsup",
-    "test": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "clean": "rm -rf dist"
   },

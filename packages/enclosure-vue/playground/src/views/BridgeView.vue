@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import type { ParentToChild, ChildToParent } from '@passerelle/enclosure-vue'
+import {
+  BridgeFrame,
+  type ParentToChild,
+  type ChildToParent
+} from '@passerelle/enclosure-vue'
 import { onMounted, ref } from 'vue'
 
 const route = useRoute()

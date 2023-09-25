@@ -1,10 +1,7 @@
 import { onBeforeUnmount, onMounted, unref } from 'vue'
 import { onBeforeRouteUpdate, useRouter, type RouteLocationNormalized } from 'vue-router'
 import { ensureNotNil } from 'type-assurer'
-import {
-  createCommunicator as createCommunicatorInternal,
-  type Communicator
-} from '@passerelle/enclosure-core'
+import { createCommunicator as create, type Communicator } from '@passerelle/enclosure-core'
 
 import type { IframeRef, IframeBridgeConfig } from '../lib/types'
 import { name } from '../../package.json'
@@ -31,7 +28,7 @@ export function useIframeBridge(iframeRef: IframeRef, config: IframeBridgeConfig
   let communicator: Communicator | undefined = undefined
 
   onMounted(() => {
-    communicator = createCommunicatorInternal(ensureNotNil(unref(iframeRef)), config)
+    communicator = create(ensureNotNil(unref(iframeRef)), config)
 
     communicator.logPrefix = logPrefix
 

@@ -46,5 +46,15 @@ export default defineNuxtPlugin((nuxtApp) => {
       name: 'useCommunicator',
       from: '@passerelle/insider-vue/src/composables.ts'
     })
+
+    addImports({
+      name: 'onUpdateLayout',
+      from: '@passerelle/insider-vue/src/composables.ts'
+    })
+
+    addImports({
+      name: 'onReceivedData',
+      from: '@passerelle/insider-vue/src/composables.ts'
+    })
   }
 })

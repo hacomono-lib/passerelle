@@ -8,7 +8,7 @@ import {
   type InsiderVueConfig
 } from './communicator'
 
-export { onUpdateLayout, useCommunicator } from './composables'
+export { onUpdateLayout, onReceivedData, useCommunicator } from './composables'
 
 export { createCommunicator } from './communicator'
 

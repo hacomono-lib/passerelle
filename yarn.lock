@@ -8168,33 +8168,37 @@ __metadata:
 
 "playground-vue-components@file:../../fixtures/playground-vue-components::locator=%40passerelle%2Fenclosure-nuxt%40workspace%3Apackages%2Fenclosure-nuxt":
   version: 0.0.0
-  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=86578c&locator=%40passerelle%2Fenclosure-nuxt%40workspace%3Apackages%2Fenclosure-nuxt"
+  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=a6e9de&locator=%40passerelle%2Fenclosure-nuxt%40workspace%3Apackages%2Fenclosure-nuxt"
   peerDependencies:
     vue: ^2.7.14 || ^3.0.0
+  checksum: 741b95deed00f5dd1e22e5066455ad9af9a7147c37cf3e5657fb3c92423f065469506fd086497ca2ad2e570ebb290152b426e7195fbe59ca8d3dae51ca0af30f
   languageName: node
   linkType: hard
 
 "playground-vue-components@file:../../fixtures/playground-vue-components::locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue":
   version: 0.0.0
-  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=86578c&locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue"
+  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=a6e9de&locator=%40passerelle%2Fenclosure-vue%40workspace%3Apackages%2Fenclosure-vue"
   peerDependencies:
     vue: ^2.7.14 || ^3.0.0
+  checksum: 741b95deed00f5dd1e22e5066455ad9af9a7147c37cf3e5657fb3c92423f065469506fd086497ca2ad2e570ebb290152b426e7195fbe59ca8d3dae51ca0af30f
   languageName: node
   linkType: hard
 
 "playground-vue-components@file:../../fixtures/playground-vue-components::locator=%40passerelle%2Finsider-nuxt%40workspace%3Apackages%2Finsider-nuxt":
   version: 0.0.0
-  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=86578c&locator=%40passerelle%2Finsider-nuxt%40workspace%3Apackages%2Finsider-nuxt"
+  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=a6e9de&locator=%40passerelle%2Finsider-nuxt%40workspace%3Apackages%2Finsider-nuxt"
   peerDependencies:
     vue: ^2.7.14 || ^3.0.0
+  checksum: 741b95deed00f5dd1e22e5066455ad9af9a7147c37cf3e5657fb3c92423f065469506fd086497ca2ad2e570ebb290152b426e7195fbe59ca8d3dae51ca0af30f
   languageName: node
   linkType: hard
 
 "playground-vue-components@file:../../fixtures/playground-vue-components::locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue":
   version: 0.0.0
-  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=86578c&locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue"
+  resolution: "playground-vue-components@file:../../fixtures/playground-vue-components#../../fixtures/playground-vue-components::hash=a6e9de&locator=%40passerelle%2Finsider-vue%40workspace%3Apackages%2Finsider-vue"
   peerDependencies:
     vue: ^2.7.14 || ^3.0.0
+  checksum: 741b95deed00f5dd1e22e5066455ad9af9a7147c37cf3e5657fb3c92423f065469506fd086497ca2ad2e570ebb290152b426e7195fbe59ca8d3dae51ca0af30f
   languageName: node
   linkType: hard
 
@@ -10280,6 +10284,7 @@ __metadata:
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
+  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
   languageName: node
   linkType: hard
 

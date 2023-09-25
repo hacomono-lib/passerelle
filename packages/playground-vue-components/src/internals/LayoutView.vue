@@ -1,3 +1,0 @@
-<template>
-  layout-view
-</template>

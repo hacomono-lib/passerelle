@@ -12,6 +12,7 @@
   "private": true,
   "workspaces": [
     "./packages/*",
+    "./fixtures/*",
     "./tests/*"
   ],
   "scripts": {

@@ -1,6 +1,5 @@
 <template>
-  <button
-    :class="{ selected }">
+  <button :class="{ selected }">
     {{ label }}
   </button>
 </template>
@@ -35,10 +34,10 @@ button {
   display: inline-block;
   padding: 0 1rem;
   background: none;
-	cursor: pointer;
-	outline: inherit;
+  cursor: pointer;
+  outline: inherit;
   font: inherit;
-	outline: inherit;
+  outline: inherit;
 
   border: none;
   border-left: 1px solid var(--color-border);

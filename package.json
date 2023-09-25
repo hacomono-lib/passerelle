@@ -30,9 +30,9 @@
     "@typescript-eslint/parser": "^5.60.0",
     "changesets": "^1.0.2",
     "eslint": "^8.43.0",
-    "eslint-config-import": "^0.13.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-turbo": "^1.10.14",
+    "eslint-plugin-import": "^2.28.1",
     "prettier": "^2.8.8",
     "turbo": "^1.10.6"
   },

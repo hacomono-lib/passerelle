@@ -1,0 +1,28 @@
+---
+name: Install Dependencies and Cache
+description: This composite action installs dependencies and restores from cache if available.
+
+runs:
+  using: 'composite'
+
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        cache: yarn
+        node-version: 18
+
+    - name: cache node_modules
+      id: cache_node_modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./node_modules
+        key: node-modules-${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
+        restore-keys: |
+          node-modules-${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
+          node-modules-${{ runner.os }}-
+          node-modules--
+
+    - if: steps.cache_node_modules.outputs.cache-hit != 'true'
+      run: yarn --immutable
+      shell: bash

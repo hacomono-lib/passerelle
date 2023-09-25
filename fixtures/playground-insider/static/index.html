@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Playground Enclosure</title>
+    <link
+      rel="stylesheet"
+      href="./assets/base.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/layout.css" />
+  </head>
+  <body>
+    <header>
+      <img
+        alt="html5 logo"
+        class="logo"
+        src="./assets/logo.svg"
+        width="125"
+        height="125" />
+      <div class="wrapper">
+        <h1>@test/playground-insider</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/works">Works</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Event</th>
+          <th>Key</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody id="logger"></tbody>
+    </table>
+    <script>
+      window.addEventListener('message', (event) => {
+        document.getElementById('logger').innerHTML += `
+          <tr>
+            <td>${event.timeStamp}</td>
+            <td>${event.data.type}</td>
+            <td>${event.data.type === 'data' ? event.data.key : ''}</td>
+            <td>${JSON.stringify(event.data.value)}</td>
+          </tr>
+        `
+      })
+    </script>
+  </body>
+</html>

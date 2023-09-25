@@ -1,0 +1,57 @@
+{
+  "name": "@passerelle/enclosure-vue",
+  "version": "0.0.1",
+  "description": "passerelle enclosure module for vue3",
+  "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hacomono-lib/passerelle.git",
+    "directory": "packages/enclosure-vue"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./src/*": "./src/*"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite ./playground --port 5173",
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@passerelle/core": "0.0.1",
+    "@passerelle/enclosure-core": "0.0.1",
+    "type-assurer": "0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.17",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/tsconfig": "^0.4.0",
+    "playground-vue-components": "file:../../fixtures/playground-vue-components",
+    "typescript": "^5.1.6",
+    "vite": "^4.3.9",
+    "vite-plugin-dts": "^3.2.0",
+    "vitest": "^0.32.2",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2",
+    "vue-tsc": "^1.6.5",
+    "yarn-run-all": "latest"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
+  }
+}

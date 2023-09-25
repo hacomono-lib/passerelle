@@ -1,0 +1,10 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>hacomono-lib/renovate-config:base",
+    "github>hacomono-lib/renovate-config:npm",
+    "github>hacomono-lib/renovate-config:npm-lockfile",
+    "github>hacomono-lib/renovate-config:github-actions",
+    "github>hacomono-lib/renovate-config:pre-commit"
+  ]
+}

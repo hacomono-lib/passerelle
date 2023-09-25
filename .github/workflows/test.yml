@@ -1,0 +1,52 @@
+---
+name: Test
+run-name: 'Test on "${{ github.event.pull_request.title }}" by ${{ github.actor }}'
+
+permissions:
+  contents: read
+  packages: read
+  pull-requests: write
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  init__node:
+    name: 'Initialize: node'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/init-node
+
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+    needs:
+      - init__node
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/init-node
+      - uses: ./.github/actions/build-and-cache
+
+  test__code_spec:
+    name: 'Test: Code Specifigation'
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/init-node
+      - uses: ./.github/actions/build-and-cache
+      - run: yarn test
+
+  test__typecheck:
+    name: 'Test: TypeCheck'
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/init-node
+      - uses: ./.github/actions/build-and-cache
+      - run: yarn typecheck

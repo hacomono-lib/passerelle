@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
 
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -34,5 +34,6 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "useDefineForClassFields": true
-  }
+  },
+  "exclude": ["**/dist"]
 }

@@ -1,0 +1,1 @@
+<template>data-sender</template>

@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "playground",
+  "type": "module",
+  "devDependencies": {
+    "nuxt": "latest"
+  }
+}

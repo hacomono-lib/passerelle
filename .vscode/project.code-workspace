@@ -13,12 +13,12 @@
       "name": "@passerelle/core"
     },
     {
-      "path": "../packages/enclosure-core",
-      "name": "@passerelle/enclosure-core"
+      "path": "../packages/enclosure",
+      "name": "@passerelle/enclosure"
     },
     {
-      "path": "../packages/insider-core",
-      "name": "@passerelle/insider-core"
+      "path": "../packages/insider",
+      "name": "@passerelle/insider"
     },
     {
       "path": "../fixtures/playground-enclosure",

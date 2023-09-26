@@ -1,7 +1,7 @@
 ---
 '@passerelle/core': major
-'@passerelle/enclosure-core': major
-'@passerelle/insider-core': major
+'@passerelle/enclosure': major
+'@passerelle/insider': major
 ---
 
 feat: passerelle core logics

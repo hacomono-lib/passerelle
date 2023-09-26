@@ -35,5 +35,8 @@
     "typescript": "^5.1.6",
     "vitest": "^0.32.2",
     "yarn-run-all": "latest"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,1 +1,0 @@
-# @passerelle/enclosure-vue

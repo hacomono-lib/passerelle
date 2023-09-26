@@ -26,6 +26,7 @@
     "clean": "turbo run clean"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
     "changesets": "^1.0.2",

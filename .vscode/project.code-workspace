@@ -13,36 +13,20 @@
       "name": "@passerelle/core"
     },
     {
-      "path": "../packages/enclosure-core",
-      "name": "@passerelle/enclosure-core"
+      "path": "../packages/enclosure",
+      "name": "@passerelle/enclosure"
     },
     {
-      "path": "../packages/insider-core",
-      "name": "@passerelle/insider-core"
+      "path": "../packages/insider",
+      "name": "@passerelle/insider"
     },
     {
-      "path": "../packages/enclosure-vue",
-      "name": "@passerelle/enclosure-vue"
+      "path": "../fixtures/playground-enclosure",
+      "name": "#fixtures/playground-enclosure"
     },
     {
-      "path": "../packages/insider-vue",
-      "name": "@passerelle/insider-vue"
-    },
-    {
-      "path": "../packages/enclosure-nuxt",
-      "name": "@passerelle/enclosure-nuxt"
-    },
-    {
-      "path": "../packages/insider-nuxt",
-      "name": "@passerelle/insider-nuxt"
-    },
-    {
-      "path": "../packages/insider-nuxt",
-      "name": "@passerelle/insider-nuxt"
-    },
-    {
-      "path": "../packages/playground-vue-components",
-      "name": "#common/playground-vue-components"
+      "path": "../fixtures/playground-insider",
+      "name": "#fixtures/playground-insider"
     }
   ],
   "settings": {
@@ -57,21 +41,14 @@
       "editor.rulers": [100],
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "[vue]": {
-      "editor.rulers": [150],
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
     "typescript.tsdk": "node_modules/typescript/lib"
   },
   "extensions": {
     "recommendations": [
-      "Vue.volar",
-      "Vue.vscode-typescript-vue-plugin",
       "bradlc.vscode-tailwindcss",
       "dbaeumer.vscode-eslint",
       "esbenp.prettier-vscode",
-    ],
-    "unwantedRecommendations": ["yoyo930021.vuter"]
+    ]
   }
 }
 

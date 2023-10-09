@@ -676,7 +676,7 @@ __metadata:
   dependencies:
     tsup: ^7.1.0
     typescript: ^5.1.6
-    vitest: ^0.32.2
+    vitest: ^0.32.4
     yarn-run-all: latest
   languageName: unknown
   linkType: soft
@@ -689,7 +689,7 @@ __metadata:
     tsup: ^7.1.0
     type-assurer: 0.1.1
     typescript: ^5.1.6
-    vitest: ^0.32.2
+    vitest: ^0.32.4
     yarn-run-all: latest
   languageName: unknown
   linkType: soft
@@ -702,7 +702,7 @@ __metadata:
     tsup: ^7.1.0
     type-assurer: 0.1.1
     typescript: ^5.1.6
-    vitest: ^0.32.2
+    vitest: ^0.32.4
     yarn-run-all: latest
   languageName: unknown
   linkType: soft
@@ -5880,7 +5880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^0.32.2":
+"vitest@npm:^0.32.4":
   version: 0.32.4
   resolution: "vitest@npm:0.32.4"
   dependencies:

@@ -674,7 +674,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@passerelle/core@workspace:packages/core"
   dependencies:
-    tsup: ^7.1.0
+    tsup: ^7.2.0
     typescript: ^5.1.6
     vitest: ^0.32.2
     yarn-run-all: latest
@@ -686,7 +686,7 @@ __metadata:
   resolution: "@passerelle/enclosure@workspace:packages/enclosure"
   dependencies:
     "@passerelle/core": 1.0.0
-    tsup: ^7.1.0
+    tsup: ^7.2.0
     type-assurer: 0.1.1
     typescript: ^5.1.6
     vitest: ^0.32.2
@@ -699,7 +699,7 @@ __metadata:
   resolution: "@passerelle/insider@workspace:packages/insider"
   dependencies:
     "@passerelle/core": 1.0.0
-    tsup: ^7.1.0
+    tsup: ^7.2.0
     type-assurer: 0.1.1
     typescript: ^5.1.6
     vitest: ^0.32.2
@@ -5480,7 +5480,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^7.1.0":
+"tsup@npm:^7.2.0":
   version: 7.2.0
   resolution: "tsup@npm:7.2.0"
   dependencies:

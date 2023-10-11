@@ -9,6 +9,7 @@ export type Message =
 
 export type MessageType = Message['type']
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars, @typescript-eslint/ban-types
 export interface MessageKey<_S extends Json = Json> extends String {}
 
 /**

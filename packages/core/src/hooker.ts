@@ -10,6 +10,7 @@ import type {
 export type Event = 'href' | 'navigate' | 'layout' | 'data'
 
 export class CommunicatorHooks {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   readonly #eventMap: Map<Event, Set<Function>> = new Map()
 
   /**
@@ -47,6 +48,7 @@ export class CommunicatorHooks {
    */
   on(event: 'data', callback: (key: string, value: unknown) => void): void
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: Event, callback: (...values: any[]) => void): void {
     if (!this.#eventMap.has(event)) {
       this.#eventMap.set(event, new Set())
@@ -93,6 +95,7 @@ export class CommunicatorHooks {
    */
   off(event: 'data', callback: (key: string, value: unknown) => void): void
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: Event, callback: (...values: any[]) => void): void {
     this.#eventMap.get(event)?.delete(callback)
   }
@@ -134,6 +137,7 @@ export class CommunicatorHooks {
    */
   call(event: 'data', key: string, value: unknown): void
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   call(event: Event, ...values: any[]): void {
     this.#eventMap.get(event)?.forEach((callback) => callback(...values))
   }
@@ -141,7 +145,7 @@ export class CommunicatorHooks {
   /**
    *
    */
-  clear() {
+  clear(): void {
     this.#eventMap.clear()
   }
 }

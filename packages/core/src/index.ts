@@ -6,4 +6,5 @@ export type {
   MessageKey
 } from './message'
 export type { Json } from './common'
-export { Communicator, type CommunicateConfig } from './communicator'
+export { Communicator } from './communicator'
+export type { CommunicateConfig } from './config'

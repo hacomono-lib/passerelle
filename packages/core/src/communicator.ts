@@ -1,4 +1,5 @@
-import type { Json } from './common'
+/* eslint-disable max-lines */
+import { type Json, logScope, omitNil, isLocalhost, name } from './common'
 import type {
   NavigateMessageValue,
   HrefMessageValue,
@@ -12,80 +13,11 @@ import type {
   CollabMessage
 } from './message'
 import { CommunicatorHooks } from './hooker'
+import { type CommunicateConfig, type FixedConfig, defaultConfig } from './config'
 
-import { name } from '../package.json'
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = () => {}
 
-/**
- * Communicate config
- */
-export interface CommunicateConfig {
-  /**
-   * Origin to send messages to
-   * @default same origin
-   */
-  origin?: string
-
-  /**
-   * A Unique key to be set to ensure that the communication partners across ths iframe are in common context.
-   * if not set, context identity is not ensured (ackStrict must be false).
-   * @default undefined
-   */
-  key?: string
-
-  /**
-   * Timeout for the collab request
-   * @default 1000
-   */
-  collabRequestTimeout?: number
-
-  /**
-   * If set to true, passerelle must exist on both the outside and inside of the iframe, enclosure and insider must have the same key.
-   * If set to false, allow unset key.
-   * @default false
-   */
-  requireCollab?: boolean
-
-  /**
-   * Called when the communicator is initialized
-   * @param this
-   */
-  onInit?(this: Communicator): void
-
-  /**
-   * Called when the communicator is destroyed
-   * @param this
-   */
-  onDestroy?(this: Communicator): void
-}
-
-function defaultConfig() {
-  return {
-    collabRequestTimeout: 1000,
-    requireCollab: false,
-    origin: location.host
-  } as const satisfies CommunicateConfig
-}
-
-type FixedConfig = CommunicateConfig & ReturnType<typeof defaultConfig>
-
-function isLocalhost(origin: string): boolean {
-  return origin.startsWith('localhost:') || /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(origin)
-}
-
-function omitNil<T extends Record<string, any>>(obj: T): T {
-  return Object.entries(obj).reduce((acc, [key, value]) => {
-    if (value !== undefined && value !== null) {
-      acc[key as keyof T] = value
-    }
-    return acc
-  }, {} as T)
-}
-
-const logScope = 'core :'
-
-/**
- *
- */
 export class Communicator {
   logPrefix = `[${name}]`
 
@@ -101,13 +33,13 @@ export class Communicator {
    * Event hooks
    * @returns CommunicatorHooks
    */
-  get hooks() {
+  get hooks(): CommunicatorHooks {
     return this.#hooks
   }
 
-  #collaborated: boolean = false
+  #collaborated = false
 
-  #collabResolver: (value: boolean) => void = () => {}
+  #collabResolver: (value: boolean) => void = noop
 
   #lastLayout: LayoutMetrix | undefined
 
@@ -123,7 +55,7 @@ export class Communicator {
 
     this.#senderWindow = senderWindow
     this.#config = {
-      ...defaultConfig(),
+      ...defaultConfig,
       ...omitNil(config)
     } as FixedConfig
     this.#validateConfig(this.#config)
@@ -137,7 +69,7 @@ export class Communicator {
   /**
    * Destroy the communicator
    */
-  destroy() {
+  destroy(): void {
     console.debug(this.logPrefix, logScope, 'destroy')
     this.#hooks.clear()
     window.removeEventListener('message', this.#onMessage)
@@ -148,7 +80,7 @@ export class Communicator {
    * If the communicator requires collab, it will return true after the collab is completed.
    */
   get isReady(): boolean {
-    return this.#config.requireCollab && this.#collaborated
+    return !!(this.#config.requireCollab && this.#collaborated)
   }
 
   /**
@@ -322,7 +254,7 @@ export class Communicator {
     })
       .catch(() => false)
       .finally(() => {
-        this.#collabResolver = () => {}
+        this.#collabResolver = noop
       })
 
     setTimeout(() => {

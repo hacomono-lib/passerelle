@@ -1,5 +1,11 @@
 # @passerelle/core
 
+## 1.0.1
+
+### Patch Changes
+
+- [#28](https://github.com/hacomono-lib/passerelle/pull/28) [`846f6e7`](https://github.com/hacomono-lib/passerelle/commit/846f6e768c67131e9dcef48e5fe5b08f2a4eb600) Thanks [@mew-ton](https://github.com/mew-ton)! - fix: 型のミスや linter のエラーを解消
+
 ## 1.0.0
 
 ### Major Changes

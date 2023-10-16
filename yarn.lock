@@ -687,7 +687,7 @@ __metadata:
   dependencies:
     "@passerelle/core": 1.0.1
     tsup: ^7.2.0
-    type-assurer: 0.1.1
+    type-assurer: 0.1.2
     typescript: ^5.2.2
     vitest: ^0.32.4
     yarn-run-all: latest
@@ -700,7 +700,7 @@ __metadata:
   dependencies:
     "@passerelle/core": 1.0.1
     tsup: ^7.2.0
-    type-assurer: 0.1.1
+    type-assurer: 0.1.2
     typescript: ^5.2.2
     vitest: ^0.32.4
     yarn-run-all: latest
@@ -5615,15 +5615,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-assurer@npm:0.1.1":
-  version: 0.1.1
-  resolution: "type-assurer@npm:0.1.1"
+"type-assurer@npm:0.1.2":
+  version: 0.1.2
+  resolution: "type-assurer@npm:0.1.2"
   peerDependencies:
     typescript: ">= 4.0.0"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: d1a5662bac3860dc42ed571eeb131b359dd81f535c067279bde4192a808006bc538ffce328c2be1ca929045914435f084dbe06561809659b74d35a03a91a8614
+  checksum: f782b37acb40e6e2ae98d2eb593cddfee7d0fb5f3a287ba9d49c19f1e028dcd2d92d9a3b19700dd7518b320bc742f2800afe3c54587fa3e625f486676d2fd469
   languageName: node
   linkType: hard
 

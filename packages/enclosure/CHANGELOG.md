@@ -1,5 +1,12 @@
 # @passerelle/enclosure
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`2efb7c9`](https://github.com/hacomono-lib/passerelle/commit/2efb7c9979cd6e5cbe978598127bbee6feaf483d)]:
+  - @passerelle/core@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

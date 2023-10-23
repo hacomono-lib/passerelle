@@ -56,6 +56,7 @@ export class Communicator {
     this.#senderWindow = senderWindow
     this.#config = {
       ...defaultConfig,
+      origin: location.host,
       ...omitNil(config)
     } as FixedConfig
     this.#validateConfig(this.#config)

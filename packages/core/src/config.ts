@@ -45,8 +45,8 @@ export interface CommunicateConfig {
 
 export const defaultConfig = {
   collabRequestTimeout: 1000,
-  requireCollab: false,
-  origin: location.host
+  requireCollab: false
+  // origin is set in communicator.ts because it depends on browser
 } as const satisfies CommunicateConfig
 Object.freeze(defaultConfig)
 

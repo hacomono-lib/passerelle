@@ -1,5 +1,11 @@
 # @passerelle/core
 
+## 1.0.2
+
+### Patch Changes
+
+- [#44](https://github.com/hacomono-lib/passerelle/pull/44) [`2efb7c9`](https://github.com/hacomono-lib/passerelle/commit/2efb7c9979cd6e5cbe978598127bbee6feaf483d) Thanks [@mew-ton](https://github.com/mew-ton)! - fix: #42 location is not defined in SSR mode
+
 ## 1.0.1
 
 ### Patch Changes

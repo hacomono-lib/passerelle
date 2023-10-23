@@ -50,4 +50,4 @@ export const defaultConfig = {
 } as const satisfies CommunicateConfig
 Object.freeze(defaultConfig)
 
-export type FixedConfig = CommunicateConfig & typeof defaultConfig
+export type FixedConfig = CommunicateConfig & typeof defaultConfig & { origin: string }

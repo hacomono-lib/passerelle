@@ -2118,14 +2118,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-turbo@npm:^1.10.15":
-  version: 1.10.15
-  resolution: "eslint-config-turbo@npm:1.10.15"
+"eslint-config-turbo@npm:^1.10.16":
+  version: 1.10.16
+  resolution: "eslint-config-turbo@npm:1.10.16"
   dependencies:
-    eslint-plugin-turbo: 1.10.15
+    eslint-plugin-turbo: 1.10.16
   peerDependencies:
     eslint: ">6.6.0"
-  checksum: c48f12da65f62d29865f0b377492f3dad4d2c3e950d20629febf68e82eae20fec981fb1cda3ba72d57ee3b40ada47284821d630b3d5de7b19713e3dc923f6501
+  checksum: e5a6ec6d04f21c162f59bd2f3e7e25a311943d94d8130d7d5a7fdea375fa5acfd62918aa34467a5e56ab0f3ca087ea8e117354a5ff631bb38f1fe8a35444ae4b
   languageName: node
   linkType: hard
 
@@ -2179,14 +2179,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-turbo@npm:1.10.15":
-  version: 1.10.15
-  resolution: "eslint-plugin-turbo@npm:1.10.15"
+"eslint-plugin-turbo@npm:1.10.16":
+  version: 1.10.16
+  resolution: "eslint-plugin-turbo@npm:1.10.16"
   dependencies:
     dotenv: 16.0.3
   peerDependencies:
     eslint: ">6.6.0"
-  checksum: 51ffd874dd206ed2151067267fb7a75c42e8505584c9edb7029b336bd3175444f1054e87ff9f2e8dfaeb0aff93eafa5726cd157217ad3b6f320570a21f14a5b1
+  checksum: 00fdbd2cb956b3e9972c84169bb190bafaa274418989508bf52a5d1b5f7df0e850eb60fc702fedbc34477dcebc3e06450de0b81d8e30b56e061ced850e8cb8e3
   languageName: node
   linkType: hard
 
@@ -4262,10 +4262,10 @@ __metadata:
     changesets: ^1.0.2
     eslint: ^8.52.0
     eslint-config-prettier: ^9.0.0
-    eslint-config-turbo: ^1.10.15
+    eslint-config-turbo: ^1.10.16
     eslint-plugin-import: ^2.28.1
     prettier: ^3.0.3
-    turbo: ^1.10.15
+    turbo: ^1.10.16
   languageName: unknown
   linkType: soft
 
@@ -5536,58 +5536,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:1.10.15":
-  version: 1.10.15
-  resolution: "turbo-darwin-64@npm:1.10.15"
+"turbo-darwin-64@npm:1.10.16":
+  version: 1.10.16
+  resolution: "turbo-darwin-64@npm:1.10.16"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:1.10.15":
-  version: 1.10.15
-  resolution: "turbo-darwin-arm64@npm:1.10.15"
+"turbo-darwin-arm64@npm:1.10.16":
+  version: 1.10.16
+  resolution: "turbo-darwin-arm64@npm:1.10.16"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:1.10.15":
-  version: 1.10.15
-  resolution: "turbo-linux-64@npm:1.10.15"
+"turbo-linux-64@npm:1.10.16":
+  version: 1.10.16
+  resolution: "turbo-linux-64@npm:1.10.16"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:1.10.15":
-  version: 1.10.15
-  resolution: "turbo-linux-arm64@npm:1.10.15"
+"turbo-linux-arm64@npm:1.10.16":
+  version: 1.10.16
+  resolution: "turbo-linux-arm64@npm:1.10.16"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:1.10.15":
-  version: 1.10.15
-  resolution: "turbo-windows-64@npm:1.10.15"
+"turbo-windows-64@npm:1.10.16":
+  version: 1.10.16
+  resolution: "turbo-windows-64@npm:1.10.16"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:1.10.15":
-  version: 1.10.15
-  resolution: "turbo-windows-arm64@npm:1.10.15"
+"turbo-windows-arm64@npm:1.10.16":
+  version: 1.10.16
+  resolution: "turbo-windows-arm64@npm:1.10.16"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^1.10.15":
-  version: 1.10.15
-  resolution: "turbo@npm:1.10.15"
+"turbo@npm:^1.10.16":
+  version: 1.10.16
+  resolution: "turbo@npm:1.10.16"
   dependencies:
-    turbo-darwin-64: 1.10.15
-    turbo-darwin-arm64: 1.10.15
-    turbo-linux-64: 1.10.15
-    turbo-linux-arm64: 1.10.15
-    turbo-windows-64: 1.10.15
-    turbo-windows-arm64: 1.10.15
+    turbo-darwin-64: 1.10.16
+    turbo-darwin-arm64: 1.10.16
+    turbo-linux-64: 1.10.16
+    turbo-linux-arm64: 1.10.16
+    turbo-windows-64: 1.10.16
+    turbo-windows-arm64: 1.10.16
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -5603,7 +5603,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: b494c8bf79355874919e76ee0e4a0a53616e0ae5c7126eb1add50e67d4cd1e445ed9aecf99cb6d81c592b7a43ba91cd7dbf30df70410a44cecedba8b5126095d
+  checksum: 69d1892593449b264e0bd48b851317a743016ab62cf470e7293b2cc3781240e863c48232c89f65a5a4ce97eb791ca550b201593449350da073db07703a19cfa5
   languageName: node
   linkType: hard
 

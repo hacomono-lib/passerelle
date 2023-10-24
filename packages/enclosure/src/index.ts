@@ -1,6 +1,5 @@
 import { Communicator as _Communicator } from '@passerelle/core'
 import type { CommunicateConfig } from '@passerelle/core'
-import { assertNotNil } from 'type-assurer'
 import { name } from '../package.json'
 
 export type {
@@ -22,7 +21,7 @@ export function createCommunicator(
   iframe: HTMLIFrameElement,
   config: CommunicateConfig = {}
 ): Communicator {
-  assertNotNil(iframe.contentWindow, 'iframe.contentWindow is null')
+  if (!iframe.contentWindow) throw new Error('iframe.contentWindow is null')
 
   const sendLayout = () => {
     communicator.sendLayout({

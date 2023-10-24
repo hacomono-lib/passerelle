@@ -31,8 +31,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@passerelle/core": "1.0.2",
-    "type-assurer": "0.1.2"
+    "@passerelle/core": "1.0.2"
   },
   "devDependencies": {
     "tsup": "^7.2.0",

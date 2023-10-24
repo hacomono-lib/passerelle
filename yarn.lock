@@ -831,7 +831,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@passerelle/core@npm:1.0.1, @passerelle/core@workspace:packages/core":
+"@passerelle/core@npm:1.0.2, @passerelle/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@passerelle/core@workspace:packages/core"
   dependencies:
@@ -846,9 +846,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@passerelle/enclosure@workspace:packages/enclosure"
   dependencies:
-    "@passerelle/core": "npm:1.0.1"
+    "@passerelle/core": "npm:1.0.2"
     tsup: "npm:^7.2.0"
-    type-assurer: "npm:0.1.2"
     typescript: "npm:^5.2.2"
     vitest: "npm:^0.34.6"
     yarn-run-all: "npm:latest"
@@ -859,7 +858,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@passerelle/insider@workspace:packages/insider"
   dependencies:
-    "@passerelle/core": "npm:1.0.1"
+    "@passerelle/core": "npm:1.0.2"
     tsup: "npm:^7.2.0"
     type-assurer: "npm:0.1.2"
     typescript: "npm:^5.2.2"

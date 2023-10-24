@@ -1,6 +1,6 @@
 {
   "name": "@passerelle/enclosure",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "passerelle enclosure core library",
   "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@passerelle/core": "1.0.2"
+    "@passerelle/core": "1.0.3"
   },
   "devDependencies": {
     "tsup": "^7.2.0",

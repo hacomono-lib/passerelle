@@ -1,5 +1,11 @@
 # @passerelle/core
 
+## 1.0.3
+
+### Patch Changes
+
+- [#47](https://github.com/hacomono-lib/passerelle/pull/47) [`dbe2c1e`](https://github.com/hacomono-lib/passerelle/commit/dbe2c1e72e0ab32299f5818956f3f39cbaa8ac16) Thanks [@mew-ton](https://github.com/mew-ton)! - feat: ビルド結果のパターンをいくつか用意
+
 ## 1.0.2
 
 ### Patch Changes

@@ -848,7 +848,6 @@ __metadata:
   dependencies:
     "@passerelle/core": "npm:1.0.2"
     tsup: "npm:^7.2.0"
-    type-assurer: "npm:0.1.2"
     typescript: "npm:^5.2.2"
     vitest: "npm:^0.34.6"
     yarn-run-all: "npm:latest"

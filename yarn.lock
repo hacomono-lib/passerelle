@@ -836,7 +836,7 @@ __metadata:
   resolution: "@passerelle/core@workspace:packages/core"
   dependencies:
     tsup: "npm:^7.2.0"
-    typescript: "npm:^5.2.2"
+    typescript: "npm:^5.8.2"
     vitest: "npm:^0.34.6"
     yarn-run-all: "npm:latest"
   languageName: unknown
@@ -848,7 +848,7 @@ __metadata:
   dependencies:
     "@passerelle/core": "npm:1.0.3"
     tsup: "npm:^7.2.0"
-    typescript: "npm:^5.2.2"
+    typescript: "npm:^5.8.2"
     vitest: "npm:^0.34.6"
     yarn-run-all: "npm:latest"
   languageName: unknown
@@ -861,7 +861,7 @@ __metadata:
     "@passerelle/core": "npm:1.0.3"
     tsup: "npm:^7.2.0"
     type-assurer: "npm:0.1.2"
-    typescript: "npm:^5.2.2"
+    typescript: "npm:^5.8.2"
     vitest: "npm:^0.34.6"
     yarn-run-all: "npm:latest"
   languageName: unknown
@@ -6101,23 +6101,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "typescript@npm:5.2.2"
+"typescript@npm:^5.8.2":
+  version: 5.8.2
+  resolution: "typescript@npm:5.8.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 91ae3e6193d0ddb8656d4c418a033f0f75dec5e077ebbc2bd6d76439b93f35683936ee1bdc0e9cf94ec76863aa49f27159b5788219b50e1cd0cd6d110aa34b07
+  checksum: 5c4f6fbf1c6389b6928fe7b8fcd5dc73bb2d58cd4e3883f1d774ed5bd83b151cbac6b7ecf11723de56d4676daeba8713894b1e9af56174f2f9780ae7848ec3c6
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
-  version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"
+"typescript@patch:typescript@npm%3A^5.8.2#optional!builtin<compat/typescript>":
+  version: 5.8.2
+  resolution: "typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=e012d7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 062c1cee1990e6b9419ce8a55162b8dc917eb87f807e4de0327dbc1c2fa4e5f61bc0dd4e034d38ff541d1ed0479b53bcee8e4de3a4075c51a1724eb6216cb6f5
+  checksum: 8a6cd29dfb59bd5a978407b93ae0edb530ee9376a5b95a42ad057a6f80ffb0c410489ccd6fe48d1d0dfad6e8adf5d62d3874bbd251f488ae30e11a1ce6dabd28
   languageName: node
   linkType: hard
 

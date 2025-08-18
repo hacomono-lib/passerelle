@@ -16,7 +16,7 @@ jobs:
     name: 'Lint: GitHub Actions'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: github actions lint
         uses: reviewdog/action-actionlint@v1
@@ -30,7 +30,7 @@ jobs:
     name: 'Lint: ESLint'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/init-node
 

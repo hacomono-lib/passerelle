@@ -9,7 +9,7 @@ runs:
     - uses: actions/setup-node@v6
       with:
         cache: yarn
-        node-version: 18
+        node-version: 22
 
     - name: cache node_modules
       id: cache_node_modules

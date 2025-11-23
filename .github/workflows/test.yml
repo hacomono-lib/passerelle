@@ -16,7 +16,7 @@ jobs:
     name: 'Initialize: node'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/init-node
 
   build:
@@ -25,7 +25,7 @@ jobs:
     needs:
       - init__node
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/init-node
       - uses: ./.github/actions/build-and-cache
 
@@ -35,7 +35,7 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/init-node
       - uses: ./.github/actions/build-and-cache
       - run: yarn test
@@ -46,7 +46,7 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/init-node
       - uses: ./.github/actions/build-and-cache
       - run: yarn typecheck

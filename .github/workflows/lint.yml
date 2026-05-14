@@ -15,8 +15,14 @@ jobs:
   actionlint:
     name: 'Lint: GitHub Actions'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@v6
+      - uses: ./.github/actions/takumi-guard-setup
 
       - name: github actions lint
         uses: reviewdog/action-actionlint@v1
@@ -29,8 +35,14 @@ jobs:
   eslint:
     name: 'Lint: ESLint'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@v6
+      - uses: ./.github/actions/takumi-guard-setup
 
       - uses: ./.github/actions/init-node
 

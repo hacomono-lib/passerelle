@@ -15,8 +15,14 @@ jobs:
   init__node:
     name: 'Initialize: node'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@v6
+      - uses: ./.github/actions/takumi-guard-setup
       - uses: ./.github/actions/init-node
 
   build:
@@ -24,8 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - init__node
+    permissions:
+      contents: read
+      packages: read
+      pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@v6
+      - uses: ./.github/actions/takumi-guard-setup
       - uses: ./.github/actions/init-node
       - uses: ./.github/actions/build-and-cache
 
@@ -34,8 +46,14 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
+    permissions:
+      contents: read
+      packages: read
+      pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@v6
+      - uses: ./.github/actions/takumi-guard-setup
       - uses: ./.github/actions/init-node
       - uses: ./.github/actions/build-and-cache
       - run: yarn test
@@ -45,8 +63,14 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
+    permissions:
+      contents: read
+      packages: read
+      pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@v6
+      - uses: ./.github/actions/takumi-guard-setup
       - uses: ./.github/actions/init-node
       - uses: ./.github/actions/build-and-cache
       - run: yarn typecheck

@@ -24,5 +24,7 @@ runs:
           node-modules--
 
     - if: steps.cache_node_modules.outputs.cache-hit != 'true'
+      env:
+        YARN_ENABLE_SCRIPTS: 'false'
       run: yarn --immutable
       shell: bash
